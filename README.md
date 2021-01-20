@@ -48,7 +48,6 @@ to identify cross-validation folds:
 
 ``` r
 library(spatialsample)
-#> Loading required package: rsample
 data("ames", package = "modeldata")
 
 set.seed(1234)
