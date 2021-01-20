@@ -38,8 +38,10 @@ test_that('can pass the dots to kmeans', {
 })
 
 test_that('printing', {
-    expect_output(print(spatial_clustering_cv(Smithsonian, v = 2,
-                                              coords = c(latitude, longitude))))
+    expect_snapshot_output(
+        spatial_clustering_cv(Smithsonian, v = 2,
+                              coords = c(latitude, longitude))
+    )
 })
 
 test_that('rsplit labels', {
