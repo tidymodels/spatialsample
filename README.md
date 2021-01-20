@@ -7,6 +7,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
 <!-- badges: end -->
 
 The goal of spatialsample is to provide functions and classes for
