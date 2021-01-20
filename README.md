@@ -13,10 +13,10 @@ The goal of spatialsample is to provide functions and classes for
 spatial resampling to use with
 [rsample](https://rsample.tidymodels.org/), including:
 
--   [spatial
+-   [spatial clustering
     cross-validation](https://doi.org/10.1109/IGARSS.2012.6352393)
 
-More spatial resampling approaches are planned.
+The implementation of more spatial resampling approaches is planned.
 
 Like [rsample](https://rsample.tidymodels.org/), spatialsample provides
 building blocks for creating and analyzing resamples of a spatial data
