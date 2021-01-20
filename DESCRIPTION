@@ -30,9 +30,13 @@ Suggests:
     dplyr,
     ggplot2,
     modeldata,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    yardstick
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9000
+VignetteBuilder: knitr
