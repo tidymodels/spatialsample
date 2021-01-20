@@ -1,0 +1,26 @@
+url: https://tidymodels.github.io/spatialsample
+
+template:
+  package: tidytemplate
+  params:
+    theme: tidymodels
+    part_of: <a href="https://tidymodels.org">tidymodels</a>
+    footer: spatialsample is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
+
+home:
+  strip_header: true
+
+figures:
+  fig.width: 8
+  fig.height: 5.75
+
+reference:
+  - title: Resampling Methods
+    contents:
+      - spatial_clustering_cv
+  - title: Utilities
+    contents:
+      - reexports
+  - title: Package
+    contents:
+      - spatialsample

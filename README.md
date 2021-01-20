@@ -12,6 +12,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
 <!-- badges: end -->
 
+## Introduction
+
 The goal of spatialsample is to provide functions and classes for
 spatial resampling to use with
 [rsample](https://rsample.tidymodels.org/), including:
