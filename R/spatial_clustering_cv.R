@@ -79,7 +79,7 @@ spatial_clustering_splits <- function(data, v = 10, coords, ...) {
 }
 
 #' @export
-print.spatial_cv <- function(x, ...) {
+print.spatial_clustering_cv <- function(x, ...) {
     cat("# ", pretty(x), "\n")
     class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv", "rset"))]
     print(x, ...)

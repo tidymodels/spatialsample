@@ -2,7 +2,7 @@
 
 S3method(complement,spatial_clustering_split)
 S3method(pretty,spatial_clustering_cv)
-S3method(print,spatial_cv)
+S3method(print,spatial_clustering_cv)
 export(analysis)
 export(assessment)
 export(pretty.spatial_clustering_cv)
