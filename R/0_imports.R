@@ -3,7 +3,10 @@
 #' @importFrom rlang is_empty
 #' @importFrom stats kmeans
 #'
-split_unnamed <- function(x, f) {
-    out <- split(x, f)
-    unname(out)
-}
+#' @importFrom rsample analysis
+#' @export
+rsample::analysis
+
+#' @importFrom rsample assessment
+#' @export
+rsample::assessment

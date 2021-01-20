@@ -15,6 +15,10 @@ vfold_complement <- function(ind, n) {
          assessment = ind)
 }
 
+split_unnamed <- function(x, f) {
+    out <- split(x, f)
+    unname(out)
+}
 
 dim_rset <- function(x, ...) {
     dims <- purrr::map(x$splits, dim)

@@ -20,10 +20,11 @@ License: MIT + file LICENSE
 URL: https://github.com/tidymodels/spatialsample, https://spatialsample.tidymodels.org
 BugReports: https://github.com/tidymodels/spatialsample/issues
 Depends: 
-    rsample
+    R (>= 3.2)
 Imports:
     purrr,
     rlang,
+    rsample,
     tibble,
     tidyselect
 Suggests: 
