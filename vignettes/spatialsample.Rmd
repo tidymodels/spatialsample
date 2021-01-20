@@ -16,7 +16,7 @@ library(ggplot2)
 theme_set(theme_minimal())
 ```
 
-The resampled objects created by spatialsample can be used in many of the same ways that those created by [rsample](https://rsample.tidymodels.org/) can, from making comparisons to evaluating models. Let's walk through one example using linear modeling of housing data from Ames, IA.
+The resampled objects created by spatialsample can be used in many of the same ways that those created by [rsample](https://rsample.tidymodels.org/) can, from making comparisons to evaluating models. These objects can be used together with other parts of the [tidymodels](https://www.tidymodels.org/) framework, but let's walk through a more basic example using linear modeling of housing data from Ames, IA.
 
 ```{r}
 data("ames", package = "modeldata")
@@ -24,13 +24,13 @@ data("ames", package = "modeldata")
 
 Let's say that the sale price of these houses depends on the year they were built, their living area (size), and the type of house they are (duplex vs. townhouse vs. single family), along with perhaps interactions between type and house size. 
 
-```{r form, eval = FALSE}
+```{r, eval = FALSE}
 log10(Sale_Price) ~ Year_Built + Gr_Liv_Area +  Bldg_Type
 ```
 
 This relationship may exhibit spatial autocorrelation across the city of Ames, and we can use a spatial resampling strategy to evaluate such a model. We can create `v = 15` spatial cross-validation folds with `spatial_clustering_cv()`, which uses k-means clustering to identify the sets:
 
-```{r setup}
+```{r}
 library(spatialsample)
 
 set.seed(123)
