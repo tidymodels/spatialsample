@@ -11,6 +11,8 @@ knitr::opts_chunk$set(
     fig.path = "man/figures/README-",
     out.width = "100%"
 )
+library(ggplot2)
+theme_set(theme_minimal())
 ```
 
 # spatialsample
@@ -49,6 +51,7 @@ The most straightforward spatial resampling strategy with the lightest dependenc
 library(spatialsample)
 data("ames", package = "modeldata")
 
+set.seed(1234)
 folds <- spatial_clustering_cv(ames, v = 5, coords = c("Latitude", "Longitude"))
 
 folds

@@ -51,17 +51,18 @@ library(spatialsample)
 #> Loading required package: rsample
 data("ames", package = "modeldata")
 
+set.seed(1234)
 folds <- spatial_clustering_cv(ames, v = 5, coords = c("Latitude", "Longitude"))
 
 folds
 #> # A tibble: 5 x 2
 #>   splits             id   
 #>   <list>             <chr>
-#> 1 <split [2.3K/653]> Fold1
-#> 2 <split [2.6K/363]> Fold2
-#> 3 <split [2.8K/163]> Fold3
-#> 4 <split [2K/890]>   Fold4
-#> 5 <split [2.1K/861]> Fold5
+#> 1 <split [2.3K/598]> Fold1
+#> 2 <split [2.2K/743]> Fold2
+#> 3 <split [2.6K/360]> Fold3
+#> 4 <split [2.1K/812]> Fold4
+#> 5 <split [2.5K/417]> Fold5
 ```
 
 In this example, the `ames` data on houses in Ames, IA is resampled with
