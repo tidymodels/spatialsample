@@ -10,3 +10,6 @@ rsample::analysis
 #' @importFrom rsample assessment
 #' @export
 rsample::assessment
+
+#' @import vctrs
+NULL
