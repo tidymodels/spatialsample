@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/index.html</loc>
+    <loc>https://spatialsample.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/reference/pretty.spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/pretty.spatial_clustering_cv.html</loc>
   </url>
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/reference/reexports.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/reference/spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/spatial_clustering_cv.html</loc>
   </url>
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/reference/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/spatialsample.html</loc>
   </url>
   <url>
-    <loc>https://tidymodels.github.io/spatialsample/articles/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/articles/spatialsample.html</loc>
   </url>
 </urlset>
