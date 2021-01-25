@@ -27,7 +27,8 @@ Imports:
     rlang,
     rsample,
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs (>= 0.3.6)
 Suggests: 
     ggplot2,
     knitr,
