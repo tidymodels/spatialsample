@@ -2,6 +2,7 @@
 #' @importFrom purrr map
 #' @importFrom rlang is_empty
 #' @importFrom stats kmeans
+#' @importFrom dplyr dplyr_reconstruct
 #'
 #' @importFrom rsample analysis
 #' @export
