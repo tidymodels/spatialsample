@@ -22,13 +22,13 @@ BugReports: https://github.com/tidymodels/spatialsample/issues
 Depends: 
     R (>= 3.2)
 Imports:
+    dplyr (>= 1.0.0),
     purrr,
     rlang,
     rsample,
     tibble,
     tidyselect
 Suggests: 
-    dplyr,
     ggplot2,
     knitr,
     modeldata,
