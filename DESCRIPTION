@@ -45,4 +45,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9000
 VignetteBuilder: knitr
 Remotes:
-    tidymodels/rsample#210
+    tidymodels/rsample
