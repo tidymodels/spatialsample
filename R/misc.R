@@ -9,10 +9,16 @@ names0 <- function(num, prefix = "x") {
     paste0(prefix, ind)
 }
 
+## This will remove the assessment indices from an rsplit object
+rm_out <- function(x) {
+    x$out_id <- NA
+    x
+}
+
 # Get the indices of the analysis set from the assessment set
-vfold_complement <- function(ind, n) {
+default_complement <- function(ind, n) {
     list(analysis = setdiff(1:n, ind),
-         assessment = ind)
+         assessment = unique(ind))
 }
 
 split_unnamed <- function(x, f) {
