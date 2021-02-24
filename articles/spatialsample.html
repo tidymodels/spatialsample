@@ -107,21 +107,21 @@
 <span class="co">#&gt; # A tibble: 15 x 2</span>
 <span class="co">#&gt;    splits             id    </span>
 <span class="co">#&gt;    &lt;list&gt;             &lt;chr&gt; </span>
-<span class="co">#&gt;  1 &lt;split [2.7K/192]&gt; Fold01</span>
-<span class="co">#&gt;  2 &lt;split [2.7K/276]&gt; Fold02</span>
-<span class="co">#&gt;  3 &lt;split [2.7K/213]&gt; Fold03</span>
-<span class="co">#&gt;  4 &lt;split [2.8K/168]&gt; Fold04</span>
-<span class="co">#&gt;  5 &lt;split [2.8K/101]&gt; Fold05</span>
-<span class="co">#&gt;  6 &lt;split [2.8K/151]&gt; Fold06</span>
-<span class="co">#&gt;  7 &lt;split [2.7K/212]&gt; Fold07</span>
-<span class="co">#&gt;  8 &lt;split [2.8K/174]&gt; Fold08</span>
-<span class="co">#&gt;  9 &lt;split [2.7K/224]&gt; Fold09</span>
-<span class="co">#&gt; 10 &lt;split [2.8K/136]&gt; Fold10</span>
-<span class="co">#&gt; 11 &lt;split [2.7K/236]&gt; Fold11</span>
-<span class="co">#&gt; 12 &lt;split [2.8K/151]&gt; Fold12</span>
-<span class="co">#&gt; 13 &lt;split [2.7K/202]&gt; Fold13</span>
-<span class="co">#&gt; 14 &lt;split [2.6K/314]&gt; Fold14</span>
-<span class="co">#&gt; 15 &lt;split [2.8K/180]&gt; Fold15</span></code></pre></div>
+<span class="co">#&gt;  1 &lt;split [2738/192]&gt; Fold01</span>
+<span class="co">#&gt;  2 &lt;split [2654/276]&gt; Fold02</span>
+<span class="co">#&gt;  3 &lt;split [2717/213]&gt; Fold03</span>
+<span class="co">#&gt;  4 &lt;split [2762/168]&gt; Fold04</span>
+<span class="co">#&gt;  5 &lt;split [2829/101]&gt; Fold05</span>
+<span class="co">#&gt;  6 &lt;split [2779/151]&gt; Fold06</span>
+<span class="co">#&gt;  7 &lt;split [2718/212]&gt; Fold07</span>
+<span class="co">#&gt;  8 &lt;split [2756/174]&gt; Fold08</span>
+<span class="co">#&gt;  9 &lt;split [2706/224]&gt; Fold09</span>
+<span class="co">#&gt; 10 &lt;split [2794/136]&gt; Fold10</span>
+<span class="co">#&gt; 11 &lt;split [2694/236]&gt; Fold11</span>
+<span class="co">#&gt; 12 &lt;split [2779/151]&gt; Fold12</span>
+<span class="co">#&gt; 13 &lt;split [2728/202]&gt; Fold13</span>
+<span class="co">#&gt; 14 &lt;split [2616/314]&gt; Fold14</span>
+<span class="co">#&gt; 15 &lt;split [2750/180]&gt; Fold15</span></code></pre></div>
 <p>The <code>folds</code> object is an <code>rset</code> object that contains many resamples or <code>rsplit</code> objects in the <code>splits</code> column. The resulting partitions do not necessarily contain an equal number of observations.</p>
 <p>Now let’s write a function that will, for each resample:</p>
 <ul>
@@ -181,21 +181,21 @@
 <span class="co">#&gt; # A tibble: 15 x 3</span>
 <span class="co">#&gt;    splits             id     .preds            </span>
 <span class="co">#&gt;    &lt;list&gt;             &lt;chr&gt;  &lt;list&gt;            </span>
-<span class="co">#&gt;  1 &lt;split [2.7K/192]&gt; Fold01 &lt;tibble [192 × 4]&gt;</span>
-<span class="co">#&gt;  2 &lt;split [2.7K/276]&gt; Fold02 &lt;tibble [276 × 4]&gt;</span>
-<span class="co">#&gt;  3 &lt;split [2.7K/213]&gt; Fold03 &lt;tibble [213 × 4]&gt;</span>
-<span class="co">#&gt;  4 &lt;split [2.8K/168]&gt; Fold04 &lt;tibble [168 × 4]&gt;</span>
-<span class="co">#&gt;  5 &lt;split [2.8K/101]&gt; Fold05 &lt;tibble [101 × 4]&gt;</span>
-<span class="co">#&gt;  6 &lt;split [2.8K/151]&gt; Fold06 &lt;tibble [151 × 4]&gt;</span>
-<span class="co">#&gt;  7 &lt;split [2.7K/212]&gt; Fold07 &lt;tibble [212 × 4]&gt;</span>
-<span class="co">#&gt;  8 &lt;split [2.8K/174]&gt; Fold08 &lt;tibble [174 × 4]&gt;</span>
-<span class="co">#&gt;  9 &lt;split [2.7K/224]&gt; Fold09 &lt;tibble [224 × 4]&gt;</span>
-<span class="co">#&gt; 10 &lt;split [2.8K/136]&gt; Fold10 &lt;tibble [136 × 4]&gt;</span>
-<span class="co">#&gt; 11 &lt;split [2.7K/236]&gt; Fold11 &lt;tibble [236 × 4]&gt;</span>
-<span class="co">#&gt; 12 &lt;split [2.8K/151]&gt; Fold12 &lt;tibble [151 × 4]&gt;</span>
-<span class="co">#&gt; 13 &lt;split [2.7K/202]&gt; Fold13 &lt;tibble [202 × 4]&gt;</span>
-<span class="co">#&gt; 14 &lt;split [2.6K/314]&gt; Fold14 &lt;tibble [314 × 4]&gt;</span>
-<span class="co">#&gt; 15 &lt;split [2.8K/180]&gt; Fold15 &lt;tibble [180 × 4]&gt;</span></code></pre></div>
+<span class="co">#&gt;  1 &lt;split [2738/192]&gt; Fold01 &lt;tibble [192 × 4]&gt;</span>
+<span class="co">#&gt;  2 &lt;split [2654/276]&gt; Fold02 &lt;tibble [276 × 4]&gt;</span>
+<span class="co">#&gt;  3 &lt;split [2717/213]&gt; Fold03 &lt;tibble [213 × 4]&gt;</span>
+<span class="co">#&gt;  4 &lt;split [2762/168]&gt; Fold04 &lt;tibble [168 × 4]&gt;</span>
+<span class="co">#&gt;  5 &lt;split [2829/101]&gt; Fold05 &lt;tibble [101 × 4]&gt;</span>
+<span class="co">#&gt;  6 &lt;split [2779/151]&gt; Fold06 &lt;tibble [151 × 4]&gt;</span>
+<span class="co">#&gt;  7 &lt;split [2718/212]&gt; Fold07 &lt;tibble [212 × 4]&gt;</span>
+<span class="co">#&gt;  8 &lt;split [2756/174]&gt; Fold08 &lt;tibble [174 × 4]&gt;</span>
+<span class="co">#&gt;  9 &lt;split [2706/224]&gt; Fold09 &lt;tibble [224 × 4]&gt;</span>
+<span class="co">#&gt; 10 &lt;split [2794/136]&gt; Fold10 &lt;tibble [136 × 4]&gt;</span>
+<span class="co">#&gt; 11 &lt;split [2694/236]&gt; Fold11 &lt;tibble [236 × 4]&gt;</span>
+<span class="co">#&gt; 12 &lt;split [2779/151]&gt; Fold12 &lt;tibble [151 × 4]&gt;</span>
+<span class="co">#&gt; 13 &lt;split [2728/202]&gt; Fold13 &lt;tibble [202 × 4]&gt;</span>
+<span class="co">#&gt; 14 &lt;split [2616/314]&gt; Fold14 &lt;tibble [314 × 4]&gt;</span>
+<span class="co">#&gt; 15 &lt;split [2750/180]&gt; Fold15 &lt;tibble [180 × 4]&gt;</span></code></pre></div>
 <p>We can <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> these results and <a href="https://yardstick.tidymodels.org/reference/index.html#section-regression-metrics">use yardstick to compute any regression metrics appropriate to this modeling analysis</a>, such as <code><a href="https://yardstick.tidymodels.org/reference/rmse.html">yardstick::rmse()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
