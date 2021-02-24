@@ -71,7 +71,7 @@ spatial_clustering_splits <- function(data, v = 10, coords, ...) {
     folds <- clusters$cluster
     idx <- seq_len(n)
     indices <- split_unnamed(idx, folds)
-    indices <- lapply(indices, vfold_complement, n = n)
+    indices <- lapply(indices, default_complement, n = n)
     split_objs <- purrr::map(indices, make_splits, data = data,
                              class = "spatial_clustering_split")
     tibble::tibble(splits = split_objs,
