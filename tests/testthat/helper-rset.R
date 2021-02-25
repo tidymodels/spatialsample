@@ -9,7 +9,7 @@ test_data <- function() {
 
 # Keep this list up to date with known rset subclasses for testing.
 rset_subclasses <- list(
-    spatial_clustering_cv = spatial_clustering_cv(test_data(), v = 3, coords = c(x, y))
+    spatial_clustering_cv = spatial_clustering_cv(test_data(), coords = c(x, y), v = 3)
 )
 
 # ------------------------------------------------------------------------------
