@@ -4,15 +4,15 @@
 \alias{spatial_clustering_cv}
 \title{Spatial or Cluster Cross-Validation}
 \usage{
-spatial_clustering_cv(data, v = 10, coords, ...)
+spatial_clustering_cv(data, coords, v = 10, ...)
 }
 \arguments{
 \item{data}{A data frame.}
 
-\item{v}{The number of partitions of the data set.}
-
 \item{coords}{A vector of variable names, typically spatial coordinates,
 to partition the data into disjointed sets via k-means clustering.}
+
+\item{v}{The number of partitions of the data set.}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}}.}
 }
@@ -38,7 +38,7 @@ in each fold.
 }
 \examples{
 data(ames, package = "modeldata")
-spatial_clustering_cv(ames, v = 5, coords = c(Latitude, Longitude))
+spatial_clustering_cv(ames, coords = c(Latitude, Longitude), v = 5)
 
 }
 \references{

@@ -34,7 +34,7 @@ This relationship may exhibit spatial autocorrelation across the city of Ames, a
 library(spatialsample)
 
 set.seed(123)
-folds <- spatial_clustering_cv(ames, v = 15, coords = c("Latitude", "Longitude"))
+folds <- spatial_clustering_cv(ames, coords = c("Latitude", "Longitude"), v = 15)
 folds
 ```
 
