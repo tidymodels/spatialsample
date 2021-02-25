@@ -18,9 +18,10 @@ theme_set(theme_minimal())
 # spatialsample
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
 [![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
 [![Codecov test coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## Introduction
@@ -56,7 +57,7 @@ library(spatialsample)
 data("ames", package = "modeldata")
 
 set.seed(1234)
-folds <- spatial_clustering_cv(ames, v = 5, coords = c("Latitude", "Longitude"))
+folds <- spatial_clustering_cv(ames, coords = c("Latitude", "Longitude"), v = 5)
 
 folds
 ```

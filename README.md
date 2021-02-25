@@ -5,11 +5,13 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
 [![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## Introduction
@@ -56,17 +58,18 @@ library(spatialsample)
 data("ames", package = "modeldata")
 
 set.seed(1234)
-folds <- spatial_clustering_cv(ames, v = 5, coords = c("Latitude", "Longitude"))
+folds <- spatial_clustering_cv(ames, coords = c("Latitude", "Longitude"), v = 5)
 
 folds
+#> #  5-fold spatial cross-validation 
 #> # A tibble: 5 x 2
 #>   splits             id   
 #>   <list>             <chr>
-#> 1 <split [2.3K/598]> Fold1
-#> 2 <split [2.2K/743]> Fold2
-#> 3 <split [2.6K/360]> Fold3
-#> 4 <split [2.1K/812]> Fold4
-#> 5 <split [2.5K/417]> Fold5
+#> 1 <split [2332/598]> Fold1
+#> 2 <split [2187/743]> Fold2
+#> 3 <split [2570/360]> Fold3
+#> 4 <split [2118/812]> Fold4
+#> 5 <split [2513/417]> Fold5
 ```
 
 In this example, the `ames` data on houses in Ames, IA is resampled with

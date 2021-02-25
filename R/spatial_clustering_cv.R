@@ -15,9 +15,9 @@
 #'  in each fold.
 #'
 #' @param data A data frame.
-#' @param v The number of partitions of the data set.
 #' @param coords A vector of variable names, typically spatial coordinates,
 #'  to partition the data into disjointed sets via k-means clustering.
+#' @param v The number of partitions of the data set.
 #' @param ... Extra arguments passed on to [stats::kmeans()].
 #' @export
 #' @return A tibble with classes `spatial_cv`, `rset`, `tbl_df`, `tbl`, and
@@ -33,10 +33,10 @@
 #'
 #' @examples
 #' data(ames, package = "modeldata")
-#' spatial_clustering_cv(ames, v = 5, coords = c(Latitude, Longitude))
+#' spatial_clustering_cv(ames, coords = c(Latitude, Longitude), v = 5)
 #'
 #' @export
-spatial_clustering_cv <- function(data, v = 10, coords, ...) {
+spatial_clustering_cv <- function(data, coords, v = 10,  ...) {
 
     coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
 
@@ -44,7 +44,7 @@ spatial_clustering_cv <- function(data, v = 10, coords, ...) {
         rlang::abort("`coords` are required and must be variables in `data`.")
     }
 
-    split_objs <- spatial_clustering_splits(data = data, v = v, coords = coords, ...)
+    split_objs <- spatial_clustering_splits(data = data, coords = coords, v = v,  ...)
 
     ## We remove the holdout indices since it will save space and we can
     ## derive them later when they are needed.
@@ -61,7 +61,7 @@ spatial_clustering_cv <- function(data, v = 10, coords, ...) {
              subclass = c("spatial_clustering_cv", "rset"))
 }
 
-spatial_clustering_splits <- function(data, v = 10, coords, ...) {
+spatial_clustering_splits <- function(data, coords, v = 10, ...) {
 
     if (!is.numeric(v) || length(v) != 1)
         rlang::abort("`v` must be a single integer.")
