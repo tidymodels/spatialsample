@@ -101,7 +101,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/spatialsample">spatialsample</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv</a></span><span class="op">(</span><span class="va">ames</span>, v <span class="op">=</span> <span class="fl">15</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Latitude"</span>, <span class="st">"Longitude"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv</a></span><span class="op">(</span><span class="va">ames</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Latitude"</span>, <span class="st">"Longitude"</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
 <span class="va">folds</span>
 <span class="co">#&gt; #  15-fold spatial cross-validation </span>
 <span class="co">#&gt; # A tibble: 15 x 2</span>

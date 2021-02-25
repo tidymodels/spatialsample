@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   spatialsample: spatialsample.html
-last_built: 2021-02-24T19:19Z
+last_built: 2021-02-25T21:00Z
 urls:
   reference: https://spatialsample.tidymodels.org/reference
   article: https://spatialsample.tidymodels.org/articles
