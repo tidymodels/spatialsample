@@ -1,6 +1,6 @@
 Package: spatialsample
 Title: Spatial Resampling Infrastructure
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person(given = "Julia",
            family = "Silge",
@@ -10,7 +10,7 @@ Authors@R: c(
     person("RStudio", role = "cph")
     )
 Description: Functions and classes for spatial resampling to use with the 
-    'rsample' package, including spatial cross-validation (Brenning, 2012) 
+    'rsample' package, such as spatial cross-validation (Brenning, 2012) 
     <doi:10.1109/IGARSS.2012.6352393>. The scope of 'rsample' and 
     'spatialsample' is to provide the basic building blocks for creating and
     analyzing resamples of a spatial data set, but neither package includes
