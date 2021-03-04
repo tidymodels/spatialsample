@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://spatialsample.tidymodels.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/pretty.spatial_clustering_cv.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/spatial_clustering_cv.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/spatialsample.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/articles/spatialsample.html</loc>
+  </url>
+</urlset>
