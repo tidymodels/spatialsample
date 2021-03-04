@@ -5,13 +5,11 @@
 
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
 [![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 ## Introduction
@@ -33,11 +31,11 @@ have much memory overhead.
 
 ## Installation
 
-~~You can install the released version of spatialsample from
-[CRAN](https://CRAN.R-project.org) with:~~
+You can install the released version of spatialsample from
+[CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("spatialsample")  ## not yet released
+install.packages("spatialsample")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
