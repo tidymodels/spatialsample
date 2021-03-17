@@ -15,7 +15,7 @@ library(ggplot2)
 theme_set(theme_minimal())
 ```
 
-# spatialsample
+# spatialsample <a href='https://spatialsample.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
