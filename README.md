@@ -9,7 +9,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=master)
+coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=main)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
