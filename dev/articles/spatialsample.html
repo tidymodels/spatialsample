@@ -115,7 +115,7 @@
 <span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv</a></span><span class="op">(</span><span class="va">ames</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Latitude"</span>, <span class="st">"Longitude"</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
 <span class="va">folds</span>
 <span class="co">#&gt; #  15-fold spatial cross-validation </span>
-<span class="co">#&gt; # A tibble: 15 x 2</span>
+<span class="co">#&gt; # A tibble: 15 × 2</span>
 <span class="co">#&gt;    splits             id    </span>
 <span class="co">#&gt;    &lt;list&gt;             &lt;chr&gt; </span>
 <span class="co">#&gt;  1 &lt;split [2738/192]&gt; Fold01</span>
@@ -157,7 +157,7 @@
 <p>We can apply this function to just one of the <code>splits</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">compute_preds</span><span class="op">(</span><span class="va">folds</span><span class="op">$</span><span class="va">splits</span><span class="op">[[</span><span class="fl">7</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> 
-<span class="co">#&gt; # A tibble: 212 x 4</span>
+<span class="co">#&gt; # A tibble: 212 × 4</span>
 <span class="co">#&gt;    Longitude Latitude Sale_Price .pred</span>
 <span class="co">#&gt;        &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1     -93.7     42.0       5.37  5.45</span>
@@ -189,7 +189,7 @@
 
 <span class="va">cv_res</span>
 <span class="co">#&gt; #  15-fold spatial cross-validation </span>
-<span class="co">#&gt; # A tibble: 15 x 3</span>
+<span class="co">#&gt; # A tibble: 15 × 3</span>
 <span class="co">#&gt;    splits             id     .preds            </span>
 <span class="co">#&gt;    &lt;list&gt;             &lt;chr&gt;  &lt;list&gt;            </span>
 <span class="co">#&gt;  1 &lt;split [2738/192]&gt; Fold01 &lt;tibble [192 × 4]&gt;</span>
@@ -220,7 +220,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/rmse.html">rmse</a></span><span class="op">(</span><span class="va">Sale_Price</span>, <span class="va">.pred</span><span class="op">)</span>
 
 <span class="va">cv_rmse</span>
-<span class="co">#&gt; # A tibble: 15 x 4</span>
+<span class="co">#&gt; # A tibble: 15 × 4</span>
 <span class="co">#&gt;    id     .metric .estimator .estimate</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Fold01 rmse    standard      0.122 </span>
