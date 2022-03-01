@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
+[![R-CMD-check](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=main)
+coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/spatialsample?branch=main)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
@@ -62,7 +62,7 @@ folds <- spatial_clustering_cv(ames, coords = c("Latitude", "Longitude"), v = 5)
 
 folds
 #> #  5-fold spatial cross-validation 
-#> # A tibble: 5 x 2
+#> # A tibble: 5 × 2
 #>   splits             id   
 #>   <list>             <chr>
 #> 1 <split [2332/598]> Fold1
