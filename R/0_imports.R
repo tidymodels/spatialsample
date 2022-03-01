@@ -1,3 +1,10 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
+
 #' @importFrom rsample complement new_rset make_splits
 #' @importFrom purrr map
 #' @importFrom rlang is_empty

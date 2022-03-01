@@ -39,7 +39,6 @@ in each fold.
 \examples{
 data(ames, package = "modeldata")
 spatial_clustering_cv(ames, coords = c(Latitude, Longitude), v = 5)
-
 }
 \references{
 A. Brenning, "Spatial cross-validation and bootstrap for the assessment of

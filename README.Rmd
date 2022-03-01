@@ -18,9 +18,9 @@ theme_set(theme_minimal())
 # spatialsample <a href='https://spatialsample.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/tidymodels/spatialsample/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/spatialsample/actions)
+[![R-CMD-check](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/spatialsample)](https://CRAN.R-project.org/package=spatialsample)
-[![Codecov test coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/spatialsample?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/spatialsample/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/spatialsample?branch=main)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
@@ -87,7 +87,7 @@ walk(folds$splits, plot_splits)
 
 ## Contributing
 
-This project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+This project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 - For questions and discussions about tidymodels packages, modeling, and machine learning, please [post on RStudio Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
