@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://spatialsample.tidymodels.org/index.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/pretty.spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/reexports.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/articles/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/articles/spatialsample.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/pretty.spatial_clustering_cv.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/spatial_clustering_cv.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/spatialsample-package.html</loc>
   </url>
 </urlset>
