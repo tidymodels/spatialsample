@@ -34,53 +34,57 @@
 #' @examples
 #' data(ames, package = "modeldata")
 #' spatial_clustering_cv(ames, coords = c(Latitude, Longitude), v = 5)
-#'
 #' @export
-spatial_clustering_cv <- function(data, coords, v = 10,  ...) {
+spatial_clustering_cv <- function(data, coords, v = 10, ...) {
+  coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
 
-    coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
+  if (is_empty(coords)) {
+    rlang::abort("`coords` are required and must be variables in `data`.")
+  }
 
-    if(is_empty(coords)) {
-        rlang::abort("`coords` are required and must be variables in `data`.")
-    }
+  split_objs <- spatial_clustering_splits(data = data, coords = coords, v = v, ...)
 
-    split_objs <- spatial_clustering_splits(data = data, coords = coords, v = v,  ...)
+  ## We remove the holdout indices since it will save space and we can
+  ## derive them later when they are needed.
 
-    ## We remove the holdout indices since it will save space and we can
-    ## derive them later when they are needed.
+  split_objs$splits <- map(split_objs$splits, rm_out)
 
-    split_objs$splits <- map(split_objs$splits, rm_out)
+  ## Save some overall information
 
-    ## Save some overall information
+  cv_att <- list(v = v, repeats = 1)
 
-    cv_att <- list(v = v, repeats = 1)
-
-    new_rset(splits = split_objs$splits,
-             ids = split_objs[, grepl("^id", names(split_objs))],
-             attrib = cv_att,
-             subclass = c("spatial_clustering_cv", "rset"))
+  new_rset(
+    splits = split_objs$splits,
+    ids = split_objs[, grepl("^id", names(split_objs))],
+    attrib = cv_att,
+    subclass = c("spatial_clustering_cv", "rset")
+  )
 }
 
 spatial_clustering_splits <- function(data, coords, v = 10, ...) {
+  if (!is.numeric(v) || length(v) != 1) {
+    rlang::abort("`v` must be a single integer.")
+  }
 
-    if (!is.numeric(v) || length(v) != 1)
-        rlang::abort("`v` must be a single integer.")
-
-    n <- nrow(data)
-    clusters <- kmeans(data[coords], centers = v, ...)
-    folds <- clusters$cluster
-    idx <- seq_len(n)
-    indices <- split_unnamed(idx, folds)
-    indices <- lapply(indices, default_complement, n = n)
-    split_objs <- purrr::map(indices, make_splits, data = data,
-                             class = "spatial_clustering_split")
-    tibble::tibble(splits = split_objs,
-                   id = names0(length(split_objs), "Fold"))
+  n <- nrow(data)
+  clusters <- kmeans(data[coords], centers = v, ...)
+  folds <- clusters$cluster
+  idx <- seq_len(n)
+  indices <- split_unnamed(idx, folds)
+  indices <- lapply(indices, default_complement, n = n)
+  split_objs <- purrr::map(indices, make_splits,
+    data = data,
+    class = "spatial_clustering_split"
+  )
+  tibble::tibble(
+    splits = split_objs,
+    id = names0(length(split_objs), "Fold")
+  )
 }
 
 #' @export
 print.spatial_clustering_cv <- function(x, ...) {
-    cat("# ", pretty(x), "\n")
-    class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv", "rset"))]
-    print(x, ...)
+  cat("# ", pretty(x), "\n")
+  class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv", "rset"))]
+  print(x, ...)
 }

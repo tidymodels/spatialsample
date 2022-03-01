@@ -1,12 +1,12 @@
 #' spatialsample: Spatial Resampling Infrastructure for R
 #'
-#'\pkg{spatialsample} has functions to create resamples of a spatial
+#' \pkg{spatialsample} has functions to create resamples of a spatial
 #'  data set that can be used to evaluate models or to estimate the sampling
 #'  distribution of some statistic. It is a specialized package designed with
 #'  the same principles and terminology as \link[rsample]{rsample}.
 #'
 #' @section Terminology:
-#'\itemize{
+#' \itemize{
 #'  \item A **resample** is the result of a split of a
 #'  data set. For example, in cross-validation, a data set is split
 #'  into complementary subsets, and different partitions of subsets are
@@ -23,7 +23,7 @@
 #'     often called the "out-of-bag" samples.
 #'  \item A collection of resamples is contained in an
 #'  `rset` object.
-#'}
+#' }
 #'
 #' @section Basic Functions:
 #' The main resampling functions are: [spatial_clustering_cv()]
