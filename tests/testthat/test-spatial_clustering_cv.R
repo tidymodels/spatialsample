@@ -128,6 +128,10 @@ test_that("using sf", {
 })
 
 test_that("printing", {
+  suppressWarnings(
+    RNGversion("3.5.3") # RNG changes in 3.6.0 cause this to fail in < 3.6
+  )
+  set.seed(123)
   expect_snapshot_output(
     spatial_clustering_cv(Smithsonian,
       coords = c(latitude, longitude),
