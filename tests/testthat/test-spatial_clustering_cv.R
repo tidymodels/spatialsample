@@ -94,10 +94,7 @@ test_that("can pass the dots to kmeans", {
 
 test_that("using sf", {
 
-  # Older builds without s2 give additional warnings,
-  # as running sf::st_centroid pre-s2 gives inaccurate results
-  # for geographic CRS
-  skip_if_not(sf::sf_use_s2())
+
   Smithsonian_sf <- sf::st_as_sf(Smithsonian,
                                  coords = c("longitude", "latitude"),
                                  crs = 4326)
@@ -123,8 +120,19 @@ test_that("using sf", {
   )
   expect_true(all(good_holdout))
 
-  # The default RNG changed in 3.6.0
+  # This tests to ensure that _our_ warning happens on all platforms:
+  expect_warning(
+    spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude)),
+    "`coords` is ignored when providing `sf` objects to `data`."
+  )
+
+  # This tests to ensure that _other_ warnings don't fire on _most_ platforms
+  # The default RNG changed in 3.6.0 (skips oldrel-4)
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
+  # Older builds without s2 give additional warnings,
+  # as running sf::st_centroid pre-s2 gives inaccurate results
+  # for geographic CRS (skips windows-3.6)
+  skip_if_not(sf::sf_use_s2())
   expect_snapshot(
       spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
   )
