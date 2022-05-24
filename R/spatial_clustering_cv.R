@@ -21,7 +21,7 @@
 #'  to partition the data into disjointed sets via k-means clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @param v The number of partitions of the data set.
-#' @param fun Which function to use to cluster. Must be one of either
+#' @param cluster_function Which function to use to cluster. Must be one of either
 #' "kmeans" (to use [stats::kmeans()]) or "hclust" (to use [stats::hclust()]).
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
@@ -51,55 +51,28 @@
 #'
 #' @rdname spatial_clustering_cv
 #' @export
-spatial_clustering_cv <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
-  UseMethod("spatial_clustering_cv", data)
-}
+spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
+  cluster_function <- rlang::arg_match(cluster_function)
 
-#' @rdname spatial_clustering_cv
-#' @export
-spatial_clustering_cv.default <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
-  fun <- rlang::arg_match(fun)
-
-  coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
-  if (is_empty(coords)) {
-    rlang::abort("`coords` are required and must be variables in `data`.")
+  if ("sf" %in% class(data)) {
+    if (!missing(coords)) {
+      rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
+    }
+    coords <- sf::st_centroid(sf::st_geometry(data))
+    coords <- as.dist(sf::st_distance(coords))
+  } else {
+    coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
+    if (is_empty(coords)) {
+      rlang::abort("`coords` are required and must be variables in `data`.")
+    }
+    coords <- data[coords]
+    coords <- dist(coords)
   }
-  coords <- data[coords]
-  coords <- dist(coords)
 
-  spatial_clustering_handler(data = data,
-                             coords = coords,
-                             v = v,
-                             fun = fun,
-                             ...)
-
-}
-
-#' @rdname spatial_clustering_cv
-#' @export
-spatial_clustering_cv.sf <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
-  fun <- rlang::arg_match(fun)
-
-  if (!missing(coords)) {
-    rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
-  }
-  coords <- sf::st_centroid(sf::st_geometry(data))
-  coords <- as.dist(sf::st_distance(coords))
-
-  spatial_clustering_handler(data = data,
-                             coords = coords,
-                             v = v,
-                             fun = fun,
-                             ...)
-
-}
-
-
-spatial_clustering_handler <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
   split_objs <- spatial_clustering_splits(data = data,
                                           coords = coords,
                                           v = v,
-                                          fun = fun,
+                                          cluster_function = cluster_function,
                                           ...)
 
   ## We remove the holdout indices since it will save space and we can
@@ -120,22 +93,27 @@ spatial_clustering_handler <- function(data, coords, v = 10, fun = c("kmeans", "
 
 }
 
-spatial_clustering_splits <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
+spatial_clustering_splits <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
+
+  cluster_function <- rlang::arg_match(cluster_function)
+
   if (!is.numeric(v) || length(v) != 1) {
     rlang::abort("`v` must be a single integer.")
   }
 
   n <- nrow(data)
 
-  if (fun == "kmeans") {
-    clusters <- kmeans(coords, centers = v, ...)
-    folds <- clusters$cluster
-  } else if (fun == "hclust") {
-    clusters <- hclust(coords, ...)
-    folds <- cutree(clusters, k = v)
-  } else { # Not sure how this would ever fire, but just in case...
-    rlang::abort("`fun` must be either 'kmeans' or 'hclust'")
-  }
+  folds <- switch(
+    cluster_function,
+    "kmeans" = {
+      clusters <- kmeans(coords, centers = v, ...)
+      clusters$cluster
+    },
+    "hclust" = {
+      clusters <- hclust(coords, ...)
+      cutree(clusters, k = v)
+    }
+  )
 
   idx <- seq_len(n)
   indices <- split_unnamed(idx, folds)

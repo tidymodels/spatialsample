@@ -2,15 +2,15 @@
 % Please edit documentation in R/spatial_clustering_cv.R
 \name{spatial_clustering_cv}
 \alias{spatial_clustering_cv}
-\alias{spatial_clustering_cv.default}
-\alias{spatial_clustering_cv.sf}
 \title{Spatial or Cluster Cross-Validation}
 \usage{
-spatial_clustering_cv(data, coords, v = 10, fun = c("kmeans", "hclust"), ...)
-
-\method{spatial_clustering_cv}{default}(data, coords, v = 10, fun = c("kmeans", "hclust"), ...)
-
-\method{spatial_clustering_cv}{sf}(data, coords, v = 10, fun = c("kmeans", "hclust"), ...)
+spatial_clustering_cv(
+  data,
+  coords,
+  v = 10,
+  cluster_function = c("kmeans", "hclust"),
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame, or an \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
@@ -22,7 +22,7 @@ This argument is ignored (with a warning) if \code{data} is an \code{sf} object.
 
 \item{v}{The number of partitions of the data set.}
 
-\item{fun}{Which function to use to cluster. Must be one of either
+\item{cluster_function}{Which function to use to cluster. Must be one of either
 "kmeans" (to use \code{\link[stats:kmeans]{stats::kmeans()}}) or "hclust" (to use \code{\link[stats:hclust]{stats::hclust()}}).}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
@@ -44,8 +44,7 @@ is equal to V.
 \details{
 The variables in the \code{coords} argument are used for k-means clustering of
 the data into disjointed sets, as outlined in Brenning (2012), or for
-hierarchical clustering of the data (by default using the complete linkage
-method, though this can be changed through arguments). These
+hierarchical clustering of the data. These
 clusters are used as the folds for cross-validation. Depending on how the
 data are distributed spatially, there may not be an equal number of points
 in each fold.
@@ -56,7 +55,8 @@ spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
 smithsonian_sf <- sf::st_as_sf(Smithsonian,
                                coords = c("longitude", "latitude"),
-                               crs = 4326) # WGS84
+                               # Set CRS to WGS84
+                               crs = 4326)
 
 # When providing sf objects, coords are inferred automatically
 spatial_clustering_cv(smithsonian_sf, v = 5)

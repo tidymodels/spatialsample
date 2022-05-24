@@ -16,7 +16,7 @@ test_that("using kmeans", {
   rs2 <- spatial_clustering_cv(Smithsonian,
                                coords = c(latitude, longitude),
                                v = 2,
-                               fun = "kmeans"
+                               cluster_function = "kmeans"
   )
   expect_identical(rs1, rs2)
   sizes1 <- dim_rset(rs1)
@@ -43,7 +43,7 @@ test_that("using hclust", {
     rs1 <- spatial_clustering_cv(Smithsonian,
                                  coords = c(latitude, longitude),
                                  v = 2,
-                                 fun = "hclust"
+                                 cluster_function = "hclust"
     )
     sizes1 <- dim_rset(rs1)
 
