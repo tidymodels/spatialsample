@@ -15,13 +15,13 @@
 #'  data are distributed spatially, there may not be an equal number of points
 #'  in each fold.
 #'
-#' @param data A data frame, or an `sf` object (often from [sf::read_sf()]
+#' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
 #' @param coords A vector of variable names, typically spatial coordinates,
 #'  to partition the data into disjointed sets via k-means clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @param v The number of partitions of the data set.
-#' @param cluster_function Which function to use to cluster. Must be one of either
+#' @param cluster_function Which function to use for clustering. Must be one of either
 #' "kmeans" (to use [stats::kmeans()]) or "hclust" (to use [stats::hclust()]).
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
@@ -48,7 +48,8 @@
 #'
 #' # When providing sf objects, coords are inferred automatically
 #' spatial_clustering_cv(smithsonian_sf, v = 5)
-#'
+#' # Can use hclust instead:
+#' spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
