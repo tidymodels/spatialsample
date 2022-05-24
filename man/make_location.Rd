@@ -2,7 +2,7 @@
 % Please edit documentation in R/leave_location_out_cv.R
 \name{make_location}
 \alias{make_location}
-\title{Create or Modify Stratification Variables}
+\title{Create or Modify Location Variables}
 \usage{
 make_location(x, pool = 0.1)
 }
@@ -10,20 +10,18 @@ make_location(x, pool = 0.1)
 \item{x}{An input vector.}
 
 \item{pool}{A proportion of data used to determine if a particular group is
-too small and should be pooled into another group. We do not recommend
-decreasing this argument below its default of 0.1 because of the dangers
-of stratifying groups that are too small.}
+too small and should be pooled into another group.}
 }
 \value{
 A factor vector.
 }
 \description{
-This function can create strata from numeric data and make non-numeric data
-more conducive for stratification.
+Create or Modify Location Variables
 }
 \details{
 For categorical inputs, the function will find levels of \code{x} than
 occur in the data with percentage less than \code{pool}. The values from
-these groups will be randomly assigned to the remaining strata (as will
-data points that have missing values in \code{x}).
+these groups will be pooled into a single category (if they make up
+a greater than \code{pool} percentage of the data) or combined with the smallest
+extant category (if not).
 }

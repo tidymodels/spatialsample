@@ -41,6 +41,14 @@ This function breaks \code{data} into \code{v} folds, grouping data which share 
 \code{location} into the same folds. When \code{v} is equal to the number of unique
 \code{location}s, this function produces "leave-one-location-out" resamples.
 }
+\examples{
+data(Sacramento, package = "modeldata")
+
+leave_location_out_cv(Sacramento, city)
+leave_location_out_cv(Sacramento, city, pool = 0.03)
+leave_location_out_cv(Sacramento, city, pool = 0.03, v = 5)
+
+}
 \references{
 H. Meyer, C. Reudenbach, T. Hengl, M. Katurji, and T. Nauss, 2018.
 "Improving performance of spatio-temporal machine learning models using
