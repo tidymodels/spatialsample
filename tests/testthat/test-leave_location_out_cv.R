@@ -45,18 +45,23 @@ test_that("bad args", {
     error = TRUE
   )
 
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+
   Sacramento_tmp <- Sacramento
   levels(Sacramento_tmp$city) <- c(levels(Sacramento_tmp$city), ".pooled_locations")
   Sacramento_tmp$city[[1]] <- ".pooled_locations"
+  set.seed(123)
   expect_snapshot(
     leave_location_out_cv(Sacramento_tmp, city, pool = 0.03)
   )
   rm(Sacramento_tmp)
 
+  set.seed(123)
   expect_snapshot(
     leave_location_out_cv(Sacramento, city, pool = 0.03, v = 8)
   )
 
+  set.seed(123)
   expect_snapshot(
     leave_location_out_cv(Sacramento, city, pool = 0.04)
   )
@@ -64,12 +69,15 @@ test_that("bad args", {
 
 
 test_that("printing", {
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+  set.seed(123)
   expect_snapshot_output(
     leave_location_out_cv(Sacramento, city, v = 4)
   )
 })
 
 test_that("rsplit labels", {
+  set.seed(123)
   rs <- leave_location_out_cv(Sacramento, city, v = 4)
   all_labs <- map_df(rs$splits, labels)
   original_id <- rs[, grepl("^id", names(rs))]

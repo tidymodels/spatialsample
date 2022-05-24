@@ -25,3 +25,4 @@ these groups will be pooled into a single category (if they make up
 a greater than \code{pool} percentage of the data) or combined with the smallest
 extant category (if not).
 }
+\keyword{internal}

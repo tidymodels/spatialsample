@@ -129,6 +129,8 @@ print.leave_location_out_cv <- function(x, ...) {
 #' @param pool A proportion of data used to determine if a particular group is
 #'   too small and should be pooled into another group.
 #' @return  A factor vector.
+#'
+#' @keywords internal
 make_location <- function(x, pool = .1) {
 
   n <- length(x)

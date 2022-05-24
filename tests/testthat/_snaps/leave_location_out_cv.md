@@ -33,13 +33,13 @@
       # A tibble: 7 x 2
         splits            id   
         <list>            <chr>
-      1 <split [818/114]> Fold1
-      2 <split [495/437]> Fold2
-      3 <split [884/48]>  Fold3
-      4 <split [695/237]> Fold4
-      5 <split [904/28]>  Fold5
-      6 <split [899/33]>  Fold6
-      7 <split [897/35]>  Fold7
+      1 <split [884/48]>  Fold1
+      2 <split [897/35]>  Fold2
+      3 <split [495/437]> Fold3
+      4 <split [899/33]>  Fold4
+      5 <split [818/114]> Fold5
+      6 <split [904/28]>  Fold6
+      7 <split [695/237]> Fold7
 
 ---
 
@@ -52,13 +52,13 @@
       # A tibble: 7 x 2
         splits            id   
         <list>            <chr>
-      1 <split [818/114]> Fold1
+      1 <split [884/48]>  Fold1
       2 <split [897/35]>  Fold2
-      3 <split [899/33]>  Fold3
-      4 <split [904/28]>  Fold4
-      5 <split [696/236]> Fold5
-      6 <split [494/438]> Fold6
-      7 <split [884/48]>  Fold7
+      3 <split [904/28]>  Fold3
+      4 <split [899/33]>  Fold4
+      5 <split [818/114]> Fold5
+      6 <split [696/236]> Fold6
+      7 <split [494/438]> Fold7
 
 ---
 
@@ -72,8 +72,8 @@
       # A tibble: 3 x 2
         splits            id   
         <list>            <chr>
-      1 <split [818/114]> Fold1
-      2 <split [552/380]> Fold2
+      1 <split [552/380]> Fold1
+      2 <split [818/114]> Fold2
       3 <split [494/438]> Fold3
 
 # printing
@@ -82,8 +82,8 @@
     # A tibble: 4 x 2
       splits            id   
       <list>            <chr>
-    1 <split [396/536]> Fold1
-    2 <split [831/101]> Fold2
-    3 <split [725/207]> Fold3
-    4 <split [844/88]>  Fold4
+    1 <split [741/191]> Fold1
+    2 <split [867/65]>  Fold2
+    3 <split [364/568]> Fold3
+    4 <split [824/108]> Fold4
 
