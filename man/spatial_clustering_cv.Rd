@@ -54,10 +54,11 @@ in each fold.
 data(Smithsonian, package = "modeldata")
 spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
-# When providing sf objects, coords are inferred automatically
 smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                        coords = c("longitude", "latitude"),
-                        crs = 4326) # WGS84
+                               coords = c("longitude", "latitude"),
+                               crs = 4326) # WGS84
+
+# When providing sf objects, coords are inferred automatically
 spatial_clustering_cv(smithsonian_sf, v = 5)
 
 }

@@ -67,17 +67,17 @@ test_that("using hclust", {
 test_that("bad args", {
   expect_error(spatial_clustering_cv(Smithsonian, coords = NULL))
   expect_error(spatial_clustering_cv(Smithsonian, coords = c(Species, Sepal.Width)))
-  expect_error(
+  expect_snapshot(
     spatial_clustering_cv(Smithsonian,
                           coords = c(latitude, longitude),
                           v = "a"),
-    "`v` must be a single integer"
+    error = TRUE
   )
-  expect_error(
+  expect_snapshot(
     spatial_clustering_cv(Smithsonian,
                           coords = c(latitude, longitude),
                           v = c(5, 10)),
-    "`v` must be a single integer"
+    error = TRUE
   )
 })
 
@@ -98,9 +98,8 @@ test_that("using sf", {
                                  coords = c("longitude", "latitude"),
                                  crs = 4326)
 
-  expect_warning(
-    spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude)),
-    "`coords` is ignored when providing `sf` objects to `data`."
+  expect_snapshot(
+    spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
   )
 
   set.seed(11)
@@ -128,9 +127,7 @@ test_that("using sf", {
 })
 
 test_that("printing", {
-  suppressWarnings(
-    RNGversion("3.5.3") # RNG changes in 3.6.0 cause this to fail in < 3.6
-  )
+  skip_if_not(getRversion() > numeric_version("3.6.0"))
   set.seed(123)
   expect_snapshot_output(
     spatial_clustering_cv(Smithsonian,

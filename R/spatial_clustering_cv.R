@@ -42,10 +42,11 @@
 #' data(Smithsonian, package = "modeldata")
 #' spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 #'
-#' # When providing sf objects, coords are inferred automatically
 #' smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                         coords = c("longitude", "latitude"),
-#'                         crs = 4326) # WGS84
+#'                                coords = c("longitude", "latitude"),
+#'                                crs = 4326) # WGS84
+#'
+#' # When providing sf objects, coords are inferred automatically
 #' spatial_clustering_cv(smithsonian_sf, v = 5)
 #'
 #' @rdname spatial_clustering_cv
@@ -57,7 +58,7 @@ spatial_clustering_cv <- function(data, coords, v = 10, fun = c("kmeans", "hclus
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv.default <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
-  fun <- match.arg(fun)
+  fun <- rlang::arg_match(fun)
 
   coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
   if (is_empty(coords)) {
@@ -77,7 +78,7 @@ spatial_clustering_cv.default <- function(data, coords, v = 10, fun = c("kmeans"
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv.sf <- function(data, coords, v = 10, fun = c("kmeans", "hclust"), ...) {
-  fun <- match.arg(fun)
+  fun <- rlang::arg_match(fun)
 
   if (!missing(coords)) {
     rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
