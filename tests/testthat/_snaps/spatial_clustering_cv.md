@@ -1,6 +1,6 @@
 # printing
 
-    #  2-fold spatial cross-validation 
+    #  2-fold spatial clustering cross-validation 
     # A tibble: 2 x 2
       splits         id   
       <list>         <chr>

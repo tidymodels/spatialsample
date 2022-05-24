@@ -8,7 +8,7 @@ leave_location_out_cv(
   data,
   location,
   v = length(unique(location)),
-  pool = 0.1,
+  pool = 0,
   ...
 )
 }
@@ -21,10 +21,10 @@ so it is possible to use integer indicators.}
 
 \item{v}{The number of partitions of the data set.}
 
-\item{pool}{A proportion of data used to determine if a particular group is
-too small and should be pooled into another group. We do not recommend
-decreasing this argument below its default of 0.1 because of the dangers
-of stratifying groups that are too small.}
+\item{pool}{A proportion of data used to determine if a particular location
+is too small and should be pooled into another group. For instance, if
+\code{pool = 0.1}, then only locations constituting 10\% or more of the data will
+be preserved, with the remainder being folded into a single "pooled" location.}
 
 \item{...}{Not currently used.}
 }

@@ -17,6 +17,10 @@
 #' @param location A variable in data (single character or name) used to
 #' indicate "location" groupings. Data are immediately converted to factors,
 #' so it is possible to use integer indicators.
+#' @param pool A proportion of data used to determine if a particular location
+#' is too small and should be pooled into another group. For instance, if
+#' `pool = 0.1`, then only locations constituting 10% or more of the data will
+#' be preserved, with the remainder being folded into a single "pooled" location.
 #'
 #' @references
 #'
@@ -28,14 +32,23 @@
 #'
 #' @export
 leave_location_out_cv <- function(data, location, v = length(unique(location)),
-                                  pool = 0.1, ...) {
+                                  pool = 0, ...) {
   location <- tidyselect::eval_select(rlang::enquo(location), data = data)
 
   if (is_empty(location)) {
     rlang::abort("`location` is required and must be variables in `data`.")
   }
+  location <- make_location(getElement(data, location), pool = pool)
+  n_locations <- length(unique(location))
 
-  if (missing(v)) v <- length(unique(getElement(data, location)))
+  if (missing(v)) {
+    v <- n_locations
+  } else if (v > n_locations) {
+    rlang::warn(paste0(
+      "Fewer than ", v, " locations available for sampling; setting v to ",
+      n_locations, "."
+    ))
+  }
 
   split_objs <- llo_splits(
     data = data, location = location, v = v, pool = pool
@@ -58,8 +71,7 @@ leave_location_out_cv <- function(data, location, v = length(unique(location)),
   )
 }
 
-llo_splits <- function(data, location, v = length(unique(location)),
-                       pool = 0.1) {
+llo_splits <- function(data, location, v, pool = 0.1) {
 
   if (!is.numeric(v) || length(v) != 1) {
     rlang::abort("`v` must be a single integer.")
@@ -68,7 +80,7 @@ llo_splits <- function(data, location, v = length(unique(location)),
   n <- nrow(data)
   locations <- tibble::tibble(
     idx = 1:n,
-    location = make_location(getElement(data, location), pool = pool)
+    location = location
   )
 
   folds <- tibble::tibble(
@@ -112,7 +124,6 @@ print.leave_location_out_cv <- function(x, ...) {
 #' @return  A factor vector.
 make_location <- function(x, pool = .1) {
 
-  default_pool <- 0.1
   n <- length(x)
   x <- factor(x)
   xtab <- sort(table(x))
@@ -123,19 +134,6 @@ make_location <- function(x, pool = .1) {
     rlang::abort(c(
       "Fewer than two locations had enough data to use without pooling.",
       "Consider providing a less granular location variable."
-    ))
-  }
-
-  if (pool < default_pool & any(pcts < default_pool)) {
-    rlang::warn(c(
-      paste0(
-        "Grouping locations that make up ",
-        round(100 * pool), "% of the data may be ",
-        "statistically risky."
-      ),
-      paste0(
-        "Consider increasing `pool` to at least ", default_pool, "."
-      )
     ))
   }
 
