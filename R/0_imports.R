@@ -8,7 +8,7 @@ NULL
 #' @importFrom rsample complement new_rset make_splits
 #' @importFrom purrr map
 #' @importFrom rlang is_empty
-#' @importFrom stats kmeans
+#' @importFrom stats kmeans hclust cutree as.dist dist
 #' @importFrom dplyr dplyr_reconstruct
 #'
 #' @importFrom rsample analysis
