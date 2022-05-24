@@ -94,13 +94,13 @@ test_that("can pass the dots to kmeans", {
 
 test_that("using sf", {
 
+  # Older builds without s2 give additional warnings,
+  # as running sf::st_centroid pre-s2 gives inaccurate results
+  # for geographic CRS
+  skip_if_not(sf::sf_use_s2())
   Smithsonian_sf <- sf::st_as_sf(Smithsonian,
                                  coords = c("longitude", "latitude"),
                                  crs = 4326)
-
-  expect_snapshot(
-    spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
-  )
 
   set.seed(11)
   rs1 <- spatial_clustering_cv(Smithsonian_sf,
@@ -123,11 +123,18 @@ test_that("using sf", {
   )
   expect_true(all(good_holdout))
 
+  # The default RNG changed in 3.6.0
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+  expect_snapshot(
+      spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
+  )
+
 
 })
 
 test_that("printing", {
-  skip_if_not(getRversion() > numeric_version("3.6.0"))
+  # The default RNG changed in 3.6.0
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
   set.seed(123)
   expect_snapshot_output(
     spatial_clustering_cv(Smithsonian,
