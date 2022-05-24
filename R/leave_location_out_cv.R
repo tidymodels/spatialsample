@@ -85,13 +85,13 @@ llo_splits <- function(data, location, v, pool = 0.1) {
 
   n <- nrow(data)
   locations <- tibble::tibble(
-    idx = 1:n,
+    idx = seq_len(n),
     location = location
   )
 
   folds <- tibble::tibble(
     location = unique(locations$location),
-    fold = sample(rep(1:v, length.out = length(unique(locations$location))))
+    fold = sample(rep(seq_len(v), length.out = length(unique(locations$location))))
   )
 
   locations <- merge(locations, folds, by = c("location"))
