@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
-<link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.1/font.css" rel="stylesheet">
+<link href="../deps/_Source%20Code%20Pro-0.4.1/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using spatial resamples for analysis">
@@ -104,21 +104,21 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 2</span></span>
 <span class="co">#&gt;    splits             id    </span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;split [2738/192]&gt;</span> Fold01</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;split [2654/276]&gt;</span> Fold02</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;split [2717/213]&gt;</span> Fold03</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;split [2731/199]&gt;</span> Fold01</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;split [2787/143]&gt;</span> Fold02</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;split [2719/211]&gt;</span> Fold03</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">&lt;split [2762/168]&gt;</span> Fold04</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;split [2829/101]&gt;</span> Fold05</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold06</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;split [2718/212]&gt;</span> Fold07</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;split [2756/174]&gt;</span> Fold08</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;split [2706/224]&gt;</span> Fold09</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;split [2794/136]&gt;</span> Fold10</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;split [2694/236]&gt;</span> Fold11</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold12</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;split [2728/202]&gt;</span> Fold13</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">&lt;split [2616/314]&gt;</span> Fold14</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">&lt;split [2750/180]&gt;</span> Fold15</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;split [2680/250]&gt;</span> Fold05</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;split [2704/226]&gt;</span> Fold06</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;split [2707/223]&gt;</span> Fold07</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;split [2738/192]&gt;</span> Fold08</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;split [2777/153]&gt;</span> Fold09</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold10</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;split [2724/206]&gt;</span> Fold11</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;split [2815/115]&gt;</span> Fold12</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;split [2732/198]&gt;</span> Fold13</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">&lt;split [2574/356]&gt;</span> Fold14</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">&lt;split [2791/139]&gt;</span> Fold15</span></code></pre></div>
 <p>The <code>folds</code> object is an <code>rset</code> object that contains many resamples or <code>rsplit</code> objects in the <code>splits</code> column. The resulting partitions do not necessarily contain an equal number of observations.</p>
 <p>Now let’s write a function that will, for each resample:</p>
 <ul>
@@ -143,20 +143,20 @@
 <p>We can apply this function to just one of the <code>splits</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">compute_preds</span><span class="op">(</span><span class="va">folds</span><span class="op">$</span><span class="va">splits</span><span class="op">[[</span><span class="fl">7</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> 
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 212 × 4</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 223 × 4</span></span>
 <span class="co">#&gt;    Longitude Latitude Sale_Price .pred</span>
 <span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.37  5.45</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.26  5.37</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.31  5.42</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.16  5.07</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.28  5.37</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.00  5.06</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.10  4.99</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.29  5.36</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.18  5.18</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.23  5.29</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 202 more rows</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     -<span style="color: #BB0000;">93.7</span>     42.0       4.83  4.98</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.05  5.20</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.17  5.13</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.14  5.06</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.09  5.06</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.12  5.10</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     -<span style="color: #BB0000;">93.7</span>     42.0       4.97  4.86</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.13  5.16</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.14  5.16</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     -<span style="color: #BB0000;">93.7</span>     42.0       5.12  5.09</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 213 more rows</span></span></code></pre></div>
 <p>Or we can apply this function to all of the <code>splits</code>, using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
@@ -178,21 +178,21 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 3</span></span>
 <span class="co">#&gt;    splits             id     .preds            </span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;split [2738/192]&gt;</span> Fold01 <span style="color: #949494;">&lt;tibble [192 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;split [2654/276]&gt;</span> Fold02 <span style="color: #949494;">&lt;tibble [276 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;split [2717/213]&gt;</span> Fold03 <span style="color: #949494;">&lt;tibble [213 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;split [2731/199]&gt;</span> Fold01 <span style="color: #949494;">&lt;tibble [199 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;split [2787/143]&gt;</span> Fold02 <span style="color: #949494;">&lt;tibble [143 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;split [2719/211]&gt;</span> Fold03 <span style="color: #949494;">&lt;tibble [211 × 4]&gt;</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">&lt;split [2762/168]&gt;</span> Fold04 <span style="color: #949494;">&lt;tibble [168 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;split [2829/101]&gt;</span> Fold05 <span style="color: #949494;">&lt;tibble [101 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold06 <span style="color: #949494;">&lt;tibble [151 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;split [2718/212]&gt;</span> Fold07 <span style="color: #949494;">&lt;tibble [212 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;split [2756/174]&gt;</span> Fold08 <span style="color: #949494;">&lt;tibble [174 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;split [2706/224]&gt;</span> Fold09 <span style="color: #949494;">&lt;tibble [224 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;split [2794/136]&gt;</span> Fold10 <span style="color: #949494;">&lt;tibble [136 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;split [2694/236]&gt;</span> Fold11 <span style="color: #949494;">&lt;tibble [236 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold12 <span style="color: #949494;">&lt;tibble [151 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;split [2728/202]&gt;</span> Fold13 <span style="color: #949494;">&lt;tibble [202 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">&lt;split [2616/314]&gt;</span> Fold14 <span style="color: #949494;">&lt;tibble [314 × 4]&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">&lt;split [2750/180]&gt;</span> Fold15 <span style="color: #949494;">&lt;tibble [180 × 4]&gt;</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;split [2680/250]&gt;</span> Fold05 <span style="color: #949494;">&lt;tibble [250 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;split [2704/226]&gt;</span> Fold06 <span style="color: #949494;">&lt;tibble [226 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;split [2707/223]&gt;</span> Fold07 <span style="color: #949494;">&lt;tibble [223 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;split [2738/192]&gt;</span> Fold08 <span style="color: #949494;">&lt;tibble [192 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;split [2777/153]&gt;</span> Fold09 <span style="color: #949494;">&lt;tibble [153 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;split [2779/151]&gt;</span> Fold10 <span style="color: #949494;">&lt;tibble [151 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;split [2724/206]&gt;</span> Fold11 <span style="color: #949494;">&lt;tibble [206 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;split [2815/115]&gt;</span> Fold12 <span style="color: #949494;">&lt;tibble [115 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;split [2732/198]&gt;</span> Fold13 <span style="color: #949494;">&lt;tibble [198 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">&lt;split [2574/356]&gt;</span> Fold14 <span style="color: #949494;">&lt;tibble [356 × 4]&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">&lt;split [2791/139]&gt;</span> Fold15 <span style="color: #949494;">&lt;tibble [139 × 4]&gt;</span></span></code></pre></div>
 <p>We can <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest()</a></code> these results and <a href="https://yardstick.tidymodels.org/reference/index.html#section-regression-metrics" class="external-link">use yardstick to compute any regression metrics appropriate to this modeling analysis</a>, such as <code><a href="https://yardstick.tidymodels.org/reference/rmse.html" class="external-link">yardstick::rmse()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
@@ -209,21 +209,21 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 4</span></span>
 <span class="co">#&gt;    id     .metric .estimator .estimate</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Fold01 rmse    standard      0.122 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Fold02 rmse    standard      0.098<span style="text-decoration: underline;">3</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Fold01 rmse    standard      0.121 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Fold02 rmse    standard      0.082<span style="text-decoration: underline;">1</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Fold03 rmse    standard      0.104 </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Fold04 rmse    standard      0.066<span style="text-decoration: underline;">0</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Fold05 rmse    standard      0.142 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Fold06 rmse    standard      0.084<span style="text-decoration: underline;">9</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Fold07 rmse    standard      0.068<span style="text-decoration: underline;">6</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Fold08 rmse    standard      0.067<span style="text-decoration: underline;">4</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Fold09 rmse    standard      0.113 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fold10 rmse    standard      0.066<span style="text-decoration: underline;">9</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Fold11 rmse    standard      0.085<span style="text-decoration: underline;">9</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Fold12 rmse    standard      0.106 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Fold13 rmse    standard      0.081<span style="text-decoration: underline;">4</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Fold14 rmse    standard      0.083<span style="text-decoration: underline;">7</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Fold15 rmse    standard      0.086<span style="text-decoration: underline;">8</span></span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Fold05 rmse    standard      0.105 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Fold06 rmse    standard      0.101 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Fold07 rmse    standard      0.096<span style="text-decoration: underline;">2</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Fold08 rmse    standard      0.067<span style="text-decoration: underline;">1</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Fold09 rmse    standard      0.107 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fold10 rmse    standard      0.065<span style="text-decoration: underline;">2</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Fold11 rmse    standard      0.113 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Fold12 rmse    standard      0.107 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Fold13 rmse    standard      0.082<span style="text-decoration: underline;">1</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Fold14 rmse    standard      0.068<span style="text-decoration: underline;">2</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Fold15 rmse    standard      0.092<span style="text-decoration: underline;">0</span></span></code></pre></div>
 <p>It looks like the RMSE may vary across the city, so we can join the metrics back up to our results and plot them.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
@@ -252,7 +252,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
   </div></footer>
