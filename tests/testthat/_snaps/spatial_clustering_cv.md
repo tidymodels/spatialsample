@@ -23,16 +23,16 @@
       # A tibble: 10 x 2
          splits         id    
          <list>         <chr> 
-       1 <split [16/4]> Fold01
-       2 <split [18/2]> Fold02
+       1 <split [18/2]> Fold01
+       2 <split [19/1]> Fold02
        3 <split [18/2]> Fold03
-       4 <split [18/2]> Fold04
-       5 <split [19/1]> Fold05
+       4 <split [17/3]> Fold04
+       5 <split [18/2]> Fold05
        6 <split [19/1]> Fold06
-       7 <split [17/3]> Fold07
+       7 <split [18/2]> Fold07
        8 <split [18/2]> Fold08
-       9 <split [18/2]> Fold09
-      10 <split [19/1]> Fold10
+       9 <split [17/3]> Fold09
+      10 <split [18/2]> Fold10
 
 # printing
 

@@ -121,6 +121,7 @@ test_that("using sf", {
   expect_true(all(good_holdout))
 
   # This tests to ensure that _our_ warning happens on all platforms:
+  set.seed(123)
   expect_warning(
     spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude)),
     "`coords` is ignored when providing `sf` objects to `data`."
@@ -133,6 +134,7 @@ test_that("using sf", {
   # as running sf::st_centroid pre-s2 gives inaccurate results
   # for geographic CRS (skips windows-3.6)
   skip_if_not(sf::sf_use_s2())
+  set.seed(123)
   expect_snapshot(
       spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
   )
