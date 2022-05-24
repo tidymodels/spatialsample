@@ -43,7 +43,8 @@
 #'
 #' smithsonian_sf <- sf::st_as_sf(Smithsonian,
 #'                                coords = c("longitude", "latitude"),
-#'                                crs = 4326) # WGS84
+#'                                # Set CRS to WGS84
+#'                                crs = 4326)
 #'
 #' # When providing sf objects, coords are inferred automatically
 #' spatial_clustering_cv(smithsonian_sf, v = 5)
