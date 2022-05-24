@@ -10,8 +10,7 @@
 #' @details
 #' The variables in the `coords` argument are used for k-means clustering of
 #'  the data into disjointed sets, as outlined in Brenning (2012), or for
-#'  hierarchical clustering of the data (by default using the complete linkage
-#'  method, though this can be changed through arguments). These
+#'  hierarchical clustering of the data. These
 #'  clusters are used as the folds for cross-validation. Depending on how the
 #'  data are distributed spatially, there may not be an equal number of points
 #'  in each fold.
