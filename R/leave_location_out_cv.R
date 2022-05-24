@@ -22,6 +22,13 @@
 #' `pool = 0.1`, then only locations constituting 10% or more of the data will
 #' be preserved, with the remainder being folded into a single "pooled" location.
 #'
+#' @examples
+#' data(Sacramento, package = "modeldata")
+#'
+#' leave_location_out_cv(Sacramento, city)
+#' leave_location_out_cv(Sacramento, city, pool = 0.03)
+#' leave_location_out_cv(Sacramento, city, pool = 0.03, v = 5)
+#'
 #' @references
 #'
 #' H. Meyer, C. Reudenbach, T. Hengl, M. Katurji, and T. Nauss, 2018.
@@ -43,11 +50,14 @@ leave_location_out_cv <- function(data, location, v = length(unique(location)),
 
   if (missing(v)) {
     v <- n_locations
+  } else if (!is.numeric(v) || length(v) != 1) {
+    rlang::abort("`v` must be a single integer.")
   } else if (v > n_locations) {
     rlang::warn(paste0(
       "Fewer than ", v, " locations available for sampling; setting v to ",
       n_locations, "."
     ))
+    v <- n_locations
   }
 
   split_objs <- llo_splits(
@@ -73,10 +83,6 @@ leave_location_out_cv <- function(data, location, v = length(unique(location)),
 
 llo_splits <- function(data, location, v, pool = 0.1) {
 
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.")
-  }
-
   n <- nrow(data)
   locations <- tibble::tibble(
     idx = 1:n,
@@ -91,7 +97,12 @@ llo_splits <- function(data, location, v, pool = 0.1) {
   locations <- merge(locations, folds, by = c("location"))
   indices <- split_unnamed(locations$idx, locations$fold)
   indices <- lapply(indices, default_complement, n = n)
-  split_objs <- purrr::map(indices, make_splits, data = data, class = "llo_split")
+  split_objs <- purrr::map(
+    indices,
+    make_splits,
+    data = data,
+    class = "llo_split"
+  )
   tibble::tibble(
     splits = split_objs,
     id = names0(length(split_objs), "Fold")
@@ -105,22 +116,18 @@ print.leave_location_out_cv <- function(x, ...) {
     print(x, ...)
 }
 
-#' Create or Modify Stratification Variables
-#'
-#' This function can create strata from numeric data and make non-numeric data
-#'  more conducive for stratification.
+#' Create or Modify Location Variables
 #'
 #' @details
 #' For categorical inputs, the function will find levels of `x` than
 #'   occur in the data with percentage less than `pool`. The values from
-#'   these groups will be randomly assigned to the remaining strata (as will
-#'   data points that have missing values in `x`).
+#'   these groups will be pooled into a single category (if they make up
+#'   a greater than `pool` percentage of the data) or combined with the smallest
+#'   extant category (if not).
 #'
 #' @param x An input vector.
 #' @param pool A proportion of data used to determine if a particular group is
-#'   too small and should be pooled into another group. We do not recommend
-#'   decreasing this argument below its default of 0.1 because of the dangers
-#'   of stratifying groups that are too small.
+#'   too small and should be pooled into another group.
 #' @return  A factor vector.
 make_location <- function(x, pool = .1) {
 
@@ -129,7 +136,6 @@ make_location <- function(x, pool = .1) {
   xtab <- sort(table(x))
   pcts <- xtab / n
 
-  ## This should really be based on some combo of rate and number.
   if (all(pcts < pool) || sum(pcts > pool) == 1) {
     rlang::abort(c(
       "Fewer than two locations had enough data to use without pooling.",
@@ -166,7 +172,7 @@ make_location <- function(x, pool = .1) {
   ## I don't know if this is the right way to handle this, three other ways:
   ##
   ## 1. If default_name already exists, error out
-  ## 2. If default_name already exists, don't check for < 10% but combine
+  ## 2. If default_name already exists, don't check for < pool but combine
   ## with default_name automatically (so users can select a fallback group)
   ## 3. If default_name already exists, try alternative names until one works
   if (any(levels(x) == default_name)) {

@@ -25,6 +25,7 @@ Imports:
     purrr,
     rlang,
     rsample (>= 0.0.9),
+    sf,
     tibble,
     tidyselect,
     vctrs (>= 0.3.6)
