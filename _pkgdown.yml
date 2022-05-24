@@ -21,6 +21,7 @@ reference:
   - title: Resampling Methods
     contents:
       - spatial_clustering_cv
+      - leave_location_out_cv
   - title: Utilities
     contents:
       - reexports
