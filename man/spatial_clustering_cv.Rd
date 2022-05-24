@@ -13,7 +13,7 @@ spatial_clustering_cv(
 )
 }
 \arguments{
-\item{data}{A data frame, or an \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
+\item{data}{A data frame or an \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
 or \code{\link[sf:st_as_sf]{sf::st_as_sf()}}), to split into folds.}
 
 \item{coords}{A vector of variable names, typically spatial coordinates,
@@ -22,7 +22,7 @@ This argument is ignored (with a warning) if \code{data} is an \code{sf} object.
 
 \item{v}{The number of partitions of the data set.}
 
-\item{cluster_function}{Which function to use to cluster. Must be one of either
+\item{cluster_function}{Which function to use for clustering. Must be one of either
 "kmeans" (to use \code{\link[stats:kmeans]{stats::kmeans()}}) or "hclust" (to use \code{\link[stats:hclust]{stats::hclust()}}).}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
@@ -60,7 +60,8 @@ smithsonian_sf <- sf::st_as_sf(Smithsonian,
 
 # When providing sf objects, coords are inferred automatically
 spatial_clustering_cv(smithsonian_sf, v = 5)
-
+# Can use hclust instead:
+spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
 }
 \references{
 A. Brenning, "Spatial cross-validation and bootstrap for the assessment of

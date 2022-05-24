@@ -60,18 +60,18 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
       rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
     }
     coords <- sf::st_centroid(sf::st_geometry(data))
-    coords <- as.dist(sf::st_distance(coords))
+    dists <- as.dist(sf::st_distance(coords))
   } else {
     coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
     if (is_empty(coords)) {
       rlang::abort("`coords` are required and must be variables in `data`.")
     }
     coords <- data[coords]
-    coords <- dist(coords)
+    dists <- dist(coords)
   }
 
   split_objs <- spatial_clustering_splits(data = data,
-                                          coords = coords,
+                                          dists = dists,
                                           v = v,
                                           cluster_function = cluster_function,
                                           ...)
@@ -94,7 +94,7 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
 
 }
 
-spatial_clustering_splits <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
+spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
 
   cluster_function <- rlang::arg_match(cluster_function)
 
@@ -107,11 +107,11 @@ spatial_clustering_splits <- function(data, coords, v = 10, cluster_function = c
   folds <- switch(
     cluster_function,
     "kmeans" = {
-      clusters <- kmeans(coords, centers = v, ...)
+      clusters <- kmeans(dists, centers = v, ...)
       clusters$cluster
     },
     "hclust" = {
-      clusters <- hclust(coords, ...)
+      clusters <- hclust(dists, ...)
       cutree(clusters, k = v)
     }
   )
