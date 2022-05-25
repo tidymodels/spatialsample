@@ -56,14 +56,19 @@ block_cv <- function(data, method = "random", v = 10, ...) {
 
   if (!"sf" %in% class(data)) {
     rlang::abort(
-      "`block_cv` currently only supports `sf` objects.",
-      "Try converting `data` to an `sf` object via `sf::st_as_sf()`.")
+      c(
+        "`block_cv` currently only supports `sf` objects.",
+        "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
+      )
+    )
   }
 
   if (sf::st_crs(data) == sf::NA_crs_) {
     rlang::abort(
-      "`block_cv` requires your data to have an appropriate coordinate reference system (CRS).",
-      "Try setting a CRS using `sf::st_set_crs()`."
+      c(
+        "`block_cv` requires your data to have an appropriate coordinate reference system (CRS).",
+        "Try setting a CRS using `sf::st_set_crs()`."
+      )
     )
   }
 
