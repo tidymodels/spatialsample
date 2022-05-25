@@ -33,6 +33,7 @@ Suggests:
     covr,
     ggplot2,
     knitr,
+    lwgeom,
     modeldata,
     rmarkdown,
     testthat (>= 3.0.0),
