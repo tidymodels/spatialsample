@@ -121,11 +121,7 @@ spatial_block_cv <- function(data, method = "random", v = 10, ...) {
 random_block_cv <- function(data, grid_blocks, v) {
   n <- nrow(data)
 
-  block_contains_points <- purrr::map_lgl(
-    sf::st_intersects(grid_blocks, data),
-    sgbp_is_not_empty
-  )
-  grid_blocks <- grid_blocks[block_contains_points]
+  grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
   if (!is.numeric(v) || length(v) != 1) {
@@ -236,6 +232,7 @@ systematic_block_cv <- function(data, grid_blocks, v,
         "To avoid this, set `relevant_only = TRUE`."
       )
     )
+    v <- num_folds
   }
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
   indices <- purrr::map(
