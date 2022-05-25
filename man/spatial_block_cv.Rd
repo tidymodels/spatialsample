@@ -9,12 +9,21 @@ spatial_block_cv(data, method = "random", v = 10, ...)
 \arguments{
 \item{data}{An object of class \code{sf} or \code{sfc}.}
 
-\item{method}{The method used to sample blocks for cross validation folds.
-Currently, only \code{"random"} is supported.}
+\item{method}{The method for sampling blocks for cross validation folds.
+Currently supports \code{"random"} and \code{"systematic"}.}
 
 \item{v}{The number of partitions of the data set.}
 
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
+
+\item{ordering}{For systematic sampling, one of either \code{"snake"}
+(the default) or \code{"continuous"}. The \code{"snake"} method labels the first row
+of blocks from left to right, then the next from right to left, and repeats
+the pattern from there. The \code{"continuous"} method labels each row from left
+to right, moving from the bottom row up.}
+
+\item{relevant_only}{For systematic sampling, should only blocks containing
+data be included in fold labeling?}
 }
 \value{
 A tibble with classes \code{spatial_block_cv}, \code{rset}, \code{tbl_df}, \code{tbl},

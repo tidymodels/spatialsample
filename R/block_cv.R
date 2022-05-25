@@ -24,9 +24,17 @@
 #' number of cells.
 #'
 #' @param data An object of class `sf` or `sfc`.
-#' @param method The method used to sample blocks for cross validation folds.
-#' Currently, only `"random"` is supported.
+#' @param method The method for sampling blocks for cross validation folds.
+#' Currently supports `"random"` and `"systematic"`.
 #' @inheritParams rsample::vfold_cv
+#' @param ordering For systematic sampling, one of either `"snake"`
+#' (the default) or `"continuous"`. The `"snake"` method labels the first row
+#' of blocks from left to right, then the next from right to left, and repeats
+#' the pattern from there. The `"continuous"` method labels each row from left
+#' to right, moving from the bottom row up.
+#' @param relevant_only For systematic sampling, should only blocks containing
+#' data be included in fold labeling?
+#'
 #' @param ... Arguments passed to [sf::st_make_grid()].
 #'
 #' @return A tibble with classes `spatial_block_cv`, `rset`, `tbl_df`, `tbl`,
@@ -88,7 +96,8 @@ spatial_block_cv <- function(data, method = "random", v = 10, ...) {
   grid_blocks <- sf::st_make_grid(grid_box, ...)
   split_objs <- switch(
     method,
-    "random" = random_block_cv(data, grid_blocks, v)
+    "random" = random_block_cv(data, grid_blocks, v),
+    "systematic" = systematic_block_cv(data, grid_blocks, v, ordering, relevant_only)
   )
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
@@ -167,9 +176,108 @@ random_block_cv <- function(data, grid_blocks, v) {
   )
 }
 
+systematic_block_cv <- function(data, grid_blocks, v,
+                                ordering = c("snake", "continuous"),
+                                relevant_only = TRUE) {
+  n <- nrow(data)
+  ordering <- rlang::arg_match(ordering)
+
+  if (relevant_only) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  }
+
+  n_blocks <- length(grid_blocks)
+  if (!is.numeric(v) || length(v) != 1) {
+    rlang::abort("`v` must be a single integer.")
+  } else if (v > n_blocks) {
+    rlang::warn(paste0(
+      "Fewer than ", v, " blocks available for sampling; setting v to ",
+      n_blocks, "."
+    ))
+    v <- n_blocks
+  }
+
+  folds <- rep(seq_len(v), length.out = length(grid_blocks))
+  if (ordering == "snake") {
+    rowtab <- table(
+      vapply(
+        grid_blocks,
+        function(x) sf::st_bbox(x)[["xmin"]],
+        numeric(1)
+      )
+    )
+    sum_rowtab <- cumsum(rowtab)
+    reverse <- FALSE
+    for (i in seq_along(rowtab)) {
+      idx_one <- ifelse(i == 1, 1, sum_rowtab[[i - 1]] + 1)
+      idx_two <- sum_rowtab[[i]]
+      if (reverse) {
+        folds[idx_one:idx_two] <- rev(folds[idx_one:idx_two])
+      }
+      reverse <- !reverse
+    }
+  }
+  grid_blocks <- sf::st_as_sf(grid_blocks)
+  grid_blocks$fold <- folds
+  if (!relevant_only) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  }
+  num_folds <- length(unique(grid_blocks$fold))
+  if (num_folds != v) {
+    rlang::warn(
+      c(
+        paste0(
+          "Not all folds contained blocks with data: \n",
+          v,
+          " folds were requested, but only ",
+          num_folds,
+          " contain any data. \nEmpty folds were dropped."
+        ),
+        "To avoid this, set `relevant_only = TRUE`."
+      )
+    )
+  }
+  grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
+  indices <- purrr::map(
+    grid_blocks,
+    ~ which(
+      vapply(
+        sf::st_intersects(data, .x),
+        sgbp_is_not_empty,
+        logical(1)
+      )
+    )
+  )
+
+  indices <- lapply(indices, default_complement, n = n)
+  split_objs <- purrr::map(
+    indices,
+    make_splits,
+    data = data,
+    class = "spatial_block_split"
+  )
+  tibble::tibble(
+    splits = split_objs,
+    id = names0(length(split_objs), "Fold"),
+    v = v
+  )
+}
+
 # Check sparse geometry binary predicate for empty elements
 # See ?sf::sgbp for more information on the data structure
 sgbp_is_not_empty <- function(x) !identical(x, integer(0))
+
+filter_grid_blocks <- function(grid_blocks, data) {
+  block_contains_points <- purrr::map_lgl(
+    sf::st_intersects(grid_blocks, data),
+    sgbp_is_not_empty
+  )
+  if ("data.frame" %in% class(grid_blocks)) {
+    grid_blocks[block_contains_points, ]
+  } else {
+    grid_blocks[block_contains_points]
+  }
+}
 
 #' @export
 print.spatial_block_cv <- function(x, ...) {

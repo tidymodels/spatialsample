@@ -120,8 +120,8 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
   indices <- split_unnamed(idx, folds)
   indices <- lapply(indices, default_complement, n = n)
   split_objs <- purrr::map(indices, make_splits,
-    data = data,
-    class = "spatial_clustering_split"
+                           data = data,
+                           class = "spatial_clustering_split"
   )
   tibble::tibble(
     splits = split_objs,
