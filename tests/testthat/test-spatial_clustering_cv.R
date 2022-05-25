@@ -24,7 +24,7 @@ test_that("using kmeans", {
   expect_true(all(sizes1$analysis + sizes1$assessment == 20))
   same_data <-
     map_lgl(rs1$splits, function(x) {
-      all.equal(x$data, Smithsonian)
+      isTRUE(all.equal(x$data, Smithsonian))
     })
   expect_true(all(same_data))
 
@@ -50,7 +50,7 @@ test_that("using hclust", {
     expect_true(all(sizes1$analysis + sizes1$assessment == 20))
     same_data <-
         map_lgl(rs1$splits, function(x) {
-            all.equal(x$data, Smithsonian)
+            isTRUE(all.equal(x$data, Smithsonian))
         })
     expect_true(all(same_data))
 
@@ -108,7 +108,7 @@ test_that("using sf", {
   expect_true(all(sizes1$analysis + sizes1$assessment == 20))
   same_data <-
     map_lgl(rs1$splits, function(x) {
-      all.equal(x$data, Smithsonian_sf)
+      isTRUE(all.equal(x$data, Smithsonian_sf))
     })
   expect_true(all(same_data))
 
