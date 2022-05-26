@@ -9,3 +9,5 @@
 ^pkgdown$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^doc$
+^Meta$

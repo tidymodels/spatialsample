@@ -1,10 +1,9 @@
 library(testthat)
 library(rsample)
 library(purrr)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data("Smithsonian")
-
+data("Smithsonian", package = "modeldata")
 
 test_that("using kmeans", {
   set.seed(11)
