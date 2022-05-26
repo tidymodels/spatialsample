@@ -117,23 +117,7 @@ test_that("systematic assignment -- continuous", {
 })
 
 test_that("bad args", {
-  expect_snapshot(
-    block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
-  )
-  expect_snapshot(
-    block_cv(ames_sf, method = "systematic", v = 60)
-  )
-  expect_snapshot(
-    block_cv(ames_sf, v = 60)
-  )
-  expect_snapshot(
-    block_cv(ames_sf, v = c(5, 10)),
-    error = TRUE
-  )
-  expect_snapshot(
-    block_cv(ames_sf, v = c(5, 10), method = "systematic"),
-    error = TRUE
-  )
+
   expect_snapshot(
     block_cv(ames),
     error = TRUE
@@ -142,6 +126,31 @@ test_that("bad args", {
     block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_)),
     error = TRUE
   )
+
+  skip_if_not(sf::sf_use_s2())
+
+  expect_snapshot(
+    block_cv(ames_sf, v = c(5, 10)),
+    error = TRUE
+  )
+  expect_snapshot(
+    block_cv(ames_sf, v = c(5, 10), method = "systematic"),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
+  )
+  expect_snapshot(
+    block_cv(ames_sf, method = "systematic", v = 60)
+  )
+
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+
+  expect_snapshot(
+    block_cv(ames_sf, v = 60)
+  )
+
 })
 
 test_that("printing", {
