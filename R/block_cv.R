@@ -170,6 +170,7 @@ random_block_cv <- function(data, grid_blocks, v) {
 # Check sparse geometry binary predicate for empty elements
 # See ?sf::sgbp for more information on the data structure
 sgbp_is_not_empty <- function(x) !identical(x, integer(0))
+
 #' @export
 print.spatial_block_cv <- function(x, ...) {
   cat("# ", pretty(x), "\n")
