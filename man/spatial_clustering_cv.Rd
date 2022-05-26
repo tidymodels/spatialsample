@@ -50,18 +50,23 @@ data are distributed spatially, there may not be an equal number of points
 in each fold.
 }
 \examples{
-data(Smithsonian, package = "modeldata")
-spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
+if (requireNamespace("modeldata", quietly = TRUE)) {
 
-smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                               coords = c("longitude", "latitude"),
-                               # Set CRS to WGS84
-                               crs = 4326)
+  data(Smithsonian, package = "modeldata")
+  spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
-# When providing sf objects, coords are inferred automatically
-spatial_clustering_cv(smithsonian_sf, v = 5)
-# Can use hclust instead:
-spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
+  smithsonian_sf <- sf::st_as_sf(Smithsonian,
+                                 coords = c("longitude", "latitude"),
+                                 # Set CRS to WGS84
+                                 crs = 4326)
+
+  # When providing sf objects, coords are inferred automatically
+  spatial_clustering_cv(smithsonian_sf, v = 5)
+
+  # Can use hclust instead:
+  spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
+
+}
 }
 \references{
 A. Brenning, "Spatial cross-validation and bootstrap for the assessment of
