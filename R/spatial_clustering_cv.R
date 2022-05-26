@@ -98,7 +98,7 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
 
   cluster_function <- rlang::arg_match(cluster_function)
 
-  v <- check_v(v, Inf, "no limit")
+  v <- check_v(v, nrow(data), "data points")
 
   n <- nrow(data)
 

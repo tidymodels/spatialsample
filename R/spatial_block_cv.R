@@ -130,22 +130,8 @@ random_block_cv <- function(data, grid_blocks, v) {
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
-  grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
-  indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
-
-  indices <- lapply(indices, default_complement, n = n)
-  split_objs <- purrr::map(
-    indices,
-    make_splits,
-    data = data,
-    class = "spatial_block_split"
-  )
-  tibble::tibble(
-    splits = split_objs,
-    id = names0(length(split_objs), "Fold"),
-    v = v
-  )
+  generate_folds_from_blocks(data, grid_blocks, v, n)
 }
 
 systematic_block_cv <- function(data, grid_blocks, v,
@@ -183,7 +169,12 @@ systematic_block_cv <- function(data, grid_blocks, v,
     v <- num_folds
   }
 
+  generate_folds_from_blocks(data, grid_blocks, v, n)
+}
+
+generate_folds_from_blocks <- function(data, grid_blocks, v, n) {
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
+
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
 
   indices <- lapply(indices, default_complement, n = n)
