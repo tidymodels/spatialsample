@@ -1,37 +1,37 @@
 # bad args
 
     Code
-      block_cv(ames)
+      spatial_block_cv(ames)
     Error <rlang_error>
-      `block_cv` currently only supports `sf` objects.
+      `spatial_block_cv()` currently only supports `sf` objects.
       i Try converting `data` to an `sf` object via `sf::st_as_sf()`.
 
 ---
 
     Code
-      block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
+      spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
     Error <rlang_error>
-      `block_cv()` requires your data to have an appropriate coordinate reference system (CRS).
+      `spatial_block_cv()` requires your data to have an appropriate coordinate reference system (CRS).
       i Try setting a CRS using `sf::st_set_crs()`.
 
 ---
 
     Code
-      block_cv(ames_sf, v = c(5, 10))
+      spatial_block_cv(ames_sf, v = c(5, 10))
     Error <rlang_error>
       `v` must be a single integer.
 
 ---
 
     Code
-      block_cv(ames_sf, v = c(5, 10), method = "systematic")
+      spatial_block_cv(ames_sf, v = c(5, 10), method = "systematic")
     Error <rlang_error>
       `v` must be a single integer.
 
 ---
 
     Code
-      block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
+      spatial_block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
     Warning <rlang_warning>
       Not all folds contained blocks with data: 
       5 folds were requested, but only 4 contain any data. 
@@ -50,7 +50,7 @@
 ---
 
     Code
-      block_cv(ames_sf, method = "systematic", v = 60)
+      spatial_block_cv(ames_sf, method = "systematic", v = 60)
     Warning <rlang_warning>
       Fewer than 60 blocks available for sampling; setting v to 17.
     Output
@@ -79,7 +79,7 @@
 ---
 
     Code
-      block_cv(ames_sf, v = 60)
+      spatial_block_cv(ames_sf, v = 60)
     Warning <rlang_warning>
       Fewer than 60 blocks available for sampling; setting v to 17.
     Output

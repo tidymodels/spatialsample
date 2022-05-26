@@ -59,7 +59,9 @@
 #' Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.
 #'
 #' @export
-spatial_block_cv <- function(data, method = "random", v = 10, ...) {
+spatial_block_cv <- function(data, method = c("random", "systematic"), v = 10,
+                             ordering = c("snake", "continuous"),
+                             relevant_only = TRUE, ...) {
   method <- rlang::arg_match(method)
 
   if (!"sf" %in% class(data)) {

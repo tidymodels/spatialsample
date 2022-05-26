@@ -84,9 +84,9 @@ test_that("bad args", {
 test_that("can pass the dots to kmeans", {
   expect_error(
     spatial_clustering_cv(Smithsonian,
-      coords = c(latitude, longitude),
-      v = 2,
-      algorithm = "MacQueen"
+                          coords = c(latitude, longitude),
+                          v = 2,
+                          algorithm = "MacQueen"
     ),
     NA
   )
@@ -136,7 +136,7 @@ test_that("using sf", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
   expect_snapshot(
-      spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
+    spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
   )
 
 
@@ -148,8 +148,8 @@ test_that("printing", {
   set.seed(123)
   expect_snapshot_output(
     spatial_clustering_cv(Smithsonian,
-      coords = c(latitude, longitude),
-      v = 2
+                          coords = c(latitude, longitude),
+                          v = 2
     )
   )
 })
