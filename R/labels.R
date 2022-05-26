@@ -8,7 +8,9 @@ pretty.spatial_clustering_cv <- function(x, ...) {
 #' @export
 print.spatial_clustering_cv <- function(x, ...) {
   cat("# ", pretty(x), "\n")
-  class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv", "rset"))]
+  class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv",
+                                         "spatial_rset",
+                                         "rset"))]
   print(x, ...)
 }
 
@@ -22,6 +24,8 @@ pretty.spatial_block_cv <- function(x, ...) {
 #' @export
 print.spatial_block_cv <- function(x, ...) {
   cat("# ", pretty(x), "\n")
-  class(x) <- class(x)[!(class(x) %in% c("spatial_block_cv", "rset"))]
+  class(x) <- class(x)[!(class(x) %in% c("spatial_block_cv",
+                                         "spatial_rset",
+                                         "rset"))]
   print(x, ...)
 }

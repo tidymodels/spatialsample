@@ -1,0 +1,26 @@
+skip_if_not_installed("modeldata")
+
+data(ames, package = "modeldata")
+
+ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
+set.seed(123)
+ames_cluster <- spatial_clustering_cv(ames_sf)
+set.seed(123)
+ames_non_sf <- spatial_clustering_cv(ames, coords = c("Longitude", "Latitude"))
+set.seed(123)
+ames_block <- spatial_block_cv(ames_sf)
+
+test_that("autoplot is stable", {
+
+  p <- autoplot(ames_cluster)
+  vdiffr::expect_doppelganger("cluster plots", p)
+
+  p <- autoplot(ames_cluster)
+  vdiffr::expect_doppelganger("block plots", p)
+
+  expect_snapshot(
+    autoplot(ames_non_sf),
+    error = TRUE
+  )
+
+})

@@ -19,5 +19,9 @@ rsample::analysis
 #' @export
 rsample::assessment
 
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot
+
 #' @import vctrs
 NULL

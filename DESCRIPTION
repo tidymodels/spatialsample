@@ -24,16 +24,17 @@ Depends:
     R (>= 3.4)
 Imports:
     dplyr (>= 1.0.0),
+    ggplot2,
     purrr,
     rlang,
     rsample (>= 0.0.9),
     sf,
     tibble,
     tidyselect,
-    vctrs (>= 0.3.6)
+    vctrs (>= 0.3.6),
+    vdiffr
 Suggests: 
     covr,
-    ggplot2,
     knitr,
     lwgeom,
     modeldata,
