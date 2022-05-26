@@ -23,8 +23,6 @@
 autoplot.spatial_rset <- function(object, ...) {
   fold <- NULL
 
-  rlang::check_installed("ggplot2")
-
   object <- purrr::map2_dfr(
     object$splits,
     object$id,

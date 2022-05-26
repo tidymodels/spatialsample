@@ -1,7 +1,8 @@
 # spatialsample (development version)
 
 * `autoplot()` now has a method for spatial resamples built from `sf` objects.
-  It requires `ggplot2` to work.
+
+* `ggplot2` has been moved to Imports. It had been in Suggests.
 
 * `spatial_block_cv()` is a new function for performing spatial block cross validation.
   It currently supports randomly assigning blocks to folds.
