@@ -2,7 +2,7 @@
 #'
 #' Block cross-validation splits the area of your data into a number of
 #' grid cells, or "blocks", and then assigns all data into folds based on the
-#' blocks they fall into. By putting
+#' blocks they fall into.
 #'
 #' @details
 #' The grid blocks are drawn from can be controlled by passing arguments to
@@ -18,14 +18,14 @@
 #' If both `cellsize` and `n` are provided, then the number of blocks requested
 #' by `n` of sizes specified by `cellsize` will be returned, likely not
 #' lining up with the bounding box of `data`. If only `cellsize`
-#' is provided, then this function will return as many blocks of size
+#' is provided, this function will return as many blocks of size
 #' `cellsize` as fit inside the bounding box of `data`. If only `n` is provided,
 #' then `cellsize` will be automatically adjusted to create the requested
 #' number of cells.
 #'
 #' @param data An object of class `sf` or `sfc`.
 #' @param method The method for sampling blocks for cross validation folds.
-#' Currently, only "random" is supported.
+#' Currently, only `"random"` is supported.
 #' @inheritParams rsample::vfold_cv
 #' @param ... Arguments passed to [sf::st_make_grid()].
 #'
@@ -58,7 +58,7 @@ block_cv <- function(data, method = "random", v = 10, ...) {
     rlang::abort(
       c(
         "`block_cv` currently only supports `sf` objects.",
-        "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
+        i = "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
       )
     )
   }
@@ -66,8 +66,8 @@ block_cv <- function(data, method = "random", v = 10, ...) {
   if (sf::st_crs(data) == sf::NA_crs_) {
     rlang::abort(
       c(
-        "`block_cv` requires your data to have an appropriate coordinate reference system (CRS).",
-        "Try setting a CRS using `sf::st_set_crs()`."
+        "`block_cv()` requires your data to have an appropriate coordinate reference system (CRS).",
+        i = "Try setting a CRS using `sf::st_set_crs()`."
       )
     )
   }
@@ -121,7 +121,8 @@ random_block_cv <- function(data, grid_blocks, v) {
   n_blocks <- length(grid_blocks)
   if (!is.numeric(v) || length(v) != 1) {
     rlang::abort("`v` must be a single integer.")
-  } else if (v > n_blocks) {
+  }
+  if (v > n_blocks) {
     rlang::warn(paste0(
       "Fewer than ", v, " blocks available for sampling; setting v to ",
       n_blocks, "."
