@@ -51,6 +51,7 @@ test_that("systematic assignment -- snake", {
   )
   expect_true(all(good_holdout))
 
+  set.seed(123)
   rs3 <- block_cv(ames_sf,
                   method = "systematic",
                   ordering = "snake",
@@ -94,6 +95,7 @@ test_that("systematic assignment -- continuous", {
   )
   expect_true(all(good_holdout))
 
+  set.seed(123)
   rs3 <- block_cv(ames_sf,
                   method = "systematic",
                   ordering = "continuous",
@@ -118,10 +120,13 @@ test_that("systematic assignment -- continuous", {
 
 test_that("bad args", {
 
+  set.seed(123)
   expect_snapshot(
     block_cv(ames),
     error = TRUE
   )
+
+  set.seed(123)
   expect_snapshot(
     block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_)),
     error = TRUE
@@ -129,24 +134,31 @@ test_that("bad args", {
 
   skip_if_not(sf::sf_use_s2())
 
+  set.seed(123)
   expect_snapshot(
     block_cv(ames_sf, v = c(5, 10)),
     error = TRUE
   )
+
+  set.seed(123)
   expect_snapshot(
     block_cv(ames_sf, v = c(5, 10), method = "systematic"),
     error = TRUE
   )
 
+  set.seed(123)
   expect_snapshot(
     block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
   )
+
+  set.seed(123)
   expect_snapshot(
     block_cv(ames_sf, method = "systematic", v = 60)
   )
 
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
 
+  set.seed(123)
   expect_snapshot(
     block_cv(ames_sf, v = 60)
   )
@@ -163,6 +175,7 @@ test_that("printing", {
 })
 
 test_that("rsplit labels", {
+  set.seed(123)
   rs <- block_cv(ames_sf, v = 2)
   all_labs <- map_df(rs$splits, labels)
   original_id <- rs[, grepl("^id", names(rs))]
