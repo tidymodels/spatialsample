@@ -28,3 +28,18 @@ split_unnamed <- function(x, f) {
   out <- split(x, f)
   unname(out)
 }
+
+### Functions below are spatialsample-specific
+check_v <- function(v, max_v, objects) {
+  if (!is.numeric(v) || length(v) != 1) {
+    rlang::abort("`v` must be a single integer.")
+  }
+  if (v > max_v) {
+    rlang::warn(paste0(
+      "Fewer than ", v, " ", objects, " available for sampling; setting v to ",
+      max_v, "."
+    ))
+    v <- max_v
+  }
+  v
+}

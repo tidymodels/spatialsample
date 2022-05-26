@@ -24,7 +24,7 @@
 #' number of cells.
 #'
 #' @param data An object of class `sf` or `sfc`.
-#' @param method The method for sampling blocks for cross validation folds.
+#' @param method The method used to sample blocks for cross validation folds.
 #' Currently supports `"random"` and `"systematic"`.
 #' @inheritParams rsample::vfold_cv
 #' @param ordering For systematic sampling, one of either `"snake"`
@@ -126,39 +126,13 @@ random_block_cv <- function(data, grid_blocks, v) {
   grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.")
-  }
-  if (v > n_blocks) {
-    rlang::warn(paste0(
-      "Fewer than ", v, " blocks available for sampling; setting v to ",
-      n_blocks, "."
-    ))
-    v <- n_blocks
-  }
+  v <- check_v(v, n_blocks, "blocks")
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
-  # grid_blocks is now a list of sgbp lists (?sf::sgbp)
-  #
-  # The first map() here iterates through the meta-list,
-  # and the second checks each element of the relevant sgbp list
-  # to see if it is integer(0) (no intersections) or not
-  #
-  # Each sgbp sub-list is nrow(data) elements long, so this which()
-  # returns the list indices which are not empty, which is equivalent
-  # to the row numbers that intersect with blocks in the fold
-  indices <- purrr::map(
-    grid_blocks,
-    function(blocks) which(
-      purrr::map_lgl(
-        sf::st_intersects(data, blocks),
-        sgbp_is_not_empty
-      )
-    )
-  )
+  indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
 
   indices <- lapply(indices, default_complement, n = n)
   split_objs <- purrr::map(
@@ -180,46 +154,18 @@ systematic_block_cv <- function(data, grid_blocks, v,
   n <- nrow(data)
   ordering <- rlang::arg_match(ordering)
 
-  if (relevant_only) {
-    grid_blocks <- filter_grid_blocks(grid_blocks, data)
-  }
+  if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.")
-  } else if (v > n_blocks) {
-    rlang::warn(paste0(
-      "Fewer than ", v, " blocks available for sampling; setting v to ",
-      n_blocks, "."
-    ))
-    v <- n_blocks
-  }
+  v <- check_v(v, n_blocks, "blocks")
 
   folds <- rep(seq_len(v), length.out = length(grid_blocks))
-  if (ordering == "snake") {
-    rowtab <- table(
-      vapply(
-        grid_blocks,
-        function(x) sf::st_bbox(x)[["xmin"]],
-        numeric(1)
-      )
-    )
-    sum_rowtab <- cumsum(rowtab)
-    reverse <- FALSE
-    for (i in seq_along(rowtab)) {
-      idx_one <- ifelse(i == 1, 1, sum_rowtab[[i - 1]] + 1)
-      idx_two <- sum_rowtab[[i]]
-      if (reverse) {
-        folds[idx_one:idx_two] <- rev(folds[idx_one:idx_two])
-      }
-      reverse <- !reverse
-    }
-  }
+  if (ordering == "snake") folds <- make_snake_ordering(folds, grid_blocks)
+
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- folds
-  if (!relevant_only) {
-    grid_blocks <- filter_grid_blocks(grid_blocks, data)
-  }
+  if (!relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
+
   num_folds <- length(unique(grid_blocks$fold))
   if (num_folds != v) {
     rlang::warn(
@@ -231,22 +177,14 @@ systematic_block_cv <- function(data, grid_blocks, v,
           num_folds,
           " contain any data. \nEmpty folds were dropped."
         ),
-        "To avoid this, set `relevant_only = TRUE`."
+        i = "To avoid this, set `relevant_only = TRUE`."
       )
     )
     v <- num_folds
   }
+
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
-  indices <- purrr::map(
-    grid_blocks,
-    ~ which(
-      vapply(
-        sf::st_intersects(data, .x),
-        sgbp_is_not_empty,
-        logical(1)
-      )
-    )
-  )
+  indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
 
   indices <- lapply(indices, default_complement, n = n)
   split_objs <- purrr::map(
@@ -278,9 +216,43 @@ filter_grid_blocks <- function(grid_blocks, data) {
   }
 }
 
-#' @export
-print.spatial_block_cv <- function(x, ...) {
-  cat("# ", pretty(x), "\n")
-  class(x) <- class(x)[!(class(x) %in% c("spatial_block_cv", "rset"))]
-  print(x, ...)
+make_snake_ordering <- function(folds, grid_blocks) {
+  rowtab <- table(
+    purrr::map_dbl(
+      grid_blocks,
+      ~ sf::st_bbox(.x)[["xmin"]]
+    )
+  )
+  sum_rowtab <- cumsum(rowtab)
+  reverse <- FALSE
+  for (i in seq_along(rowtab)) {
+    idx_one <- ifelse(i == 1, 1, sum_rowtab[[i - 1]] + 1)
+    idx_two <- sum_rowtab[[i]]
+    if (reverse) {
+      folds[idx_one:idx_two] <- rev(folds[idx_one:idx_two])
+    }
+    reverse <- !reverse
+  }
+  folds
+}
+
+row_ids_intersecting_fold_blocks <- function(grid_blocks, data) {
+  # grid_blocks is a list of sgbp lists (?sf::sgbp)
+  #
+  # The first map() here iterates through the meta-list,
+  # and the second checks each element of the relevant sgbp list
+  # to see if it is integer(0) (no intersections) or not
+  #
+  # Each sgbp sub-list is nrow(data) elements long, so this which()
+  # returns the list indices which are not empty, which is equivalent
+  # to the row numbers that intersect with blocks in the fold
+  purrr::map(
+    grid_blocks,
+    function(blocks) which(
+      purrr::map_lgl(
+        sf::st_intersects(data, blocks),
+        sgbp_is_not_empty
+      )
+    )
+  )
 }

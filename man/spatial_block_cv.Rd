@@ -16,7 +16,7 @@ spatial_block_cv(
 \arguments{
 \item{data}{An object of class \code{sf} or \code{sfc}.}
 
-\item{method}{The method for sampling blocks for cross validation folds.
+\item{method}{The method used to sample blocks for cross validation folds.
 Currently supports \code{"random"} and \code{"systematic"}.}
 
 \item{v}{The number of partitions of the data set.}

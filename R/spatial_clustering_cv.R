@@ -98,9 +98,7 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
 
   cluster_function <- rlang::arg_match(cluster_function)
 
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.")
-  }
+  v <- check_v(v, Inf, "no limit")
 
   n <- nrow(data)
 

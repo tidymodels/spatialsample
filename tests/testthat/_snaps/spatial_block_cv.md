@@ -36,7 +36,7 @@
       Not all folds contained blocks with data: 
       5 folds were requested, but only 4 contain any data. 
       Empty folds were dropped.
-      * To avoid this, set `relevant_only = TRUE`.
+      i To avoid this, set `relevant_only = TRUE`.
     Output
       #  4-fold spatial block cross-validation 
       # A tibble: 4 x 2
