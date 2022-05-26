@@ -128,10 +128,3 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
     id = names0(length(split_objs), "Fold")
   )
 }
-
-#' @export
-print.spatial_clustering_cv <- function(x, ...) {
-  cat("# ", pretty(x), "\n")
-  class(x) <- class(x)[!(class(x) %in% c("spatial_clustering_cv", "rset"))]
-  print(x, ...)
-}
