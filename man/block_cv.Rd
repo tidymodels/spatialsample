@@ -10,7 +10,7 @@ block_cv(data, method = "random", v = 10, ...)
 \item{data}{An object of class \code{sf} or \code{sfc}.}
 
 \item{method}{The method for sampling blocks for cross validation folds.
-Currently, only "random" is supported.}
+Currently, only \code{"random"} is supported.}
 
 \item{v}{The number of partitions of the data set.}
 
@@ -24,7 +24,7 @@ and an identification variable \code{id}.
 \description{
 Block cross-validation splits the area of your data into a number of
 grid cells, or "blocks", and then assigns all data into folds based on the
-blocks they fall into. By putting
+blocks they fall into.
 }
 \details{
 The grid blocks are drawn from can be controlled by passing arguments to
@@ -41,7 +41,7 @@ hexagonal (\code{FALSE}) cells.
 If both \code{cellsize} and \code{n} are provided, then the number of blocks requested
 by \code{n} of sizes specified by \code{cellsize} will be returned, likely not
 lining up with the bounding box of \code{data}. If only \code{cellsize}
-is provided, then this function will return as many blocks of size
+is provided, this function will return as many blocks of size
 \code{cellsize} as fit inside the bounding box of \code{data}. If only \code{n} is provided,
 then \code{cellsize} will be automatically adjusted to create the requested
 number of cells.

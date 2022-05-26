@@ -114,7 +114,7 @@ random_block_cv <- function(data, grid_blocks, v) {
 
   block_contains_points <- purrr::map_lgl(
     sf::st_intersects(grid_blocks, data),
-    function(x) !identical(x, integer(0))
+    sgbp_is_not_empty
   )
   grid_blocks <- grid_blocks[block_contains_points]
 
@@ -138,7 +138,7 @@ random_block_cv <- function(data, grid_blocks, v) {
     ~ which(
       vapply(
         sf::st_intersects(data, .x),
-        function(x) !identical(x, integer(0)),
+        sgbp_is_not_empty,
         logical(1)
       )
     )
@@ -157,6 +157,8 @@ random_block_cv <- function(data, grid_blocks, v) {
     v = v
   )
 }
+
+sgbp_is_not_empty <- function(x) !identical(x, integer(0))
 
 #' @export
 print.spatial_block_cv <- function(x, ...) {
