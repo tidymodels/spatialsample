@@ -31,10 +31,10 @@
     <loc>https://spatialsample.tidymodels.org/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/dev/reference/pretty.spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/dev/reference/reexports.html</loc>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/spatial_block_cv.html</loc>
   </url>
   <url>
     <loc>https://spatialsample.tidymodels.org/dev/reference/spatial_clustering_cv.html</loc>
