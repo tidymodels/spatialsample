@@ -13,9 +13,13 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = requireNamespace("ggplot2", quietly = TRUE) && requireNamespace("modeldata", quietly = TRUE)
 )
+```
+
+```{r, include = FALSE}
 library(ggplot2)
 theme_set(theme_minimal())
 ```
+
 
 The resampled objects created by spatialsample can be used in many of the same ways that those created by [rsample](https://rsample.tidymodels.org/) can, from making comparisons to evaluating models. These objects can be used together with other parts of the [tidymodels](https://www.tidymodels.org/) framework, but let's walk through a more basic example using linear modeling of housing data from Ames, IA.
 
