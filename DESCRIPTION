@@ -31,8 +31,7 @@ Imports:
     sf,
     tibble,
     tidyselect,
-    vctrs (>= 0.3.6),
-    vdiffr
+    vctrs (>= 0.3.6)
 Suggests: 
     covr,
     knitr,
@@ -41,6 +40,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
+    vdiffr,
     yardstick
 VignetteBuilder: 
     knitr
