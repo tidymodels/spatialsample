@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = requireNamespace("ggplot2", quietly = TRUE) && requireNamespace("modeldata", quietly = TRUE)
 )
 library(ggplot2)
 theme_set(theme_minimal())
