@@ -37,24 +37,21 @@
 #' International Geoscience and Remote Sensing Symposium, Munich, 2012,
 #' pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.
 #'
-#' @examples
-#' if (requireNamespace("modeldata", quietly = TRUE)) {
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Smithsonian, package = "modeldata")
+#' spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 #'
-#'   data(Smithsonian, package = "modeldata")
-#'   spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
+#' smithsonian_sf <- sf::st_as_sf(Smithsonian,
+#'                                coords = c("longitude", "latitude"),
+#'                                # Set CRS to WGS84
+#'                                crs = 4326)
 #'
-#'   smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                                  coords = c("longitude", "latitude"),
-#'                                  # Set CRS to WGS84
-#'                                  crs = 4326)
+#' # When providing sf objects, coords are inferred automatically
+#' spatial_clustering_cv(smithsonian_sf, v = 5)
 #'
-#'   # When providing sf objects, coords are inferred automatically
-#'   spatial_clustering_cv(smithsonian_sf, v = 5)
+#' # Can use hclust instead:
+#' spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
 #'
-#'   # Can use hclust instead:
-#'   spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
-#'
-#' }
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {

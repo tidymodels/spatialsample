@@ -47,18 +47,15 @@ then \code{cellsize} will be automatically adjusted to create the requested
 number of cells.
 }
 \examples{
-if (requireNamespace("modeldata", quietly = TRUE)) {
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Smithsonian, package = "modeldata")
+smithsonian_sf <- sf::st_as_sf(Smithsonian,
+                               coords = c("longitude", "latitude"),
+                               # Set CRS to WGS84
+                               crs = 4326)
 
-  data(Smithsonian, package = "modeldata")
-  smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                                 coords = c("longitude", "latitude"),
-                                 # Set CRS to WGS84
-                                 crs = 4326)
-
-  spatial_block_cv(smithsonian_sf, v = 3)
-
-}
-
+spatial_block_cv(smithsonian_sf, v = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 D. R. Roberts, V. Bahn, S. Ciuti, M. S. Boyce, J. Elith, G. Guillera-Arroita,
