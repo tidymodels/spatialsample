@@ -37,9 +37,9 @@
 #'
 #' @param ... Arguments passed to [sf::st_make_grid()].
 #'
-#' @return A tibble with classes `spatial_block_cv`, `rset`, `tbl_df`, `tbl`,
-#'   and `data.frame`. The results include a column for the data split objects
-#'   and an identification variable `id`.
+#' @return A tibble with classes `spatial_block_cv`,  `spatial_rset`, `rset`,
+#'   `tbl_df`, `tbl`, and `data.frame`. The results include a column for the
+#'   data split objects and an identification variable `id`.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(Smithsonian, package = "modeldata")
@@ -115,7 +115,7 @@ spatial_block_cv <- function(data, method = c("random", "systematic"), v = 10,
     splits = split_objs$splits,
     ids = split_objs[, grepl("^id", names(split_objs))],
     attrib = cv_att,
-    subclass = c("spatial_block_cv", "rset")
+    subclass = c("spatial_block_cv", "spatial_rset", "rset")
   )
 
 }

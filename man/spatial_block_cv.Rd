@@ -33,9 +33,9 @@ data be included in fold labeling?}
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
 }
 \value{
-A tibble with classes \code{spatial_block_cv}, \code{rset}, \code{tbl_df}, \code{tbl},
-and \code{data.frame}. The results include a column for the data split objects
-and an identification variable \code{id}.
+A tibble with classes \code{spatial_block_cv},  \code{spatial_rset}, \code{rset},
+\code{tbl_df}, \code{tbl}, and \code{data.frame}. The results include a column for the
+data split objects and an identification variable \code{id}.
 }
 \description{
 Block cross-validation splits the area of your data into a number of
