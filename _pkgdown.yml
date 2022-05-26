@@ -25,3 +25,4 @@ reference:
   - title: Utilities
     contents:
       - reexports
+      - autoplot.spatial_rset
