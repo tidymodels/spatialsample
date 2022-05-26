@@ -9,7 +9,7 @@ spatial_block_cv(data, method = "random", v = 10, ...)
 \arguments{
 \item{data}{An object of class \code{sf} or \code{sfc}.}
 
-\item{method}{The method for sampling blocks for cross validation folds.
+\item{method}{The method used to sample blocks for cross validation folds.
 Currently, only \code{"random"} is supported.}
 
 \item{v}{The number of partitions of the data set.}
@@ -27,7 +27,7 @@ grid cells, or "blocks", and then assigns all data into folds based on the
 blocks they fall into.
 }
 \details{
-The grid blocks are drawn from can be controlled by passing arguments to
+The grid blocks can be controlled by passing arguments to
 \code{\link[sf:st_make_grid]{sf::st_make_grid()}} via \code{...}. Some particularly useful arguments include:
 \itemize{
 \item \code{cellsize} Target cellsize, expressed as the "diameter" (shortest
