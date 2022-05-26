@@ -50,6 +50,7 @@ data are distributed spatially, there may not be an equal number of points
 in each fold.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(Smithsonian, package = "modeldata")
 spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
@@ -60,8 +61,10 @@ smithsonian_sf <- sf::st_as_sf(Smithsonian,
 
 # When providing sf objects, coords are inferred automatically
 spatial_clustering_cv(smithsonian_sf, v = 5)
+
 # Can use hclust instead:
 spatial_clustering_cv(smithsonian_sf, v = 5, cluster_function = "hclust")
+\dontshow{\}) # examplesIf}
 }
 \references{
 A. Brenning, "Spatial cross-validation and bootstrap for the assessment of

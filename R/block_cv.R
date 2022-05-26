@@ -33,7 +33,7 @@
 #'   and `data.frame`. The results include a column for the data split objects
 #'   and an identification variable `id`.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(Smithsonian, package = "modeldata")
 #' smithsonian_sf <- sf::st_as_sf(Smithsonian,
 #'                                coords = c("longitude", "latitude"),

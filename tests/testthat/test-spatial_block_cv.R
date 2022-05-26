@@ -1,7 +1,7 @@
 library(testthat)
 library(rsample)
 library(purrr)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
 data(ames, package = "modeldata")
 ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
