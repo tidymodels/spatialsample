@@ -1,6 +1,6 @@
 # spatialsample (development version)
 
-* `block_cv()` is a new function for performing spatial block cross validation.
+* `spatial_block_cv()` is a new function for performing spatial block cross validation.
   It currently supports randomly assigning blocks to folds.
 
 * `spatial_clustering_cv()` gains an argument, `cluster_function`, which 

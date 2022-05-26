@@ -40,7 +40,7 @@
 #'                                # Set CRS to WGS84
 #'                                crs = 4326)
 #'
-#' block_cv(smithsonian_sf, v = 3)
+#' spatial_block_cv(smithsonian_sf, v = 3)
 #'
 #' @references
 #'
@@ -51,13 +51,13 @@
 #' Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.
 #'
 #' @export
-block_cv <- function(data, method = "random", v = 10, ...) {
+spatial_block_cv <- function(data, method = "random", v = 10, ...) {
   method <- rlang::arg_match(method)
 
   if (!"sf" %in% class(data)) {
     rlang::abort(
       c(
-        "`block_cv` currently only supports `sf` objects.",
+        "`spatial_block_cv()` currently only supports `sf` objects.",
         i = "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
       )
     )
@@ -66,7 +66,7 @@ block_cv <- function(data, method = "random", v = 10, ...) {
   if (sf::st_crs(data) == sf::NA_crs_) {
     rlang::abort(
       c(
-        "`block_cv()` requires your data to have an appropriate coordinate reference system (CRS).",
+        "`spatial_block_cv()` requires your data to have an appropriate coordinate reference system (CRS).",
         i = "Try setting a CRS using `sf::st_set_crs()`."
       )
     )
@@ -133,13 +133,22 @@ random_block_cv <- function(data, grid_blocks, v) {
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
+
+  # grid_blocks is now a list of sgbp lists (?sf::sgbp)
+  #
+  # The first map() here iterates through the meta-list,
+  # and the second checks each element of the relevant sgbp list
+  # to see if it is integer(0) (no intersections) or not
+  #
+  # Each sgbp sub-list is nrow(data) elements long, so this which()
+  # returns the list indices which are not empty, which is equivalent
+  # to the row numbers that intersect with blocks in the fold
   indices <- purrr::map(
     grid_blocks,
-    ~ which(
-      vapply(
-        sf::st_intersects(data, .x),
-        sgbp_is_not_empty,
-        logical(1)
+    function(blocks) which(
+      purrr::map_lgl(
+        sf::st_intersects(data, blocks),
+        sgbp_is_not_empty
       )
     )
   )
@@ -158,4 +167,6 @@ random_block_cv <- function(data, grid_blocks, v) {
   )
 }
 
+# Check sparse geometry binary predicate for empty elements
+# See ?sf::sgbp for more information on the data structure
 sgbp_is_not_empty <- function(x) !identical(x, integer(0))

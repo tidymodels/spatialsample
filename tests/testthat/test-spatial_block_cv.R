@@ -8,7 +8,7 @@ ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 
 test_that("random assignment", {
   set.seed(11)
-  rs1 <- block_cv(ames_sf)
+  rs1 <- spatial_block_cv(ames_sf)
   sizes1 <- dim_rset(rs1)
 
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
@@ -32,12 +32,12 @@ test_that("printing", {
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
   set.seed(123)
   expect_snapshot_output(
-    block_cv(ames_sf)
+    spatial_block_cv(ames_sf)
   )
 })
 
 test_that("rsplit labels", {
-  rs <- block_cv(ames_sf, v = 2)
+  rs <- spatial_block_cv(ames_sf, v = 2)
   all_labs <- map_df(rs$splits, labels)
   original_id <- rs[, grepl("^id", names(rs))]
   expect_equal(all_labs, original_id)
