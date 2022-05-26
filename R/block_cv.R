@@ -5,7 +5,7 @@
 #' blocks they fall into.
 #'
 #' @details
-#' The grid blocks are drawn from can be controlled by passing arguments to
+#' The grid blocks can be controlled by passing arguments to
 #' [sf::st_make_grid()] via `...`. Some particularly useful arguments include:
 #'
 #' * `cellsize` Target cellsize, expressed as the "diameter" (shortest
@@ -24,7 +24,7 @@
 #' number of cells.
 #'
 #' @param data An object of class `sf` or `sfc`.
-#' @param method The method for sampling blocks for cross validation folds.
+#' @param method The method used to sample blocks for cross validation folds.
 #' Currently, only `"random"` is supported.
 #' @inheritParams rsample::vfold_cv
 #' @param ... Arguments passed to [sf::st_make_grid()].
