@@ -2,37 +2,42 @@
 
     Code
       spatial_block_cv(ames)
-    Error <rlang_error>
-      `spatial_block_cv()` currently only supports `sf` objects.
+    Condition
+      Error in `spatial_block_cv()`:
+      ! `spatial_block_cv()` currently only supports `sf` objects.
       i Try converting `data` to an `sf` object via `sf::st_as_sf()`.
 
 ---
 
     Code
       spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
-    Error <rlang_error>
-      `spatial_block_cv()` requires your data to have an appropriate coordinate reference system (CRS).
+    Condition
+      Error in `spatial_block_cv()`:
+      ! `spatial_block_cv()` requires your data to have an appropriate coordinate reference system (CRS).
       i Try setting a CRS using `sf::st_set_crs()`.
 
 ---
 
     Code
       spatial_block_cv(ames_sf, v = c(5, 10))
-    Error <rlang_error>
-      `v` must be a single integer.
+    Condition
+      Error in `random_block_cv()`:
+      ! `v` must be a single integer.
 
 ---
 
     Code
       spatial_block_cv(ames_sf, v = c(5, 10), method = "systematic")
-    Error <rlang_error>
-      `v` must be a single integer.
+    Condition
+      Error in `systematic_block_cv()`:
+      ! `v` must be a single integer.
 
 ---
 
     Code
       spatial_block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
-    Warning <rlang_warning>
+    Condition
+      Warning:
       Not all folds contained blocks with data: 
       5 folds were requested, but only 4 contain any data. 
       Empty folds were dropped.
@@ -51,7 +56,8 @@
 
     Code
       spatial_block_cv(ames_sf, method = "systematic", v = 60)
-    Warning <rlang_warning>
+    Condition
+      Warning in `systematic_block_cv()`:
       Fewer than 60 blocks available for sampling; setting v to 17.
     Output
       #  17-fold spatial block cross-validation 
@@ -80,7 +86,8 @@
 
     Code
       spatial_block_cv(ames_sf, v = 60)
-    Warning <rlang_warning>
+    Condition
+      Warning in `random_block_cv()`:
       Fewer than 60 blocks available for sampling; setting v to 17.
     Output
       #  17-fold spatial block cross-validation 

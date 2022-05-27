@@ -2,21 +2,24 @@
 
     Code
       spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = "a")
-    Error <rlang_error>
-      `v` must be a single integer.
+    Condition
+      Error in `spatial_clustering_splits()`:
+      ! `v` must be a single integer.
 
 ---
 
     Code
       spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = c(5, 10))
-    Error <rlang_error>
-      `v` must be a single integer.
+    Condition
+      Error in `spatial_clustering_splits()`:
+      ! `v` must be a single integer.
 
 # using sf
 
     Code
       spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
-    Warning <rlang_warning>
+    Condition
+      Warning:
       `coords` is ignored when providing `sf` objects to `data`.
     Output
       #  10-fold spatial cross-validation 
