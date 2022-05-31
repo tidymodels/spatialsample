@@ -25,3 +25,6 @@ reference:
   - title: Utilities
     contents:
       - reexports
+  - title: Data
+    contents:
+      - boston_canopy
