@@ -21,7 +21,9 @@
 #' the number of folds to create, and `...`. Both the `dist` object and `v`
 #' are passed by position, without names, and must be the first and second
 #' arguments to your function respectively; any named arguments to your
-#' function can be accessed via `...`.
+#' function can be accessed via `...`. The function should return a vector
+#' of cluster assignments of length `nrow(data)`, with each element of the
+#' vector corresponding to the matching row of the data frame.
 #'
 #' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
