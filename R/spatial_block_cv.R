@@ -8,11 +8,11 @@
 #' The grid blocks can be controlled by passing arguments to
 #' [sf::st_make_grid()] via `...`. Some particularly useful arguments include:
 #'
-#' * `cellsize` Target cellsize, expressed as the "diameter" (shortest
+#' * `cellsize`: Target cellsize, expressed as the "diameter" (shortest
 #' straight-line distance between opposing sides; two times the apothem)
 #' of each block, in map units.
-#' * `n` The number of grid blocks in the x and y direction (columns, rows).
-#' * `square` A logical value indicating whether to create square (`TRUE`) or
+#' * `n`: The number of grid blocks in the x and y direction (columns, rows).
+#' * `square`: A logical value indicating whether to create square (`TRUE`) or
 #' hexagonal (`FALSE`) cells.
 #'
 #' If both `cellsize` and `n` are provided, then the number of blocks requested

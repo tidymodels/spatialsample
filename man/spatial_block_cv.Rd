@@ -46,11 +46,11 @@ blocks they fall into.
 The grid blocks can be controlled by passing arguments to
 \code{\link[sf:st_make_grid]{sf::st_make_grid()}} via \code{...}. Some particularly useful arguments include:
 \itemize{
-\item \code{cellsize} Target cellsize, expressed as the "diameter" (shortest
+\item \code{cellsize}: Target cellsize, expressed as the "diameter" (shortest
 straight-line distance between opposing sides; two times the apothem)
 of each block, in map units.
-\item \code{n} The number of grid blocks in the x and y direction (columns, rows).
-\item \code{square} A logical value indicating whether to create square (\code{TRUE}) or
+\item \code{n}: The number of grid blocks in the x and y direction (columns, rows).
+\item \code{square}: A logical value indicating whether to create square (\code{TRUE}) or
 hexagonal (\code{FALSE}) cells.
 }
 
