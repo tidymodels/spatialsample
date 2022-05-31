@@ -93,7 +93,6 @@ test_that("can pass the dots to kmeans", {
 
 test_that("using sf", {
 
-
   Smithsonian_sf <- sf::st_as_sf(Smithsonian,
                                  coords = c("longitude", "latitude"),
                                  crs = 4326)
@@ -140,6 +139,55 @@ test_that("using sf", {
 
 
 })
+
+test_that("using custom functions", {
+
+  custom_cluster <- function(dists, v, ...) {
+    clusters <- kmeans(dists, centers = v, ...)
+    letters[clusters$cluster]
+  }
+
+  set.seed(11)
+  rs1 <- spatial_clustering_cv(Smithsonian,
+                               coords = c(latitude, longitude),
+                               v = 2
+  )
+  set.seed(11)
+  rs2 <- spatial_clustering_cv(Smithsonian,
+                               coords = c(latitude, longitude),
+                               v = 2,
+                               cluster_function = custom_cluster
+  )
+  expect_identical(rs1, rs2)
+
+  expect_error(
+    spatial_clustering_cv(Smithsonian,
+                          coords = c(latitude, longitude),
+                          v = 2,
+                          cluster_function = custom_cluster,
+                          algorithm = "MacQueen"
+    ),
+    NA
+  )
+
+  Smithsonian_sf <- sf::st_as_sf(Smithsonian,
+                                 coords = c("longitude", "latitude"),
+                                 crs = 4326)
+
+  expect_error(
+    spatial_clustering_cv(Smithsonian_sf,
+                          v = 2,
+                          cluster_function = custom_cluster,
+                          algorithm = "MacQueen"
+    ),
+    NA
+  )
+
+
+})
+
+
+
 
 test_that("printing", {
   # The default RNG changed in 3.6.0
