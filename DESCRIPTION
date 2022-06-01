@@ -24,6 +24,7 @@ Depends:
     R (>= 3.4)
 Imports:
     dplyr (>= 1.0.0),
+    ggplot2,
     glue,
     purrr,
     rlang (>= 1.0.0),
@@ -34,13 +35,13 @@ Imports:
     vctrs (>= 0.3.6)
 Suggests: 
     covr,
-    ggplot2,
     knitr,
     lwgeom,
     modeldata,
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
+    vdiffr,
     yardstick
 VignetteBuilder: 
     knitr

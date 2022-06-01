@@ -25,6 +25,7 @@ reference:
   - title: Utilities
     contents:
       - reexports
+      - autoplot.spatial_rset
   - title: Data
     contents:
       - boston_canopy

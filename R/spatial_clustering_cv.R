@@ -57,6 +57,7 @@
 spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
   cluster_function <- rlang::arg_match(cluster_function)
 
+  subclasses <- c("spatial_clustering_cv", "spatial_rset", "rset")
   if ("sf" %in% class(data)) {
     if (!missing(coords)) {
       rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
@@ -70,6 +71,7 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     }
     coords <- data[coords]
     dists <- dist(coords)
+    subclasses <- setdiff(subclasses, "spatial_rset")
   }
 
   split_objs <- spatial_clustering_splits(data = data,
@@ -91,7 +93,7 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     splits = split_objs$splits,
     ids = split_objs[, grepl("^id", names(split_objs))],
     attrib = cv_att,
-    subclass = c("spatial_clustering_cv", "rset")
+    subclass = subclasses
   )
 
 }
