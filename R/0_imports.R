@@ -21,3 +21,6 @@ rsample::assessment
 
 #' @import vctrs
 NULL
+
+#' @import sf
+NULL
