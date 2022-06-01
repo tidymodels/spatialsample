@@ -11,7 +11,7 @@
 #' @format A data frame (of class `sf`, `tbl_df`, `tbl`, and `data.frame`)
 #' containing 682 records of 22 variables:
 #' \describe{
-#'   \item{grid_id}{Unique identifier for each hexagon}
+#'   \item{grid_id}{Unique identifier for each hexagon. Letters represent the hexagon's longitudinal position in the grid (ordered West to East), while numbers represent the latitudinal position (ordered North to South).}
 #'   \item{land_area}{Area excluding water bodies}
 #'   \item{canopy_gain}{Area of canopy gain between the two years}
 #'   \item{canopy_loss}{Area of canopy loss between the two years}
@@ -29,7 +29,7 @@
 #'   \item{mean_heat_index_morning}{Mean heat index for July 2019 from 6am - 7am}
 #'   \item{mean_heat_index_evening}{Mean heat index for July 2019 from 7pm - 8pm}
 #'   \item{mean_heat_index}{Mean heat index for July 2019 from 6am - 7am, 3pm - 4pm, and 7pm - 8pm (combined)}
-#'   \item{geometry}{Geometry of each hexagon, encoded using EPSG:2249 as a coordinate reference system (NAD83 / Massachusetts Mainland (ftUS)). Note that the linear units of this CRS are in US feet}
+#'   \item{geometry}{Geometry of each hexagon, encoded using EPSG:2249 as a coordinate reference system (NAD83 / Massachusetts Mainland (ftUS)). Note that the linear units of this CRS are in US feet.}
 #' }
 #'
 #' @source Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics2}.
