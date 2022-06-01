@@ -30,9 +30,9 @@
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @param v The number of partitions of the data set.
 #' @param cluster_function Which function to use for clustering.
-#' Options are either "kmeans" (to use [stats::kmeans()])
-#' or "hclust" (to use [stats::hclust()]). You can also provide your own
-#' function; see `details`.
+#' Options are either `"kmeans"` (to use [stats::kmeans()])
+#' or `"hclust"` (to use [stats::hclust()]). You can also provide your own
+#' function; see `Details`.
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
 #'
