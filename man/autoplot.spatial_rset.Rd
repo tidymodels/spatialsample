@@ -7,8 +7,10 @@
 \method{autoplot}{spatial_rset}(object, ...)
 }
 \arguments{
-\item{object}{A \code{spatial_rset} object. Note that only resamples made from
-\code{sf} objects are \code{spatial_rset} objects; this function will not work for
+\item{object}{A \code{spatial_rset} object or a \code{spatial_rsplit} object.
+Note that only resamples made from
+\code{sf} objects create \code{spatial_rset} and \code{spatial_rsplit} objects;
+this function will not work for
 resamples made with non-spatial tibbles or data.frames.}
 
 \item{...}{Options passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}.}

@@ -178,7 +178,7 @@ generate_folds_from_blocks <- function(data, grid_blocks, v, n) {
     indices,
     make_splits,
     data = data,
-    class = "spatial_block_split"
+    class = c("spatial_block_split", "spatial_rsplit")
   )
   tibble::tibble(
     splits = split_objs,
