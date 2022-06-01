@@ -38,9 +38,9 @@
       spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 5)
     Condition
       Warning:
-      Not all folds contained blocks with data: 
-      5 folds were requested, but only 4 contain any data. 
-      Empty folds were dropped.
+      Not all folds contained blocks with data:
+      x 5 folds were requested, but only 4 contain any data.
+      x Empty folds were dropped.
       i To avoid this, set `relevant_only = TRUE`.
     Output
       #  4-fold spatial block cross-validation 
