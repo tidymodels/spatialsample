@@ -39,8 +39,8 @@
     Condition
       Warning:
       Not all folds contained blocks with data:
-      i 5 folds were requested, but only 4 contain any data.
-      i Empty folds were dropped.
+      x 5 folds were requested, but only 4 contain any data.
+      x Empty folds were dropped.
       i To avoid this, set `relevant_only = TRUE`.
     Output
       #  4-fold spatial block cross-validation 
