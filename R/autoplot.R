@@ -12,8 +12,11 @@
 #'
 #' @examplesIf rlang::is_installed("ggplot2") && rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
-#' ames_sf <- sf::st_as_sf(ames,
-#'                         coords = c("Longitude", "Latitude"), crs = 4326)
+#' ames_sf <- sf::st_as_sf(
+#'   ames,
+#'   coords = c("Longitude", "Latitude"),
+#'   crs = 4326
+#' )
 #'
 #' ames_block <- spatial_block_cv(ames_sf)
 #' autoplot(ames_block)
@@ -29,9 +32,10 @@ autoplot.spatial_rset <- function(object, ...) {
     ~ cbind(assessment(.x), fold = .y)
   )
 
-  p <- ggplot2::ggplot(data = object,
-                       mapping = ggplot2::aes(color = fold, fill = fold))
+  p <- ggplot2::ggplot(
+    data = object,
+    mapping = ggplot2::aes(color = fold, fill = fold)
+  )
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
-
 }
