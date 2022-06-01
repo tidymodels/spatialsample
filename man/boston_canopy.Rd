@@ -8,7 +8,7 @@
 A data frame (of class \code{sf}, \code{tbl_df}, \code{tbl}, and \code{data.frame})
 containing 682 records of 22 variables:
 \describe{
-\item{grid_id}{Unique identifier for each hexagon. Letters represent the hexagon's longitudinal position in the grid (ordered West to East), while numbers represent the latitudinal position (ordered North to South).}
+\item{grid_id}{Unique identifier for each hexagon. Letters represent the hexagon's X position in the grid (ordered West to East), while numbers represent the Y position (ordered North to South).}
 \item{land_area}{Area excluding water bodies}
 \item{canopy_gain}{Area of canopy gain between the two years}
 \item{canopy_loss}{Area of canopy loss between the two years}
