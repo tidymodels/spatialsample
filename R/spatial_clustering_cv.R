@@ -100,9 +100,7 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
 
   cluster_function <- rlang::arg_match(cluster_function)
 
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.")
-  }
+  v <- check_v(v, nrow(data), "data points")
 
   n <- nrow(data)
 
@@ -121,7 +119,8 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
   idx <- seq_len(n)
   indices <- split_unnamed(idx, folds)
   indices <- lapply(indices, default_complement, n = n)
-  split_objs <- purrr::map(indices, make_splits,
+  split_objs <- purrr::map(
+    indices, make_splits,
     data = data,
     class = "spatial_clustering_split"
   )

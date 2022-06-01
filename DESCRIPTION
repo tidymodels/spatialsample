@@ -24,8 +24,9 @@ Depends:
     R (>= 3.4)
 Imports:
     dplyr (>= 1.0.0),
+    glue,
     purrr,
-    rlang,
+    rlang (>= 1.0.0),
     rsample (>= 0.0.9),
     sf,
     tibble,
