@@ -48,7 +48,7 @@ blocks they fall into.'><meta property="og:image" content="https://spatialsample
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Spatial block cross-validation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/spatialsample/blob/HEAD/R/block_cv.R" class="external-link"><code>R/block_cv.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/spatialsample/blob/HEAD/R/spatial_block_cv.R" class="external-link"><code>R/spatial_block_cv.R</code></a></small>
       <div class="d-none name"><code>spatial_block_cv.Rd</code></div>
     </div>
 
@@ -60,7 +60,13 @@ blocks they fall into.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spatial_block_cv</span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"random"</span>, v <span class="op">=</span> <span class="fl">10</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spatial_block_cv</span><span class="op">(</span>
+  <span class="va">data</span>,
+  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"random"</span>, <span class="st">"snake"</span>, <span class="st">"continuous"</span><span class="op">)</span>,
+  v <span class="op">=</span> <span class="fl">10</span>,
+  relevant_only <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,26 +75,33 @@ blocks they fall into.</p>
 <dd><p>An object of class <code>sf</code> or <code>sfc</code>.</p></dd>
 <dt>method</dt>
 <dd><p>The method used to sample blocks for cross validation folds.
-Currently, only <code>"random"</code> is supported.</p></dd>
+Currently supports <code>"random"</code>, which randomly assigns blocks to folds,
+<code>"snake"</code>, which labels the first row of blocks from left to right,
+then the next from right to left, and repeats from there,
+and <code>"continuous"</code>, which labels each row from left
+to right, moving from the bottom row up.</p></dd>
 <dt>v</dt>
 <dd><p>The number of partitions of the data set.</p></dd>
+<dt>relevant_only</dt>
+<dd><p>For systematic sampling, should only blocks containing
+data be included in fold labeling?</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">sf::st_make_grid()</a></code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with classes <code>spatial_block_cv</code>, <code>rset</code>, <code>tbl_df</code>, <code>tbl</code>,
-and <code>data.frame</code>. The results include a column for the data split objects
-and an identification variable <code>id</code>.</p>
+    <p>A tibble with classes <code>spatial_block_cv</code>,  <code>spatial_rset</code>, <code>rset</code>,
+<code>tbl_df</code>, <code>tbl</code>, and <code>data.frame</code>. The results include a column for the
+data split objects and an identification variable <code>id</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The grid blocks can be controlled by passing arguments to
-<code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">sf::st_make_grid()</a></code> via <code>...</code>. Some particularly useful arguments include:</p><ul><li><p><code>cellsize</code> Target cellsize, expressed as the "diameter" (shortest
+<code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">sf::st_make_grid()</a></code> via <code>...</code>. Some particularly useful arguments include:</p><ul><li><p><code>cellsize</code>: Target cellsize, expressed as the "diameter" (shortest
 straight-line distance between opposing sides; two times the apothem)
 of each block, in map units.</p></li>
-<li><p><code>n</code> The number of grid blocks in the x and y direction (columns, rows).</p></li>
-<li><p><code>square</code> A logical value indicating whether to create square (<code>TRUE</code>) or
+<li><p><code>n</code>: The number of grid blocks in the x and y direction (columns, rows).</p></li>
+<li><p><code>square</code>: A logical value indicating whether to create square (<code>TRUE</code>) or
 hexagonal (<code>FALSE</code>) cells.</p></li>
 </ul><p>If both <code>cellsize</code> and <code>n</code> are provided, then the number of blocks requested
 by <code>n</code> of sizes specified by <code>cellsize</code> will be returned, likely not
@@ -120,8 +133,8 @@ Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [3/17]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [3/17]&gt;</span> Fold2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold3</span>
 </code></pre></div>
     </div>
