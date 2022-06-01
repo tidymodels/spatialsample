@@ -14,7 +14,6 @@ set.seed(123)
 ames_non_sf <- spatial_clustering_cv(ames, coords = c("Longitude", "Latitude"))
 
 test_that("autoplot is stable", {
-
   p <- autoplot(ames_cluster)
   vdiffr::expect_doppelganger("cluster plots", p)
 
@@ -25,5 +24,4 @@ test_that("autoplot is stable", {
     autoplot(ames_non_sf),
     error = TRUE
   )
-
 })

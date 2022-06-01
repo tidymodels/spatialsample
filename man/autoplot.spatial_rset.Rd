@@ -23,8 +23,11 @@ This method provides a good visualization method for spatial resampling.
 \examples{
 \dontshow{if (rlang::is_installed("ggplot2") && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
-ames_sf <- sf::st_as_sf(ames,
-                        coords = c("Longitude", "Latitude"), crs = 4326)
+ames_sf <- sf::st_as_sf(
+  ames,
+  coords = c("Longitude", "Latitude"),
+  crs = 4326
+)
 
 ames_block <- spatial_block_cv(ames_sf)
 autoplot(ames_block)

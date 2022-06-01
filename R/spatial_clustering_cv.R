@@ -53,10 +53,12 @@
 #' data(Smithsonian, package = "modeldata")
 #' spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 #'
-#' smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                                coords = c("longitude", "latitude"),
-#'                                # Set CRS to WGS84
-#'                                crs = 4326)
+#' smithsonian_sf <- sf::st_as_sf(
+#'   Smithsonian,
+#'   coords = c("longitude", "latitude"),
+#'   # Set CRS to WGS84
+#'   crs = 4326
+#' )
 #'
 #' # When providing sf objects, coords are inferred automatically
 #' spatial_clustering_cv(smithsonian_sf, v = 5)
@@ -88,11 +90,13 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     subclasses <- setdiff(subclasses, "spatial_rset")
   }
 
-  split_objs <- spatial_clustering_splits(data = data,
-                                          dists = dists,
-                                          v = v,
-                                          cluster_function = cluster_function,
-                                          ...)
+  split_objs <- spatial_clustering_splits(
+    data = data,
+    dists = dists,
+    v = v,
+    cluster_function = cluster_function,
+    ...
+  )
 
   ## We remove the holdout indices since it will save space and we can
   ## derive them later when they are needed.
@@ -109,11 +113,13 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     attrib = cv_att,
     subclass = subclasses
   )
-
 }
 
-spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
-
+spatial_clustering_splits <- function(data,
+                                      dists,
+                                      v = 10,
+                                      cluster_function = c("kmeans", "hclust"),
+                                      ...) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }
@@ -122,9 +128,11 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
 
   n <- nrow(data)
 
-  clusterer <- ifelse(rlang::is_function(cluster_function),
-                      "custom",
-                      cluster_function)
+  clusterer <- ifelse(
+    rlang::is_function(cluster_function),
+    "custom",
+    cluster_function
+  )
 
   folds <- switch(
     clusterer,

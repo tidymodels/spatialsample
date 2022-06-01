@@ -42,10 +42,12 @@
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(Smithsonian, package = "modeldata")
-#' smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                                coords = c("longitude", "latitude"),
-#'                                # Set CRS to WGS84
-#'                                crs = 4326)
+#' smithsonian_sf <- sf::st_as_sf(
+#'   Smithsonian,
+#'   coords = c("longitude", "latitude"),
+#'   # Set CRS to WGS84
+#'   crs = 4326
+#' )
 #'
 #' spatial_block_cv(smithsonian_sf, v = 3)
 #'
@@ -118,7 +120,6 @@ spatial_block_cv <- function(data,
     attrib = cv_att,
     subclass = c("spatial_block_cv", "spatial_rset", "rset")
   )
-
 }
 
 random_block_cv <- function(data, grid_blocks, v) {
@@ -135,7 +136,9 @@ random_block_cv <- function(data, grid_blocks, v) {
   generate_folds_from_blocks(data, grid_blocks, v, n)
 }
 
-systematic_block_cv <- function(data, grid_blocks, v,
+systematic_block_cv <- function(data,
+                                grid_blocks,
+                                v,
                                 ordering = c("snake", "continuous"),
                                 relevant_only = TRUE) {
   n <- nrow(data)
@@ -235,11 +238,13 @@ row_ids_intersecting_fold_blocks <- function(grid_blocks, data) {
   # to the row numbers that intersect with blocks in the fold
   purrr::map(
     grid_blocks,
-    function(blocks) which(
-      purrr::map_lgl(
-        sf::st_intersects(data, blocks),
-        sgbp_is_not_empty
+    function(blocks) {
+      which(
+        purrr::map_lgl(
+          sf::st_intersects(data, blocks),
+          sgbp_is_not_empty
+        )
       )
-    )
+    }
   )
 }

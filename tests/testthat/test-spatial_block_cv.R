@@ -17,10 +17,12 @@ test_that("random assignment", {
   expect_identical(rs1, rs2)
 
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
-  same_data <-
-    map_lgl(rs1$splits, function(x) {
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
       isTRUE(all.equal(x$data, ames_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -37,10 +39,12 @@ test_that("systematic assignment -- snake", {
   rs1 <- spatial_block_cv(ames_sf, method = "snake")
   sizes1 <- dim_rset(rs1)
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
-  same_data <-
-    map_lgl(rs1$splits, function(x) {
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
       isTRUE(all.equal(x$data, ames_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -52,16 +56,20 @@ test_that("systematic assignment -- snake", {
   expect_true(all(good_holdout))
 
   set.seed(123)
-  rs3 <- spatial_block_cv(ames_sf,
-                          method = "snake",
-                          relevant_only = FALSE,
-                          v = 4)
+  rs3 <- spatial_block_cv(
+    ames_sf,
+    method = "snake",
+    relevant_only = FALSE,
+    v = 4
+  )
   sizes3 <- dim_rset(rs3)
   expect_true(all(sizes3$analysis + sizes3$assessment == nrow(ames)))
-  same_data <-
-    map_lgl(rs3$splits, function(x) {
+  same_data <- map_lgl(
+    rs3$splits,
+    function(x) {
       isTRUE(all.equal(x$data, ames_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -71,7 +79,6 @@ test_that("systematic assignment -- snake", {
     }
   )
   expect_true(all(good_holdout))
-
 })
 
 test_that("systematic assignment -- continuous", {
@@ -80,10 +87,12 @@ test_that("systematic assignment -- continuous", {
 
   sizes1 <- dim_rset(rs1)
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
-  same_data <-
-    map_lgl(rs1$splits, function(x) {
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
       isTRUE(all.equal(x$data, ames_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -96,15 +105,18 @@ test_that("systematic assignment -- continuous", {
 
   set.seed(123)
   rs3 <- spatial_block_cv(ames_sf,
-                          method = "continuous",
-                          relevant_only = FALSE,
-                          v = 4)
+    method = "continuous",
+    relevant_only = FALSE,
+    v = 4
+  )
   sizes3 <- dim_rset(rs3)
   expect_true(all(sizes3$analysis + sizes3$assessment == nrow(ames)))
-  same_data <-
-    map_lgl(rs3$splits, function(x) {
+  same_data <- map_lgl(
+    rs3$splits,
+    function(x) {
       isTRUE(all.equal(x$data, ames_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -117,7 +129,6 @@ test_that("systematic assignment -- continuous", {
 })
 
 test_that("bad args", {
-
   set.seed(123)
   expect_snapshot(
     spatial_block_cv(ames),
@@ -160,7 +171,6 @@ test_that("bad args", {
   expect_snapshot(
     spatial_block_cv(ames_sf, v = 60)
   )
-
 })
 
 test_that("printing", {
