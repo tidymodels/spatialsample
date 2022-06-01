@@ -158,7 +158,7 @@ systematic_block_cv <- function(data, grid_blocks, v,
     rlang::warn(c(
       "Not all folds contained blocks with data:",
       i = glue::glue("{v} folds were requested, \\
-                       but only {num_folds} contain any data."),
+                     but only {num_folds} contain any data."),
       i = "Empty folds were dropped.",
       i = "To avoid this, set `relevant_only = TRUE`."
     ))
