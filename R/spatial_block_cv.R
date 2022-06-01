@@ -127,7 +127,7 @@ random_block_cv <- function(data, grid_blocks, v) {
   grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks", rlang::caller_env())
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
@@ -144,7 +144,7 @@ systematic_block_cv <- function(data, grid_blocks, v,
   if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks", rlang::caller_env())
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
 
   folds <- rep(seq_len(v), length.out = length(grid_blocks))
   if (ordering == "snake") folds <- make_snake_ordering(folds, grid_blocks)
