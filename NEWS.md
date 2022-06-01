@@ -11,7 +11,7 @@
   specifies what type of clustering to perform. `cluster_function = "kmeans"`, 
   the default, uses `stats::kmeans()` for k-means clustering, while 
   `cluster_function = "hclust"` uses `stats::hclust()` for hierarchical 
-  clustering.
+  clustering. Users can also provide their own clustering function.
   
 * `spatial_clustering_cv()` now supports `sf` objects! Coordinates are inferred
   automatically when using `sf` objects, and anything passed to `coords` will

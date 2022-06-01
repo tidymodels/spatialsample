@@ -15,14 +15,26 @@
 #'  data are distributed spatially, there may not be an equal number of points
 #'  in each fold.
 #'
+#' You can optionally provide a custom function to `cluster_function`. The
+#' function must take three arguments:
+#' - `dists`, a [stats::dist()] object with distances between data points
+#' - `v`, a length-1 numeric for the number of folds to create
+#' - `...`, to pass any additional named arguments to your function
+#'
+#' The function should return a vector of cluster assignments of length
+#' `nrow(data)`, with each element of the vector corresponding to the matching
+#' row of the data frame.
+#'
 #' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
 #' @param coords A vector of variable names, typically spatial coordinates,
 #'  to partition the data into disjointed sets via k-means clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @param v The number of partitions of the data set.
-#' @param cluster_function Which function to use for clustering. Must be one of either
-#' "kmeans" (to use [stats::kmeans()]) or "hclust" (to use [stats::hclust()]).
+#' @param cluster_function Which function should be used for clustering?
+#' Options are either `"kmeans"` (to use [stats::kmeans()])
+#' or `"hclust"` (to use [stats::hclust()]). You can also provide your own
+#' function; see `Details`.
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
 #'
@@ -55,7 +67,9 @@
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
-  cluster_function <- rlang::arg_match(cluster_function)
+  if (!rlang::is_function(cluster_function)) {
+    cluster_function <- rlang::arg_match(cluster_function)
+  }
 
   subclasses <- c("spatial_clustering_cv", "spatial_rset", "rset")
   if ("sf" %in% class(data)) {
@@ -100,14 +114,20 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
 
 spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
 
-  cluster_function <- rlang::arg_match(cluster_function)
+  if (!rlang::is_function(cluster_function)) {
+    cluster_function <- rlang::arg_match(cluster_function)
+  }
 
   v <- check_v(v, nrow(data), "data points")
 
   n <- nrow(data)
 
+  clusterer <- ifelse(rlang::is_function(cluster_function),
+                      "custom",
+                      cluster_function)
+
   folds <- switch(
-    cluster_function,
+    clusterer,
     "kmeans" = {
       clusters <- kmeans(dists, centers = v, ...)
       clusters$cluster
@@ -115,7 +135,8 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
     "hclust" = {
       clusters <- hclust(dists, ...)
       cutree(clusters, k = v)
-    }
+    },
+    do.call(cluster_function, list(dists = dists, v = v, ...))
   )
 
   idx <- seq_len(n)
