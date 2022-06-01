@@ -38,9 +38,12 @@
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
 #'
-#' @return A tibble with classes `spatial_cv`, `rset`, `tbl_df`, `tbl`, and
-#'  `data.frame`. The results include a column for the data split objects and
+#' @return A tibble with classes `spatial_clustering_cv`, `spatial_rset`,
+#'  `rset`, `tbl_df`, `tbl`, and `data.frame`.
+#'  The results include a column for the data split objects and
 #'  an identification variable `id`.
+#'  Resamples created from non-`sf` objects will not have the
+#'  `spatial_rset` class.
 #'
 #' @references
 #'

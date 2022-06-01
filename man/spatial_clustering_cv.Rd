@@ -31,9 +31,12 @@ function; see \code{Details}.}
 \code{\link[stats:hclust]{stats::hclust()}}.}
 }
 \value{
-A tibble with classes \code{spatial_cv}, \code{rset}, \code{tbl_df}, \code{tbl}, and
-\code{data.frame}. The results include a column for the data split objects and
+A tibble with classes \code{spatial_clustering_cv}, \code{spatial_rset},
+\code{rset}, \code{tbl_df}, \code{tbl}, and \code{data.frame}.
+The results include a column for the data split objects and
 an identification variable \code{id}.
+Resamples created from non-\code{sf} objects will not have the
+\code{spatial_rset} class.
 }
 \description{
 Spatial or cluster cross-validation splits the data into V groups of
