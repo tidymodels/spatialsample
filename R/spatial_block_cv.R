@@ -155,19 +155,13 @@ systematic_block_cv <- function(data, grid_blocks, v,
 
   num_folds <- length(unique(grid_blocks$fold))
   if (num_folds != v) {
-    rlang::warn(
-      c(
-        glue::glue(
-          "Not all folds contained blocks with data: \n{v} folds were",
-          "requested, but only {num_folds} contain any data.",
-          "\nEmpty folds were dropped.",
-          v = v,
-          num_folds = num_folds,
-          .sep = " "
-        ),
-        i = "To avoid this, set `relevant_only = TRUE`."
-      )
-    )
+    rlang::warn(c(
+      "Not all folds contained blocks with data:",
+      i = glue::glue("{v} folds were requested, \\
+                       but only {num_folds} contain any data."),
+      i = "Empty folds were dropped.",
+      i = "To avoid this, set `relevant_only = TRUE`."
+    ))
     v <- num_folds
   }
 
