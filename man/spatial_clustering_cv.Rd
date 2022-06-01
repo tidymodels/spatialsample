@@ -22,10 +22,10 @@ This argument is ignored (with a warning) if \code{data} is an \code{sf} object.
 
 \item{v}{The number of partitions of the data set.}
 
-\item{cluster_function}{Which function to use for clustering.
-Options are either "kmeans" (to use \code{\link[stats:kmeans]{stats::kmeans()}})
-or "hclust" (to use \code{\link[stats:hclust]{stats::hclust()}}). You can also provide your own
-function; see \code{details}.}
+\item{cluster_function}{Which function should be used for clustering?
+Options are either \code{"kmeans"} (to use \code{\link[stats:kmeans]{stats::kmeans()}})
+or \code{"hclust"} (to use \code{\link[stats:hclust]{stats::hclust()}}). You can also provide your own
+function; see \code{Details}.}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
 \code{\link[stats:hclust]{stats::hclust()}}.}
@@ -52,12 +52,16 @@ data are distributed spatially, there may not be an equal number of points
 in each fold.
 
 You can optionally provide a custom function to \code{cluster_function}. The
-function must take three arguments: \code{dists}, a \code{\link[stats:dist]{stats::dist()}} object
-indicating distances between data points, \code{v}, a length-1 numeric indicating
-the number of folds to create, and \code{...}. Any additional named arguments to
-your function can be accessed via \code{...}. The function should return a vector
-of cluster assignments of length \code{nrow(data)}, with each element of the
-vector corresponding to the matching row of the data frame.
+function must take three arguments:
+\itemize{
+\item \code{dists}, a \code{\link[stats:dist]{stats::dist()}} object with distances between data points
+\item \code{v}, a length-1 numeric for the number of folds to create
+\item \code{...}, to pass any additional named arguments to your function
+}
+
+The function should return a vector of cluster assignments of length
+\code{nrow(data)}, with each element of the vector corresponding to the matching
+row of the data frame.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

@@ -16,12 +16,14 @@
 #'  in each fold.
 #'
 #' You can optionally provide a custom function to `cluster_function`. The
-#' function must take three arguments: `dists`, a [stats::dist()] object
-#' indicating distances between data points, `v`, a length-1 numeric indicating
-#' the number of folds to create, and `...`. Any additional named arguments to
-#' your function can be accessed via `...`. The function should return a vector
-#' of cluster assignments of length `nrow(data)`, with each element of the
-#' vector corresponding to the matching row of the data frame.
+#' function must take three arguments:
+#' - `dists`, a [stats::dist()] object with distances between data points
+#' - `v`, a length-1 numeric for the number of folds to create
+#' - `...`, to pass any additional named arguments to your function
+#'
+#' The function should return a vector of cluster assignments of length
+#' `nrow(data)`, with each element of the vector corresponding to the matching
+#' row of the data frame.
 #'
 #' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
@@ -29,7 +31,7 @@
 #'  to partition the data into disjointed sets via k-means clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @param v The number of partitions of the data set.
-#' @param cluster_function Which function to use for clustering.
+#' @param cluster_function Which function should be used for clustering?
 #' Options are either `"kmeans"` (to use [stats::kmeans()])
 #' or `"hclust"` (to use [stats::hclust()]). You can also provide your own
 #' function; see `Details`.
