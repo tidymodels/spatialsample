@@ -25,3 +25,6 @@ ggplot2::autoplot
 
 #' @import vctrs
 NULL
+
+#' @import sf
+NULL

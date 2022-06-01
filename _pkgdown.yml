@@ -26,3 +26,6 @@ reference:
     contents:
       - reexports
       - autoplot.spatial_rset
+  - title: Data
+    contents:
+      - boston_canopy

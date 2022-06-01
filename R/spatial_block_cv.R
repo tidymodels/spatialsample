@@ -8,11 +8,11 @@
 #' The grid blocks can be controlled by passing arguments to
 #' [sf::st_make_grid()] via `...`. Some particularly useful arguments include:
 #'
-#' * `cellsize` Target cellsize, expressed as the "diameter" (shortest
+#' * `cellsize`: Target cellsize, expressed as the "diameter" (shortest
 #' straight-line distance between opposing sides; two times the apothem)
 #' of each block, in map units.
-#' * `n` The number of grid blocks in the x and y direction (columns, rows).
-#' * `square` A logical value indicating whether to create square (`TRUE`) or
+#' * `n`: The number of grid blocks in the x and y direction (columns, rows).
+#' * `square`: A logical value indicating whether to create square (`TRUE`) or
 #' hexagonal (`FALSE`) cells.
 #'
 #' If both `cellsize` and `n` are provided, then the number of blocks requested
@@ -25,13 +25,12 @@
 #'
 #' @param data An object of class `sf` or `sfc`.
 #' @param method The method used to sample blocks for cross validation folds.
-#' Currently supports `"random"` and `"systematic"`.
-#' @inheritParams rsample::vfold_cv
-#' @param ordering For systematic sampling, one of either `"snake"`
-#' (the default) or `"continuous"`. The `"snake"` method labels the first row
-#' of blocks from left to right, then the next from right to left, and repeats
-#' the pattern from there. The `"continuous"` method labels each row from left
+#' Currently supports `"random"`, which randomly assigns blocks to folds,
+#' `"snake"`, which labels the first row of blocks from left to right,
+#' then the next from right to left, and repeats from there,
+#' and `"continuous"`, which labels each row from left
 #' to right, moving from the bottom row up.
+#' @inheritParams rsample::vfold_cv
 #' @param relevant_only For systematic sampling, should only blocks containing
 #' data be included in fold labeling?
 #'
@@ -59,9 +58,11 @@
 #' Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.
 #'
 #' @export
-spatial_block_cv <- function(data, method = c("random", "systematic"), v = 10,
-                             ordering = c("snake", "continuous"),
-                             relevant_only = TRUE, ...) {
+spatial_block_cv <- function(data,
+                             method = c("random", "snake", "continuous"),
+                             v = 10,
+                             relevant_only = TRUE,
+                             ...) {
   method <- rlang::arg_match(method)
 
   if (!"sf" %in% class(data)) {
@@ -99,7 +100,7 @@ spatial_block_cv <- function(data, method = c("random", "systematic"), v = 10,
   split_objs <- switch(
     method,
     "random" = random_block_cv(data, grid_blocks, v),
-    "systematic" = systematic_block_cv(data, grid_blocks, v, ordering, relevant_only)
+    systematic_block_cv(data, grid_blocks, v, ordering = method, relevant_only)
   )
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
@@ -126,7 +127,7 @@ random_block_cv <- function(data, grid_blocks, v) {
   grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks")
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
@@ -143,7 +144,7 @@ systematic_block_cv <- function(data, grid_blocks, v,
   if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks")
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
 
   folds <- rep(seq_len(v), length.out = length(grid_blocks))
   if (ordering == "snake") folds <- make_snake_ordering(folds, grid_blocks)
@@ -156,12 +157,13 @@ systematic_block_cv <- function(data, grid_blocks, v,
   if (num_folds != v) {
     rlang::warn(
       c(
-        paste0(
-          "Not all folds contained blocks with data: \n",
-          v,
-          " folds were requested, but only ",
-          num_folds,
-          " contain any data. \nEmpty folds were dropped."
+        glue::glue(
+          "Not all folds contained blocks with data: \n{v} folds were",
+          "requested, but only {num_folds} contain any data.",
+          "\nEmpty folds were dropped.",
+          v = v,
+          num_folds = num_folds,
+          .sep = " "
         ),
         i = "To avoid this, set `relevant_only = TRUE`."
       )
@@ -201,7 +203,7 @@ filter_grid_blocks <- function(grid_blocks, data) {
     sgbp_is_not_empty
   )
   if ("data.frame" %in% class(grid_blocks)) {
-    grid_blocks[block_contains_points, ]
+    grid_blocks[block_contains_points, , drop = FALSE]
   } else {
     grid_blocks[block_contains_points]
   }

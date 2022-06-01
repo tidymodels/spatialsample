@@ -6,9 +6,8 @@
 \usage{
 spatial_block_cv(
   data,
-  method = c("random", "systematic"),
+  method = c("random", "snake", "continuous"),
   v = 10,
-  ordering = c("snake", "continuous"),
   relevant_only = TRUE,
   ...
 )
@@ -17,15 +16,13 @@ spatial_block_cv(
 \item{data}{An object of class \code{sf} or \code{sfc}.}
 
 \item{method}{The method used to sample blocks for cross validation folds.
-Currently supports \code{"random"} and \code{"systematic"}.}
+Currently supports \code{"random"}, which randomly assigns blocks to folds,
+\code{"snake"}, which labels the first row of blocks from left to right,
+then the next from right to left, and repeats from there,
+and \code{"continuous"}, which labels each row from left
+to right, moving from the bottom row up.}
 
 \item{v}{The number of partitions of the data set.}
-
-\item{ordering}{For systematic sampling, one of either \code{"snake"}
-(the default) or \code{"continuous"}. The \code{"snake"} method labels the first row
-of blocks from left to right, then the next from right to left, and repeats
-the pattern from there. The \code{"continuous"} method labels each row from left
-to right, moving from the bottom row up.}
 
 \item{relevant_only}{For systematic sampling, should only blocks containing
 data be included in fold labeling?}
@@ -46,11 +43,11 @@ blocks they fall into.
 The grid blocks can be controlled by passing arguments to
 \code{\link[sf:st_make_grid]{sf::st_make_grid()}} via \code{...}. Some particularly useful arguments include:
 \itemize{
-\item \code{cellsize} Target cellsize, expressed as the "diameter" (shortest
+\item \code{cellsize}: Target cellsize, expressed as the "diameter" (shortest
 straight-line distance between opposing sides; two times the apothem)
 of each block, in map units.
-\item \code{n} The number of grid blocks in the x and y direction (columns, rows).
-\item \code{square} A logical value indicating whether to create square (\code{TRUE}) or
+\item \code{n}: The number of grid blocks in the x and y direction (columns, rows).
+\item \code{square}: A logical value indicating whether to create square (\code{TRUE}) or
 hexagonal (\code{FALSE}) cells.
 }
 
