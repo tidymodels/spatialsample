@@ -16,12 +16,10 @@
 #'  in each fold.
 #'
 #' You can optionally provide a custom function to `cluster_function`. The
-#' function must take three arguments in a set order: a [stats::dist()] object
-#' indicating distances between data points, a length-1 numeric `v` indicating
-#' the number of folds to create, and `...`. Both the `dist` object and `v`
-#' are passed by position, without names, and must be the first and second
-#' arguments to your function respectively; any named arguments to your
-#' function can be accessed via `...`. The function should return a vector
+#' function must take three arguments: `dists`, a [stats::dist()] object
+#' indicating distances between data points, `v`, a length-1 numeric indicating
+#' the number of folds to create, and `...`. Any additional named arguments to
+#' your function can be accessed via `...`. The function should return a vector
 #' of cluster assignments of length `nrow(data)`, with each element of the
 #' vector corresponding to the matching row of the data frame.
 #'
@@ -136,7 +134,7 @@ spatial_clustering_splits <- function(data, dists, v = 10, cluster_function = c(
       clusters <- hclust(dists, ...)
       cutree(clusters, k = v)
     },
-    do.call(cluster_function, list(dists, v, ...))
+    do.call(cluster_function, list(dists = dists, v = v, ...))
   )
 
   idx <- seq_len(n)
