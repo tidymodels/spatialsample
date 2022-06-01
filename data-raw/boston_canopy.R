@@ -24,21 +24,18 @@ boston_canopy <- sf::read_sf(
 )
 
 canopy_metrics <- c(
-  "FID" = "FID",
-  "GRID_ID" = "GRID_ID",
-  "TC_ID" = "TC_ID",
-  "OBJECTID" = "OBJECTID",
-  "Land_Area" = "LandArea",
-  "Canopy_Gain" = "Gain",
-  "Canopy_Loss" = "Loss",
-  "Canopy_No_Change" = "No_Change",
-  "Canopy_Area_2014" = "TreeCanopy",
-  "Canopy_Area_2019" = "TreeCano_1",
-  "Change_Canopy_Area" = "Change_Are",
-  "Change_Canopy_Percentage" = "Change_Per",
-  "Canopy_Percentage_2014" = "TreeCano_2",
-  "Canopy_Percentage_2019" = "TreeCano_3",
-  "Change_Canopy_Absolute" = "Change_P_1",
+  "grid_id" = "GRID_ID",
+  "land_area" = "LandArea",
+  "canopy_gain" = "Gain",
+  "canopy_loss" = "Loss",
+  "canopy_no_change" = "No_Change",
+  "canopy_area_2014" = "TreeCanopy",
+  "canopy_area_2019" = "TreeCano_1",
+  "change_canopy_area" = "Change_Are",
+  "change_canopy_percentage" = "Change_Per",
+  "canopy_percentage_2014" = "TreeCano_2",
+  "canopy_percentage_2019" = "TreeCano_3",
+  "change_canopy_absolute" = "Change_P_1",
   "geometry" = "geometry"
 )
 
@@ -51,12 +48,12 @@ heat <- sf::read_sf(
 )
 
 heat_metrics <- c(
-  "Mean_T_Morning" = "Mean_am_T_",
-  "Mean_T_Evening" = "Mean_ev_T_",
-  "Mean_T" = "Mean_p2_T_",
-  "Mean_Heat_Index_Morning" = "Mean_am_HI",
-  "Mean_Heat_Index_Evening" = "Mean_ev_HI",
-  "Mean_Heat_Index" = "Mean_p2_HI",
+  "mean_temp_morning" = "Mean_am_T_",
+  "mean_temp_evening" = "Mean_ev_T_",
+  "mean_temp" = "Mean_p2_T_",
+  "mean_heat_index_morning" = "Mean_am_HI",
+  "mean_heat_index_evening" = "Mean_ev_HI",
+  "mean_heat_index" = "Mean_p2_HI",
   "geometry" = "geometry"
 )
 

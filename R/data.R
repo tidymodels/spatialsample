@@ -11,28 +11,25 @@
 #' @format A data frame (of class `sf`, `tbl_df`, `tbl`, and `data.frame`)
 #' containing 682 records of 22 variables:
 #' \describe{
-#'   \item{FID}{FID field uniquely identifying each hexagon}
-#'   \item{GRID_ID}{GRID_ID field uniquely identifying each hexagon}
-#'   \item{TC_ID}{TC_ID field uniquely identifying each hexagon}
-#'   \item{OBJECTID}{OBJECTID field uniquely identifying each hexagon}
-#'   \item{Land_Area}{Area excluding water bodies}
-#'   \item{Canopy_Gain}{Area of canopy gain between the two years}
-#'   \item{Canopy_Loss}{Area of canopy loss between the two years}
-#'   \item{Canopy_No_Change}{Area of no canopy change between the two years}
-#'   \item{Canopy_Area_2014}{2014 total canopy area (baseline)}
-#'   \item{Canopy_Area_2019}{2019 total canopy area}
-#'   \item{Change_Canopy_Area}{The change in area of tree canopy between the two years}
-#'   \item{Change_Canopy_Percentage}{Relative change calculation used in economics is the gain or loss of tree canopy relative to the earlier time period: (2019 Canopy-2014 Canopy)/(2014 Canopy)}
-#'   \item{Canopy_Percentage_2014}{2014 canopy percentage}
-#'   \item{Canopy_Percentage_2019}{2019 canopy percentage}
-#'   \item{Change_Canopy_Absolute}{Absolute change. Magnitude of change in percent tree canopy from 2014 to 2019 (% 2019 Canopy - % 2014 Canopy)}
-#'   \item{Mean_T_Morning}{Mean temperature for July 2019 from 6am - 7am}
-#'   \item{Mean_T_Evening}{Mean temperature for July 2019 from 7pm - 8pm}
-#'   \item{Mean_T}{Mean temperature for July 2019 from 6am - 7am, 3pm - 4pm, and 7pm - 8pm (combined)}
-#'   \item{Mean_Heat_Index_Morning}{Mean heat index for July 2019 from 6am - 7am}
-#'   \item{Mean_Heat_Index_Evening}{Mean heat index for July 2019 from 7pm - 8pm}
-#'   \item{Mean_Heat_Index}{Mean heat index for July 2019 from 6am - 7am, 3pm - 4pm, and 7pm - 8pm (combined)}
-#'   \item{geometry}{Geometry of each hexagon, encoded using EPSG:2249 as a coordinate reference system}
+#'   \item{grid_if}{Unique identifier for each hexagon}
+#'   \item{land_area}{Area excluding water bodies}
+#'   \item{canopy_gain}{Area of canopy gain between the two years}
+#'   \item{canopy_loss}{Area of canopy loss between the two years}
+#'   \item{canopy_no_change}{Area of no canopy change between the two years}
+#'   \item{canopy_area_2014}{2014 total canopy area (baseline)}
+#'   \item{canopy_area_2019}{2019 total canopy area}
+#'   \item{change_canopy_area}{The change in area of tree canopy between the two years}
+#'   \item{change_canopy_percentage}{Relative change calculation used in economics is the gain or loss of tree canopy relative to the earlier time period: (2019 Canopy-2014 Canopy)/(2014 Canopy)}
+#'   \item{canopy_percentage_2014}{2014 canopy percentage}
+#'   \item{canopy_percentage_2019}{2019 canopy percentage}
+#'   \item{change_canopy_absolute}{Absolute change. Magnitude of change in percent tree canopy from 2014 to 2019 (% 2019 Canopy - % 2014 Canopy)}
+#'   \item{mean_temp_morning}{Mean temperature for July 2019 from 6am - 7am}
+#'   \item{mean_temp_evening}{Mean temperature for July 2019 from 7pm - 8pm}
+#'   \item{mean_temp}{Mean temperature for July 2019 from 6am - 7am, 3pm - 4pm, and 7pm - 8pm (combined)}
+#'   \item{mean_heat_index_morning}{Mean heat index for July 2019 from 6am - 7am}
+#'   \item{mean_heat_index_evening}{Mean heat index for July 2019 from 7pm - 8pm}
+#'   \item{mean_heat_index}{Mean heat index for July 2019 from 6am - 7am, 3pm - 4pm, and 7pm - 8pm (combined)}
+#'   \item{geometry}{Geometry of each hexagon, encoded using EPSG:2249 as a coordinate reference system (NAD83 / Massachusetts Mainland (ftUS)). Note that the linear units of this CRS are in US feet}
 #' }
 #'
 #' @source Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics2}.
