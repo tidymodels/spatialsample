@@ -11,7 +11,7 @@
 #' @format A data frame (of class `sf`, `tbl_df`, `tbl`, and `data.frame`)
 #' containing 682 records of 22 variables:
 #' \describe{
-#'   \item{grid_if}{Unique identifier for each hexagon}
+#'   \item{grid_id}{Unique identifier for each hexagon}
 #'   \item{land_area}{Area excluding water bodies}
 #'   \item{canopy_gain}{Area of canopy gain between the two years}
 #'   \item{canopy_loss}{Area of canopy loss between the two years}
