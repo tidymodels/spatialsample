@@ -2,8 +2,10 @@
 #'
 #' This method provides a good visualization method for spatial resampling.
 #'
-#' @param object A `spatial_rset` object. Note that only resamples made from
-#' `sf` objects are `spatial_rset` objects; this function will not work for
+#' @param object A `spatial_rset` object or a `spatial_rsplit` object.
+#' Note that only resamples made from
+#' `sf` objects create `spatial_rset` and `spatial_rsplit` objects;
+#' this function will not work for
 #' resamples made with non-spatial tibbles or data.frames.
 #' @param ... Options passed to [ggplot2::geom_sf()].
 #'
@@ -31,6 +33,32 @@ autoplot.spatial_rset <- function(object, ...) {
 
   p <- ggplot2::ggplot(data = object,
                        mapping = ggplot2::aes(color = fold, fill = fold))
+  p <- p + ggplot2::geom_sf(...)
+  p + ggplot2::coord_sf()
+
+}
+
+#' @export
+autoplot.spatial_rsplit <- function(object, ...) {
+  # .Class. is named to not interfere with normal column names
+  .Class. <- NULL
+
+  ins <- object$in_id
+  outs <- if (identical(object$out_id, NA)) {
+    rsample::complement(object)
+  } else {
+    object$out_id
+  }
+  object <- object$data
+  object$.Class. <- NA
+  object$.Class.[ins] <- "Analysis"
+  object$.Class.[outs] <- "Assessment"
+  object$.Class.[is.na(object$.Class.)] <- "Buffer"
+
+  p <- ggplot2::ggplot(data = object,
+                       mapping = ggplot2::aes(color = .Class., fill = .Class.))
+  p <- p + ggplot2::scale_fill_discrete(name = "Class")
+  p <- p + ggplot2::scale_color_discrete(name = "Class")
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
 

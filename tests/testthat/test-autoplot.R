@@ -21,6 +21,12 @@ test_that("autoplot is stable", {
   p <- autoplot(ames_block)
   vdiffr::expect_doppelganger("block plots", p)
 
+  p <- autoplot(ames_cluster$splits[[1]])
+  vdiffr::expect_doppelganger("cluster split plots", p)
+
+  p <- autoplot(ames_block$splits[[1]])
+  vdiffr::expect_doppelganger("block split plots", p)
+
   expect_snapshot(
     autoplot(ames_non_sf),
     error = TRUE

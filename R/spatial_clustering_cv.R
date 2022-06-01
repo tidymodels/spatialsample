@@ -130,6 +130,9 @@ spatial_clustering_splits <- function(data,
 
   v <- check_v(v, nrow(data), "data points", call = rlang::caller_env())
 
+  classes <- c("spatial_clustering_split")
+  if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
+
   n <- nrow(data)
 
   clusterer <- ifelse(rlang::is_function(cluster_function),
@@ -160,7 +163,7 @@ spatial_clustering_splits <- function(data,
     indices,
     make_splits,
     data = data,
-    class = "spatial_clustering_split"
+    class = classes
   )
   tibble::tibble(
     splits = split_objs,
