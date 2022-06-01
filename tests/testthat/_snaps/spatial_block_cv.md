@@ -27,7 +27,7 @@
 ---
 
     Code
-      spatial_block_cv(ames_sf, v = c(5, 10), method = "systematic")
+      spatial_block_cv(ames_sf, v = c(5, 10), method = "snake")
     Condition
       Error in `systematic_block_cv()`:
       ! `v` must be a single integer.
@@ -35,7 +35,7 @@
 ---
 
     Code
-      spatial_block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
+      spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 5)
     Condition
       Warning:
       Not all folds contained blocks with data: 
@@ -55,7 +55,7 @@
 ---
 
     Code
-      spatial_block_cv(ames_sf, method = "systematic", v = 60)
+      spatial_block_cv(ames_sf, method = "snake", v = 60)
     Condition
       Warning in `systematic_block_cv()`:
       Fewer than 60 blocks available for sampling; setting v to 17.

@@ -34,12 +34,7 @@ test_that("random assignment", {
 
 test_that("systematic assignment -- snake", {
   set.seed(11)
-  rs1 <- spatial_block_cv(ames_sf, method = "systematic")
-
-  set.seed(11)
-  rs2 <- spatial_block_cv(ames_sf, method = "systematic", ordering = "snake")
-  expect_identical(rs1, rs2)
-
+  rs1 <- spatial_block_cv(ames_sf, method = "snake")
   sizes1 <- dim_rset(rs1)
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
   same_data <-
@@ -58,8 +53,7 @@ test_that("systematic assignment -- snake", {
 
   set.seed(123)
   rs3 <- spatial_block_cv(ames_sf,
-                          method = "systematic",
-                          ordering = "snake",
+                          method = "snake",
                           relevant_only = FALSE,
                           v = 4)
   sizes3 <- dim_rset(rs3)
@@ -82,7 +76,7 @@ test_that("systematic assignment -- snake", {
 
 test_that("systematic assignment -- continuous", {
   set.seed(11)
-  rs1 <- spatial_block_cv(ames_sf, method = "systematic", ordering = "continuous")
+  rs1 <- spatial_block_cv(ames_sf, method = "continuous")
 
   sizes1 <- dim_rset(rs1)
   expect_true(all(sizes1$analysis + sizes1$assessment == nrow(ames)))
@@ -102,8 +96,7 @@ test_that("systematic assignment -- continuous", {
 
   set.seed(123)
   rs3 <- spatial_block_cv(ames_sf,
-                          method = "systematic",
-                          ordering = "continuous",
+                          method = "continuous",
                           relevant_only = FALSE,
                           v = 4)
   sizes3 <- dim_rset(rs3)
@@ -147,18 +140,18 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_block_cv(ames_sf, v = c(5, 10), method = "systematic"),
+    spatial_block_cv(ames_sf, v = c(5, 10), method = "snake"),
     error = TRUE
   )
 
   set.seed(123)
   expect_snapshot(
-    spatial_block_cv(ames_sf, method = "systematic", relevant_only = FALSE, v = 5)
+    spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 5)
   )
 
   set.seed(123)
   expect_snapshot(
-    spatial_block_cv(ames_sf, method = "systematic", v = 60)
+    spatial_block_cv(ames_sf, method = "snake", v = 60)
   )
 
   skip_if_not(getRversion() >= numeric_version("3.6.0"))

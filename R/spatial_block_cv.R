@@ -25,13 +25,12 @@
 #'
 #' @param data An object of class `sf` or `sfc`.
 #' @param method The method used to sample blocks for cross validation folds.
-#' Currently supports `"random"` and `"systematic"`.
-#' @inheritParams rsample::vfold_cv
-#' @param ordering For systematic sampling, one of either `"snake"`
-#' (the default) or `"continuous"`. The `"snake"` method labels the first row
-#' of blocks from left to right, then the next from right to left, and repeats
-#' the pattern from there. The `"continuous"` method labels each row from left
+#' Currently supports `"random"`, which randomly assigns blocks to folds,
+#' `"snake"`, which labels the first row of blocks from left to right,
+#' then the next from right to left, and repeats from there,
+#' and `"continuous"`, which labels each row from left
 #' to right, moving from the bottom row up.
+#' @inheritParams rsample::vfold_cv
 #' @param relevant_only For systematic sampling, should only blocks containing
 #' data be included in fold labeling?
 #'
@@ -60,9 +59,8 @@
 #'
 #' @export
 spatial_block_cv <- function(data,
-                             method = c("random", "systematic"),
+                             method = c("random", "snake", "continuous"),
                              v = 10,
-                             ordering = c("snake", "continuous"),
                              relevant_only = TRUE,
                              ...) {
   method <- rlang::arg_match(method)
@@ -102,7 +100,7 @@ spatial_block_cv <- function(data,
   split_objs <- switch(
     method,
     "random" = random_block_cv(data, grid_blocks, v),
-    "systematic" = systematic_block_cv(data, grid_blocks, v, ordering, relevant_only)
+    systematic_block_cv(data, grid_blocks, v, ordering = method, relevant_only)
   )
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
