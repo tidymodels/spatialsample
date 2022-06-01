@@ -9,6 +9,8 @@ spatial_clustering_cv(
   coords,
   v = 10,
   cluster_function = c("kmeans", "hclust"),
+  radius = 0,
+  buffer = 0,
   ...
 )
 }
@@ -26,6 +28,13 @@ This argument is ignored (with a warning) if \code{data} is an \code{sf} object.
 Options are either \code{"kmeans"} (to use \code{\link[stats:kmeans]{stats::kmeans()}})
 or \code{"hclust"} (to use \code{\link[stats:hclust]{stats::hclust()}}). You can also provide your own
 function; see \code{Details}.}
+
+\item{radius}{Numeric: points within this distance of the initially-selected
+test points will be assigned to the assessment set.}
+
+\item{buffer}{Numeric: points within this distance of the test set area
+(that is, the area within \code{radius} distance of the initial test points)
+will be assigned to neither the analysis or assessment set.}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
 \code{\link[stats:hclust]{stats::hclust()}}.}
