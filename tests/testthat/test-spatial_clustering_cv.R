@@ -82,10 +82,11 @@ test_that("bad args", {
 
 test_that("can pass the dots to kmeans", {
   expect_error(
-    spatial_clustering_cv(Smithsonian,
-                          coords = c(latitude, longitude),
-                          v = 2,
-                          algorithm = "MacQueen"
+    spatial_clustering_cv(
+      Smithsonian,
+      coords = c(latitude, longitude),
+      v = 2,
+      algorithm = "MacQueen"
     ),
     NA
   )

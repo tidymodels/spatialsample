@@ -159,12 +159,13 @@ systematic_block_cv <- function(data, grid_blocks, v,
   if (num_folds != v) {
     rlang::warn(
       c(
-        paste0(
-          "Not all folds contained blocks with data: \n",
-          v,
-          " folds were requested, but only ",
-          num_folds,
-          " contain any data. \nEmpty folds were dropped."
+        glue::glue(
+          "Not all folds contained blocks with data: \n{v} folds were",
+          "requested, but only {num_folds} contain any data.",
+          "\nEmpty folds were dropped.",
+          v = v,
+          num_folds = num_folds,
+          .sep = " "
         ),
         i = "To avoid this, set `relevant_only = TRUE`."
       )
@@ -204,7 +205,7 @@ filter_grid_blocks <- function(grid_blocks, data) {
     sgbp_is_not_empty
   )
   if ("data.frame" %in% class(grid_blocks)) {
-    grid_blocks[block_contains_points, ]
+    grid_blocks[block_contains_points, , drop = FALSE]
   } else {
     grid_blocks[block_contains_points]
   }
