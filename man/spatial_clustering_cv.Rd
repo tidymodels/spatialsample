@@ -32,7 +32,7 @@ function; see \code{Details}.}
 \item{radius}{Numeric: points within this distance of the initially-selected
 test points will be assigned to the assessment set.}
 
-\item{buffer}{Numeric: points within this distance of the test set area
+\item{buffer}{Numeric: points within this distance of the test set
 (after \code{radius} is applied)
 will be assigned to neither the analysis or assessment set.}
 
