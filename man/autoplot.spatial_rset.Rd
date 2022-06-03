@@ -34,7 +34,7 @@ Alternatively, consider plotting each split using the \code{spatial_rsplit} meth
 }
 \examples{
 
-boston_block <- spatial_block_cv(boston_canopy)
+boston_block <- spatial_block_cv(boston_canopy, v = 2)
 autoplot(boston_block)
 lapply(boston_block$splits, autoplot)
 
