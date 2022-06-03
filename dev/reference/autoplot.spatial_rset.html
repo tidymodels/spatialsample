@@ -61,8 +61,10 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
-<dd><p>A <code>spatial_rset</code> object. Note that only resamples made from
-<code>sf</code> objects are <code>spatial_rset</code> objects; this function will not work for
+<dd><p>A <code>spatial_rset</code> object or a <code>spatial_rsplit</code> object.
+Note that only resamples made from
+<code>sf</code> objects create <code>spatial_rset</code> and <code>spatial_rsplit</code> objects;
+this function will not work for
 resamples made with non-spatial tibbles or data.frames.</p></dd>
 <dt>...</dt>
 <dd><p>Options passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code>.</p></dd>
