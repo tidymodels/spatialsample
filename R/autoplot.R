@@ -70,5 +70,4 @@ autoplot.spatial_rsplit <- function(object, ...) {
   p <- p + ggplot2::scale_color_discrete(name = "Class")
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
-
 }
