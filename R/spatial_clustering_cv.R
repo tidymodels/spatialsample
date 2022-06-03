@@ -39,9 +39,12 @@
 #' @param ... Extra arguments passed on to [stats::kmeans()] or
 #' [stats::hclust()].
 #'
-#' @return A tibble with classes `spatial_cv`, `rset`, `tbl_df`, `tbl`, and
-#'  `data.frame`. The results include a column for the data split objects and
+#' @return A tibble with classes `spatial_clustering_cv`, `spatial_rset`,
+#'  `rset`, `tbl_df`, `tbl`, and `data.frame`.
+#'  The results include a column for the data split objects and
 #'  an identification variable `id`.
+#'  Resamples created from non-`sf` objects will not have the
+#'  `spatial_rset` class.
 #'
 #' @references
 #'
@@ -54,10 +57,12 @@
 #' data(Smithsonian, package = "modeldata")
 #' spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 #'
-#' smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                                coords = c("longitude", "latitude"),
-#'                                # Set CRS to WGS84
-#'                                crs = 4326)
+#' smithsonian_sf <- sf::st_as_sf(
+#'   Smithsonian,
+#'   coords = c("longitude", "latitude"),
+#'   # Set CRS to WGS84
+#'   crs = 4326
+#' )
 #'
 #' # When providing sf objects, coords are inferred automatically
 #' spatial_clustering_cv(smithsonian_sf, v = 5)
@@ -86,6 +91,9 @@ spatial_clustering_cv <- function(data,
     coords <- sf::st_centroid(sf::st_geometry(data))
     dists <- as.dist(sf::st_distance(coords))
   } else {
+    if (!missing(radius) || !missing(buffer)) {
+      rlang::abort("Neither `radius` or `buffer` can be used when providing non-`sf` objects to `data`.")
+    }
     coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
     if (is_empty(coords)) {
       rlang::abort("`coords` are required and must be variables in `data`.")
@@ -94,14 +102,18 @@ spatial_clustering_cv <- function(data,
     dists <- dist(coords)
     subclasses <- setdiff(subclasses, "spatial_rset")
   }
+  if (missing(radius)) radius <- NULL
+  if (missing(buffer)) buffer <- NULL
 
-  split_objs <- spatial_clustering_splits(data = data,
-                                          dists = dists,
-                                          v = v,
-                                          cluster_function = cluster_function,
-                                          radius = radius,
-                                          buffer = buffer,
-                                          ...)
+  split_objs <- spatial_clustering_splits(
+    data = data,
+    dists = dists,
+    v = v,
+    cluster_function = cluster_function,
+    radius = radius,
+    buffer = buffer,
+    ...
+  )
 
   ## Save some overall information
 
@@ -113,7 +125,6 @@ spatial_clustering_cv <- function(data,
     attrib = cv_att,
     subclass = subclasses
   )
-
 }
 
 spatial_clustering_splits <- function(data,
@@ -123,7 +134,6 @@ spatial_clustering_splits <- function(data,
                                       radius = 0,
                                       buffer = 0,
                                       ...) {
-
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }
@@ -135,9 +145,11 @@ spatial_clustering_splits <- function(data,
 
   n <- nrow(data)
 
-  clusterer <- ifelse(rlang::is_function(cluster_function),
-                      "custom",
-                      cluster_function)
+  clusterer <- ifelse(
+    rlang::is_function(cluster_function),
+    "custom",
+    cluster_function
+  )
 
   folds <- switch(
     clusterer,
@@ -154,7 +166,7 @@ spatial_clustering_splits <- function(data,
 
   idx <- seq_len(n)
   indices <- split_unnamed(idx, folds)
-  if (missing(radius) && missing(buffer)) {
+  if (is.null(radius) && is.null(buffer)) {
     indices <- lapply(indices, default_complement, n = n)
   } else {
     indices <- buffer_indices(data, indices, radius, buffer)

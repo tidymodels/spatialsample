@@ -41,6 +41,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
+    units,
     vdiffr,
     yardstick
 VignetteBuilder: 

@@ -43,3 +43,7 @@ check_v <- function(v, max_v, objects, call = rlang::caller_env()) {
   }
   v
 }
+
+# Check sparse geometry binary predicate for empty elements
+# See ?sf::sgbp for more information on the data structure
+sgbp_is_not_empty <- function(x) !identical(x, integer(0))

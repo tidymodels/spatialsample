@@ -33,21 +33,16 @@
 #' @inheritParams rsample::vfold_cv
 #' @param relevant_only For systematic sampling, should only blocks containing
 #' data be included in fold labeling?
-#'
+#' @inheritParams buffer_indices
 #' @param ... Arguments passed to [sf::st_make_grid()].
 #'
 #' @return A tibble with classes `spatial_block_cv`,  `spatial_rset`, `rset`,
 #'   `tbl_df`, `tbl`, and `data.frame`. The results include a column for the
 #'   data split objects and an identification variable `id`.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Smithsonian, package = "modeldata")
-#' smithsonian_sf <- sf::st_as_sf(Smithsonian,
-#'                                coords = c("longitude", "latitude"),
-#'                                # Set CRS to WGS84
-#'                                crs = 4326)
+#' @examples
 #'
-#' spatial_block_cv(smithsonian_sf, v = 3)
+#' spatial_block_cv(boston_canopy, v = 3)
 #'
 #' @references
 #'
@@ -62,6 +57,8 @@ spatial_block_cv <- function(data,
                              method = c("random", "snake", "continuous"),
                              v = 10,
                              relevant_only = TRUE,
+                             radius = 0,
+                             buffer = 0,
                              ...) {
   method <- rlang::arg_match(method)
 
@@ -83,6 +80,16 @@ spatial_block_cv <- function(data,
     )
   }
 
+  if (sf::st_is_longlat(data) && !sf::sf_use_s2()) {
+    rlang::abort(
+      c(
+        "`spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library",
+        "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
+        "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
+      )
+    )
+  }
+
   grid_box <- sf::st_bbox(data)
   if (sf::st_is_longlat(data)) {
     # cf https://github.com/ropensci/stplanr/pull/467
@@ -96,21 +103,35 @@ spatial_block_cv <- function(data,
     grid_box[3] <- grid_box[3] + abs(grid_box[3] * 0.001)
     grid_box[4] <- grid_box[4] + abs(grid_box[4] * 0.001)
   }
+
+  if (missing(radius)) radius <- NULL
+  if (missing(buffer)) buffer <- NULL
+
   grid_blocks <- sf::st_make_grid(grid_box, ...)
   split_objs <- switch(
     method,
-    "random" = random_block_cv(data, grid_blocks, v),
-    systematic_block_cv(data, grid_blocks, v, ordering = method, relevant_only)
+    "random" = random_block_cv(
+      data,
+      grid_blocks,
+      v,
+      radius,
+      buffer
+    ),
+    systematic_block_cv(
+      data,
+      grid_blocks,
+      v,
+      ordering = method,
+      relevant_only,
+      radius,
+      buffer
+    )
   )
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
 
-  ## We remove the holdout indices since it will save space and we can
-  ## derive them later when they are needed.
-  split_objs$splits <- map(split_objs$splits, rm_out)
-
   ## Save some overall information
-  cv_att <- list(v = v)
+  cv_att <- list(v = v, radius = radius, buffer = buffer)
 
   new_rset(
     splits = split_objs$splits,
@@ -118,10 +139,9 @@ spatial_block_cv <- function(data,
     attrib = cv_att,
     subclass = c("spatial_block_cv", "spatial_rset", "rset")
   )
-
 }
 
-random_block_cv <- function(data, grid_blocks, v) {
+random_block_cv <- function(data, grid_blocks, v, radius, buffer) {
   n <- nrow(data)
 
   grid_blocks <- filter_grid_blocks(grid_blocks, data)
@@ -132,12 +152,16 @@ random_block_cv <- function(data, grid_blocks, v) {
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
 
-  generate_folds_from_blocks(data, grid_blocks, v, n)
+  generate_folds_from_blocks(data, grid_blocks, v, n, radius, buffer)
 }
 
-systematic_block_cv <- function(data, grid_blocks, v,
+systematic_block_cv <- function(data,
+                                grid_blocks,
+                                v,
                                 ordering = c("snake", "continuous"),
-                                relevant_only = TRUE) {
+                                relevant_only = TRUE,
+                                radius,
+                                buffer) {
   n <- nrow(data)
   ordering <- rlang::arg_match(ordering)
 
@@ -165,15 +189,20 @@ systematic_block_cv <- function(data, grid_blocks, v,
     v <- num_folds
   }
 
-  generate_folds_from_blocks(data, grid_blocks, v, n)
+  generate_folds_from_blocks(data, grid_blocks, v, n, radius, buffer)
 }
 
-generate_folds_from_blocks <- function(data, grid_blocks, v, n) {
+generate_folds_from_blocks <- function(data, grid_blocks, v, n, radius, buffer) {
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
 
-  indices <- lapply(indices, default_complement, n = n)
+  if (is.null(radius) && is.null(buffer)) {
+    indices <- lapply(indices, default_complement, n = n)
+  } else {
+    indices <- buffer_indices(data, indices, radius, buffer)
+  }
+
   split_objs <- purrr::map(
     indices,
     make_splits,
@@ -186,10 +215,6 @@ generate_folds_from_blocks <- function(data, grid_blocks, v, n) {
     v = v
   )
 }
-
-# Check sparse geometry binary predicate for empty elements
-# See ?sf::sgbp for more information on the data structure
-sgbp_is_not_empty <- function(x) !identical(x, integer(0))
 
 filter_grid_blocks <- function(grid_blocks, data) {
   block_contains_points <- purrr::map_lgl(
@@ -235,11 +260,13 @@ row_ids_intersecting_fold_blocks <- function(grid_blocks, data) {
   # to the row numbers that intersect with blocks in the fold
   purrr::map(
     grid_blocks,
-    function(blocks) which(
-      purrr::map_lgl(
-        sf::st_intersects(data, blocks),
-        sgbp_is_not_empty
+    function(blocks) {
+      which(
+        purrr::map_lgl(
+          sf::st_intersects(data, blocks),
+          sgbp_is_not_empty
+        )
       )
-    )
+    }
   )
 }

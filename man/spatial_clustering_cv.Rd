@@ -33,16 +33,19 @@ function; see \code{Details}.}
 test points will be assigned to the assessment set.}
 
 \item{buffer}{Numeric: points within this distance of the test set area
-(that is, the area within \code{radius} distance of the initial test points)
+(after \code{radius} is applied)
 will be assigned to neither the analysis or assessment set.}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
 \code{\link[stats:hclust]{stats::hclust()}}.}
 }
 \value{
-A tibble with classes \code{spatial_cv}, \code{rset}, \code{tbl_df}, \code{tbl}, and
-\code{data.frame}. The results include a column for the data split objects and
+A tibble with classes \code{spatial_clustering_cv}, \code{spatial_rset},
+\code{rset}, \code{tbl_df}, \code{tbl}, and \code{data.frame}.
+The results include a column for the data split objects and
 an identification variable \code{id}.
+Resamples created from non-\code{sf} objects will not have the
+\code{spatial_rset} class.
 }
 \description{
 Spatial or cluster cross-validation splits the data into V groups of
@@ -77,10 +80,12 @@ row of the data frame.
 data(Smithsonian, package = "modeldata")
 spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
-smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                               coords = c("longitude", "latitude"),
-                               # Set CRS to WGS84
-                               crs = 4326)
+smithsonian_sf <- sf::st_as_sf(
+  Smithsonian,
+  coords = c("longitude", "latitude"),
+  # Set CRS to WGS84
+  crs = 4326
+)
 
 # When providing sf objects, coords are inferred automatically
 spatial_clustering_cv(smithsonian_sf, v = 5)

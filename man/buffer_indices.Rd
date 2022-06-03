@@ -4,7 +4,7 @@
 \alias{buffer_indices}
 \title{Apply an inclusion radius and exclusion buffer to indices}
 \usage{
-buffer_indices(data, indices, radius, buffer, ...)
+buffer_indices(data, indices, radius, buffer)
 }
 \arguments{
 \item{data}{An object of class \code{sf} or \code{sfc}.}
@@ -15,13 +15,10 @@ buffer_indices(data, indices, radius, buffer, ...)
 test points will be assigned to the assessment set.}
 
 \item{buffer}{Numeric: points within this distance of the test set area
-(that is, the area within \code{radius} distance of the initial test points)
+(after \code{radius} is applied)
 will be assigned to neither the analysis or assessment set.}
-
-\item{...}{Arguments passed to \code{\link[sf:geos_unary]{sf::st_buffer()}}. Note that both the \code{radius}
-and \code{buffer} zones are created using \code{\link[sf:geos_unary]{sf::st_buffer()}}, so any arguments
-passed through \code{...} will be applied to both.}
 }
 \description{
 Apply an inclusion radius and exclusion buffer to indices
 }
+\keyword{internal}

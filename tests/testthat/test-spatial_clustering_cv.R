@@ -4,27 +4,36 @@ library(purrr)
 skip_if_not_installed("modeldata")
 
 data("Smithsonian", package = "modeldata")
+Smithsonian_sf <- sf::st_as_sf(
+  Smithsonian,
+  coords = c("longitude", "latitude"),
+  crs = 4326
+)
 
 test_that("using kmeans", {
   set.seed(11)
-  rs1 <- spatial_clustering_cv(Smithsonian,
+  rs1 <- spatial_clustering_cv(
+    Smithsonian,
     coords = c(latitude, longitude),
     v = 2
   )
   set.seed(11)
-  rs2 <- spatial_clustering_cv(Smithsonian,
-                               coords = c(latitude, longitude),
-                               v = 2,
-                               cluster_function = "kmeans"
+  rs2 <- spatial_clustering_cv(
+    Smithsonian,
+    coords = c(latitude, longitude),
+    v = 2,
+    cluster_function = "kmeans"
   )
   expect_identical(rs1, rs2)
   sizes1 <- dim_rset(rs1)
 
   expect_true(all(sizes1$analysis + sizes1$assessment == 20))
-  same_data <-
-    map_lgl(rs1$splits, function(x) {
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
       isTRUE(all.equal(x$data, Smithsonian))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -38,44 +47,53 @@ test_that("using kmeans", {
 
 
 test_that("using hclust", {
-    set.seed(11)
-    rs1 <- spatial_clustering_cv(Smithsonian,
-                                 coords = c(latitude, longitude),
-                                 v = 2,
-                                 cluster_function = "hclust"
-    )
-    sizes1 <- dim_rset(rs1)
+  set.seed(11)
+  rs1 <- spatial_clustering_cv(
+    Smithsonian,
+    coords = c(latitude, longitude),
+    v = 2,
+    cluster_function = "hclust"
+  )
+  sizes1 <- dim_rset(rs1)
 
-    expect_true(all(sizes1$analysis + sizes1$assessment == 20))
-    same_data <-
-        map_lgl(rs1$splits, function(x) {
-            isTRUE(all.equal(x$data, Smithsonian))
-        })
-    expect_true(all(same_data))
+  expect_true(all(sizes1$analysis + sizes1$assessment == 20))
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
+      isTRUE(all.equal(x$data, Smithsonian))
+    }
+  )
+  expect_true(all(same_data))
 
-    good_holdout <- map_lgl(
-        rs1$splits,
-        function(x) {
-            length(intersect(x$in_ind, x$out_id)) == 0
-        }
-    )
-    expect_true(all(good_holdout))
+  good_holdout <- map_lgl(
+    rs1$splits,
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
 })
 
 
 test_that("bad args", {
   expect_error(spatial_clustering_cv(Smithsonian, coords = NULL))
-  expect_error(spatial_clustering_cv(Smithsonian, coords = c(Species, Sepal.Width)))
+  expect_error(
+    spatial_clustering_cv(Smithsonian, coords = c(Species, Sepal.Width))
+  )
   expect_snapshot(
-    spatial_clustering_cv(Smithsonian,
-                          coords = c(latitude, longitude),
-                          v = "a"),
+    spatial_clustering_cv(
+      Smithsonian,
+      coords = c(latitude, longitude),
+      v = "a"
+    ),
     error = TRUE
   )
   expect_snapshot(
-    spatial_clustering_cv(Smithsonian,
-                          coords = c(latitude, longitude),
-                          v = c(5, 10)),
+    spatial_clustering_cv(
+      Smithsonian,
+      coords = c(latitude, longitude),
+      v = c(5, 10)
+    ),
     error = TRUE
   )
 })
@@ -94,21 +112,20 @@ test_that("can pass the dots to kmeans", {
 
 test_that("using sf", {
 
-  Smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                                 coords = c("longitude", "latitude"),
-                                 crs = 4326)
-
   set.seed(11)
-  rs1 <- spatial_clustering_cv(Smithsonian_sf,
-                               v = 2
+  rs1 <- spatial_clustering_cv(
+    Smithsonian_sf,
+    v = 2
   )
   sizes1 <- dim_rset(rs1)
 
   expect_true(all(sizes1$analysis + sizes1$assessment == 20))
-  same_data <-
-    map_lgl(rs1$splits, function(x) {
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
       isTRUE(all.equal(x$data, Smithsonian_sf))
-    })
+    }
+  )
   expect_true(all(same_data))
 
   good_holdout <- map_lgl(
@@ -137,12 +154,9 @@ test_that("using sf", {
   expect_snapshot(
     spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
   )
-
-
 })
 
 test_that("using custom functions", {
-
   custom_cluster <- function(dists, v, ...) {
     clusters <- kmeans(dists, centers = v, ...)
     letters[clusters$cluster]
@@ -174,11 +188,6 @@ test_that("using custom functions", {
     NA
   )
 
-  Smithsonian_sf <- sf::st_as_sf(
-    Smithsonian,
-    coords = c("longitude", "latitude"),
-    crs = 4326)
-
   expect_error(
     spatial_clustering_cv(
       Smithsonian_sf,
@@ -188,12 +197,7 @@ test_that("using custom functions", {
     ),
     NA
   )
-
-
 })
-
-
-
 
 test_that("printing", {
   # The default RNG changed in 3.6.0
@@ -201,8 +205,8 @@ test_that("printing", {
   set.seed(123)
   expect_snapshot_output(
     spatial_clustering_cv(Smithsonian,
-                          coords = c(latitude, longitude),
-                          v = 2
+      coords = c(latitude, longitude),
+      v = 2
     )
   )
 })

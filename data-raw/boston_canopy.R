@@ -7,20 +7,26 @@ download.file(
   file.path(working_dir, "canopy_metrics.zip")
 )
 
-unzip(file.path(working_dir, "canopy_metrics.zip"),
-      exdir = working_dir)
+unzip(
+  file.path(working_dir, "canopy_metrics.zip"),
+  exdir = working_dir
+)
 
 download.file(
   "https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::hex-mean-heat-index.zip?outSR=%7B%22latestWkid%22%3A2249%2C%22wkid%22%3A102686%7D",
   file.path(working_dir, "heat_metrics.zip")
 )
 
-unzip(file.path(working_dir, "heat_metrics.zip"),
-      exdir = working_dir)
+unzip(
+  file.path(working_dir, "heat_metrics.zip"),
+  exdir = working_dir
+)
 
 boston_canopy <- sf::read_sf(
-  file.path(working_dir,
-            "Canopy_Change_Assessment%3A_Tree_Canopy_Change_Metrics.shp")
+  file.path(
+    working_dir,
+    "Canopy_Change_Assessment%3A_Tree_Canopy_Change_Metrics.shp"
+  )
 )
 
 canopy_metrics <- c(
@@ -43,8 +49,10 @@ boston_canopy <- boston_canopy[canopy_metrics]
 names(boston_canopy) <- names(canopy_metrics)
 
 heat <- sf::read_sf(
-  file.path(working_dir,
-            "Canopy_Change_Assessment%3A_Heat_Metrics.shp")
+  file.path(
+    working_dir,
+    "Canopy_Change_Assessment%3A_Heat_Metrics.shp"
+  )
 )
 
 heat_metrics <- c(

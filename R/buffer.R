@@ -5,51 +5,39 @@
 #' @param radius Numeric: points within this distance of the initially-selected
 #' test points will be assigned to the assessment set.
 #' @param buffer Numeric: points within this distance of the test set area
-#' (that is, the area within `radius` distance of the initial test points)
+#' (after `radius` is applied)
 #' will be assigned to neither the analysis or assessment set.
-#' @param ... Arguments passed to [sf::st_buffer()]. Note that both the `radius`
-#' and `buffer` zones are created using [sf::st_buffer()], so any arguments
-#' passed through `...` will be applied to both.
-buffer_indices <- function(data, indices, radius, buffer, ...) {
-  n <- nrow(data)
-  # radius_polygons are needed if `buffer` != 0, regardless of `radius`
-  # so create them no matter what `radius` is set to:
-  radius_polygons <- lapply(
-    indices,
-    function(x) {
-      x <- sf::st_combine(data[x, ])
-      sf::st_buffer(x, dist = radius, ...)
-    }
-  )
+#'
+#' @keywords internal
+buffer_indices <- function(data, indices, radius, buffer) {
 
-  # but don't bother checking intersections if `radius` is 0:
-  if (radius) {
-    indices <- purrr::map2(
-      radius_polygons,
-      indices,
-      data_intersects_polygon,
-      data = data
+  if (sf::st_is_longlat(data) && !sf::sf_use_s2()) {
+    rlang::abort(
+      c(
+        "`buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library",
+        "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
+        "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
+      )
     )
   }
 
-  # similarly, `buffer_indices` are _always_ needed
+  n <- nrow(data)
+
+  if (is.null(radius)) radius <- 0
+  if (is.null(buffer)) buffer <- 0
+
+  if (radius) {
+    indices <- row_ids_within_dist(data, indices, radius)
+  }
+
+  # `buffer_indices` are _always_ needed
   # so initialize to integer(0) before checking if we need to find them:
   buffer_indices <- lapply(seq_along(indices), function(x) integer(0))
   if (buffer) {
-    buffer_polygons <- lapply(
-      radius_polygons,
-      function(x) sf::st_buffer(sf::st_combine(x), dist = buffer, ...)
-    )
-
-    buffer_indices <- purrr::map2(
-      buffer_polygons,
-      indices,
-      data_intersects_polygon,
-      data = data
-    )
+    buffer_indices <- row_ids_within_dist(data, indices, buffer)
   }
 
-  indices <- purrr::map2(indices, buffer_indices, buffered_complement, n = n)
+  purrr::map2(indices, buffer_indices, buffered_complement, n = n)
 }
 
 buffered_complement <- function(ind, buff_ind, n) {
@@ -59,10 +47,30 @@ buffered_complement <- function(ind, buff_ind, n) {
   )
 }
 
-data_intersects_polygon <- function(intersection_layer, existing_indices, data) {
-  new_idx <- which(purrr::map_lgl(
-    sf::st_intersects(data, sf::st_combine(intersection_layer)),
-    ~ !identical(.x, integer(0))
-  ))
-  unique(c(existing_indices, new_idx))
+row_ids_within_dist <- function(data, indices, dist) {
+  purrr::map(
+    # indices is the output of split_unnamed
+    indices,
+    # which_within_dist returns a vector of row IDs in sequential order
+    #
+    # In order to visualize (eventually) which observations were originally
+    # chosen for the test set and which were inside `radius`,
+    # we want the new indices to be appended to the end of the original indices,
+    # not sorted in
+    #
+    # So here we append the new indices to the old and de-duplicate them
+    ~ unique(c(.x, which_within_dist(data, .x, dist)))
+  )
+}
+
+# Return row IDs for which elements of `data` are within `dist` of `data[idx, ]`
+# Note that data[idx, ] are within any positive distance of themselves
+# and as such are returned by this function
+which_within_dist <- function(data, idx, dist) {
+  which(
+    purrr::map_lgl(
+      sf::st_is_within_distance(data, data[idx, ], dist = dist),
+      sgbp_is_not_empty
+    )
+  )
 }

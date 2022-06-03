@@ -9,6 +9,8 @@ spatial_block_cv(
   method = c("random", "snake", "continuous"),
   v = 10,
   relevant_only = TRUE,
+  radius = 0,
+  buffer = 0,
   ...
 )
 }
@@ -26,6 +28,13 @@ to right, moving from the bottom row up.}
 
 \item{relevant_only}{For systematic sampling, should only blocks containing
 data be included in fold labeling?}
+
+\item{radius}{Numeric: points within this distance of the initially-selected
+test points will be assigned to the assessment set.}
+
+\item{buffer}{Numeric: points within this distance of the test set area
+(after \code{radius} is applied)
+will be assigned to neither the analysis or assessment set.}
 
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
 }
@@ -60,15 +69,9 @@ then \code{cellsize} will be automatically adjusted to create the requested
 number of cells.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(Smithsonian, package = "modeldata")
-smithsonian_sf <- sf::st_as_sf(Smithsonian,
-                               coords = c("longitude", "latitude"),
-                               # Set CRS to WGS84
-                               crs = 4326)
 
-spatial_block_cv(smithsonian_sf, v = 3)
-\dontshow{\}) # examplesIf}
+spatial_block_cv(boston_canopy, v = 3)
+
 }
 \references{
 D. R. Roberts, V. Bahn, S. Ciuti, M. S. Boyce, J. Elith, G. Guillera-Arroita,
