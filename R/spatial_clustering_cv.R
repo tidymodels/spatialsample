@@ -143,6 +143,9 @@ spatial_clustering_splits <- function(data,
   classes <- c("spatial_clustering_split")
   if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
 
+  classes <- c("spatial_clustering_split")
+  if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
+
   n <- nrow(data)
 
   clusterer <- ifelse(
