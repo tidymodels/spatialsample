@@ -127,7 +127,7 @@ spatial_clustering_splits <- function(data,
     cluster_function <- rlang::arg_match(cluster_function)
   }
 
-  v <- check_v(v, nrow(data), "data points")
+  v <- check_v(v, nrow(data), "data points", allow_max_v = FALSE)
 
   classes <- c("spatial_clustering_split")
   if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")

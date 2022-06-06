@@ -22,7 +22,7 @@
       spatial_block_cv(ames_sf, v = c(5, 10))
     Condition
       Error in `spatial_block_cv()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 
@@ -30,7 +30,7 @@
       spatial_block_cv(ames_sf, v = c(5, 10), method = "snake")
     Condition
       Error in `spatial_block_cv()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 
@@ -58,7 +58,8 @@
       spatial_block_cv(ames_sf, method = "snake", v = 60)
     Condition
       Warning in `spatial_block_cv()`:
-      Fewer than 60 blocks available for sampling; setting v to 17.
+      Fewer than 60 blocks available for sampling
+      i Setting `v` to 17
     Output
       #  17-fold spatial block cross-validation 
       # A tibble: 17 x 2
@@ -88,7 +89,8 @@
       spatial_block_cv(ames_sf, v = 60)
     Condition
       Warning in `spatial_block_cv()`:
-      Fewer than 60 blocks available for sampling; setting v to 17.
+      Fewer than 60 blocks available for sampling
+      i Setting `v` to 17
     Output
       #  17-fold spatial block cross-validation 
       # A tibble: 17 x 2
