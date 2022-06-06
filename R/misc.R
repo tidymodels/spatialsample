@@ -30,15 +30,36 @@ split_unnamed <- function(x, f) {
 }
 
 ### Functions below are spatialsample-specific
-check_v <- function(v, max_v, objects, call = rlang::caller_env()) {
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.", call = call)
+check_v <- function(v,
+                    max_v,
+                    objects,
+                    allow_max_v = TRUE,
+                    call = rlang::caller_env()) {
+  if (!is.numeric(v) || length(v) != 1 || v < 1) {
+    rlang::abort("`v` must be a single positive integer.", call = call)
   }
+
   if (v > max_v) {
-    rlang::warn(paste0(
-      "Fewer than ", v, " ", objects, " available for sampling; setting v to ",
-      max_v, "."
-    ), call = call)
+    if (!allow_max_v) {
+      rlang::abort(
+        c(
+          glue::glue(
+            "The number of {objects} is less than `v = {v}` ({max_v})"
+          ),
+          i = "Set `v` to a smaller value than {max_v}"
+        ),
+        call = call
+      )
+    }
+
+    rlang::warn(
+      c(
+        glue::glue("Fewer than {v} {objects} available for sampling"),
+        i = glue::glue("Setting `v` to {max_v}")
+      ),
+      call = call
+    )
+
     v <- max_v
   }
   v

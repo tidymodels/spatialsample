@@ -96,6 +96,14 @@ test_that("bad args", {
     ),
     error = TRUE
   )
+  expect_snapshot(
+    spatial_clustering_cv(
+      Smithsonian,
+      coords = c(latitude, longitude),
+      v = 100
+    ),
+    error = TRUE
+  )
 })
 
 test_that("can pass the dots to kmeans", {
