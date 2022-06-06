@@ -89,13 +89,20 @@ test_that("buffering selects the expected points", {
 
 skip_if_not_installed("modeldata")
 data("ames", package = "modeldata")
-ames_sf <- sf::st_as_sf(
-  ames,
-  coords = c("Longitude", "Latitude"),
-  crs = 4326
-)
 
 test_that("bad args", {
+  ames_sf <- sf::st_as_sf(
+    ames,
+    coords = c("Longitude", "Latitude")
+  )
+  expect_snapshot(
+    spatial_clustering_cv(ames_sf, buffer = 50),
+    error = TRUE
+  )
+  ames_sf <- sf::st_set_crs(
+    ames_sf,
+    4326
+  )
   s2_status <- sf::sf_use_s2()
   sf::sf_use_s2(FALSE)
   expect_snapshot(
@@ -104,6 +111,12 @@ test_that("bad args", {
   )
   sf::sf_use_s2(s2_status)
 })
+
+ames_sf <- sf::st_as_sf(
+  ames,
+  coords = c("Longitude", "Latitude"),
+  crs = 4326
+)
 
 test_that("using buffers", {
 

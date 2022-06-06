@@ -21,6 +21,14 @@ buffer_indices <- function(data, indices, radius, buffer) {
     )
   }
 
+  if (identical(sf::st_crs(data), sf::NA_crs_)) {
+    rlang::abort(
+      c("`buffer` and `radius` require `data` to have a non-NA coordinate reference system",
+        "i" = "Set the CRS for your data using `sf::st_set_crs()`"
+      )
+    )
+  }
+
   n <- nrow(data)
 
   if (is.null(radius)) radius <- 0

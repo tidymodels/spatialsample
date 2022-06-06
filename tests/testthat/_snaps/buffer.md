@@ -1,6 +1,15 @@
 # bad args
 
     Code
+      spatial_clustering_cv(ames_sf, buffer = 50)
+    Condition
+      Error in `buffer_indices()`:
+      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
+      i Set the CRS for your data using `sf::st_set_crs()`
+
+---
+
+    Code
       buffer_indices(ames_sf)
     Condition
       Error in `buffer_indices()`:
