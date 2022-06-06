@@ -7,8 +7,6 @@
 #' `sf` objects create `spatial_rset` and `spatial_rsplit` objects;
 #' this function will not work for
 #' resamples made with non-spatial tibbles or data.frames.
-#' @param show_grid When plotting [spatial_block_cv] objects, should the grid
-#' itself be drawn on top of the data? Set to FALSE to remove the grid.
 #' @param ... Options passed to [ggplot2::geom_sf()].
 #'
 #' @return A ggplot object with each fold assigned a color, made using
@@ -25,6 +23,7 @@
 #' ames_block <- spatial_block_cv(ames_sf)
 #' autoplot(ames_block)
 #'
+#' @rdname autoplot.spatial_rset
 # registered in zzz.R
 #' @export
 autoplot.spatial_rset <- function(object, ...) {
@@ -70,6 +69,9 @@ autoplot.spatial_rsplit <- function(object, ...) {
 
 }
 
+#' @rdname autoplot.spatial_rset
+#' @param show_grid When plotting [spatial_block_cv] objects, should the grid
+#' itself be drawn on top of the data? Set to FALSE to remove the grid.
 #' @export
 autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ...) {
   p <- autoplot.spatial_rset(object, ...)

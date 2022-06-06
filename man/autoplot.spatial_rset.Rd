@@ -2,9 +2,12 @@
 % Please edit documentation in R/autoplot.R
 \name{autoplot.spatial_rset}
 \alias{autoplot.spatial_rset}
+\alias{autoplot.spatial_block_cv}
 \title{Create a ggplot for spatial resamples.}
 \usage{
 \method{autoplot}{spatial_rset}(object, ...)
+
+\method{autoplot}{spatial_block_cv}(object, show_grid = TRUE, ...)
 }
 \arguments{
 \item{object}{A \code{spatial_rset} object or a \code{spatial_rsplit} object.
