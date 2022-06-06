@@ -35,8 +35,8 @@ check_v <- function(v,
                     objects,
                     allow_max_v = TRUE,
                     call = rlang::caller_env()) {
-  if (!is.numeric(v) || length(v) != 1) {
-    rlang::abort("`v` must be a single integer.", call = call)
+  if (!is.numeric(v) || length(v) != 1 || v < 1) {
+    rlang::abort("`v` must be a single positive integer.", call = call)
   }
 
   if (v > max_v) {

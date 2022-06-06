@@ -22,7 +22,7 @@
       spatial_block_cv(ames_sf, v = c(5, 10))
     Condition
       Error in `spatial_block_cv()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 
@@ -30,7 +30,7 @@
       spatial_block_cv(ames_sf, v = c(5, 10), method = "snake")
     Condition
       Error in `spatial_block_cv()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 

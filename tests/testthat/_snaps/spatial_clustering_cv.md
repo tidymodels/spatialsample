@@ -4,7 +4,7 @@
       spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = "a")
     Condition
       Error in `spatial_clustering_splits()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 
@@ -12,7 +12,7 @@
       spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = c(5, 10))
     Condition
       Error in `spatial_clustering_splits()`:
-      ! `v` must be a single integer.
+      ! `v` must be a single positive integer.
 
 ---
 
