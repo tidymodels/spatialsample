@@ -112,7 +112,10 @@ spatial_block_cv <- function(data,
   split_objs$splits <- map(split_objs$splits, rm_out)
 
   ## Save some overall information
-  cv_att <- list(v = v)
+  cv_att <- list(v = v,
+                 method = method,
+                 relevant_only = relevant_only,
+                 ...)
 
   new_rset(
     splits = split_objs$splits,
