@@ -9,13 +9,14 @@
 #' will be assigned to neither the analysis or assessment set.
 #'
 #' @keywords internal
-buffer_indices <- function(data, indices, radius, buffer) {
+buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_env()) {
 
   if (identical(sf::st_crs(data), sf::NA_crs_)) {
     rlang::abort(
       c("`buffer` and `radius` require `data` to have a non-NA coordinate reference system",
         "i" = "Set the CRS for your data using `sf::st_set_crs()`"
-      )
+      ),
+      call = call
     )
   }
 
@@ -25,7 +26,8 @@ buffer_indices <- function(data, indices, radius, buffer) {
         "`buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library",
         "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
         "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
-      )
+      ),
+      call = call
     )
   }
 
@@ -39,11 +41,8 @@ buffer_indices <- function(data, indices, radius, buffer) {
   }
 
   # `buffer_indices` are _always_ needed
-  # so initialize to integer(0) before checking if we need to find them:
-  buffer_indices <- lapply(seq_along(indices), function(x) integer(0))
-  if (buffer) {
-    buffer_indices <- row_ids_within_dist(data, indices, buffer)
-  }
+  # so don't bother checking if `buffer` is non-0
+  buffer_indices <- row_ids_within_dist(data, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)
 }
@@ -56,6 +55,9 @@ buffered_complement <- function(ind, buff_ind, n) {
 }
 
 row_ids_within_dist <- function(data, indices, dist) {
+  # initialize to integer(0) in case buffer == 0:
+  if (dist <= 0) return(lapply(seq_along(indices), function(x) integer(0)))
+
   purrr::map(
     # indices is the output of split_unnamed
     indices,

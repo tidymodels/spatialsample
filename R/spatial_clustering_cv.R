@@ -172,7 +172,13 @@ spatial_clustering_splits <- function(data,
   if (is.null(radius) && is.null(buffer)) {
     indices <- lapply(indices, default_complement, n = n)
   } else {
-    indices <- buffer_indices(data, indices, radius, buffer)
+    indices <- buffer_indices(
+      data,
+      indices,
+      radius,
+      buffer,
+      call = rlang::caller_env()
+    )
   }
   split_objs <- purrr::map(
     indices,

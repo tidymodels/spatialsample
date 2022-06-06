@@ -3,16 +3,16 @@
     Code
       spatial_clustering_cv(ames_sf, buffer = 50)
     Condition
-      Error in `buffer_indices()`:
+      Error in `spatial_clustering_cv()`:
       ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
       i Set the CRS for your data using `sf::st_set_crs()`
 
 ---
 
     Code
-      buffer_indices(ames_sf)
+      buffer_indices(ames_sf, call = rlang::current_env())
     Condition
-      Error in `buffer_indices()`:
+      Error:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
       i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
       i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`

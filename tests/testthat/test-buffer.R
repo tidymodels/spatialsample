@@ -21,7 +21,12 @@ test_that("buffering selects the expected points", {
 
   # No buffer or radius: only the selected point (2) should be in test:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 0, 0),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 0
+    ),
     list(
       list(
         analysis = c(1L, 3L),
@@ -32,7 +37,12 @@ test_that("buffering selects the expected points", {
 
   # 1 radius 0 buffer: the point at 1 should be in test:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 1, 0),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 1,
+      buffer = 0
+    ),
     list(
       list(
         analysis = c(3L),
@@ -43,7 +53,12 @@ test_that("buffering selects the expected points", {
 
   # 0 radius 1 buffer: the point at 1 should be nowhere:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 0, 1),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 1
+    ),
     list(
       list(
         analysis = c(3L),
@@ -54,7 +69,12 @@ test_that("buffering selects the expected points", {
 
   # 1 radius 2 buffer: the point at 3 should be nowhere:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 1, 2),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 1,
+      buffer = 2
+    ),
     list(
       list(
         analysis = integer(),
@@ -65,7 +85,12 @@ test_that("buffering selects the expected points", {
 
   # 0 radius 2 buffer: the point at 3 should be nowhere:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 0, 2),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 2
+    ),
     list(
       list(
         analysis = integer(),
@@ -76,7 +101,12 @@ test_that("buffering selects the expected points", {
 
   # >1 radius 1 buffer: the point at 3 should be in test:
   expect_identical(
-    buffer_indices(chosen_points, list(2), 1.8, 1),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 1.8,
+      buffer = 1
+    ),
     list(
       list(
         analysis = c(3L),
@@ -106,7 +136,7 @@ test_that("bad args", {
   s2_status <- sf::sf_use_s2()
   sf::sf_use_s2(FALSE)
   expect_snapshot(
-    buffer_indices(ames_sf),
+    buffer_indices(ames_sf, call = rlang::current_env()),
     error = TRUE
   )
   sf::sf_use_s2(s2_status)

@@ -19,7 +19,7 @@
     Code
       spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 100)
     Condition
-      Error in `spatial_clustering_splits()`:
+      Error in `spatial_clustering_cv()`:
       ! The number of data points is less than `v = 100` (20)
       i Set `v` to a smaller value than {max_v}
 
