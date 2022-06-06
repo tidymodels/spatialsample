@@ -7,6 +7,8 @@
 #' `sf` objects create `spatial_rset` and `spatial_rsplit` objects;
 #' this function will not work for
 #' resamples made with non-spatial tibbles or data.frames.
+#' @param show_grid When plotting [spatial_block_cv] objects, should the grid
+#' itself be drawn on top of the data? Set to FALSE to remove the grid.
 #' @param ... Options passed to [ggplot2::geom_sf()].
 #'
 #' @return A ggplot object with each fold assigned a color, made using
@@ -65,5 +67,32 @@ autoplot.spatial_rsplit <- function(object, ...) {
   p <- p + ggplot2::scale_color_discrete(name = "Class")
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
+
+}
+
+#' @export
+autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ...) {
+  p <- autoplot.spatial_rset(object, ...)
+
+  if (!show_grid) return(p)
+
+  data <- object$splits[[1]]$data
+  grid_args <- list(x = data)
+  grid_args$cellsize <- attr(object, "cellsize", TRUE)
+  grid_args$offset <- attr(object, "offset", TRUE)
+  grid_args$n <- attr(object, "n", TRUE)
+  grid_args$crs <- attr(object, "crs", TRUE)
+  grid_args$what <- attr(object, "what", TRUE)
+  grid_args$square <- attr(object, "square", TRUE)
+  grid_args$flat_topped <- attr(object, "flat_topped", TRUE)
+  grid_blocks <- do.call(sf::st_make_grid, grid_args)
+
+  if (attr(object, "relevant_only", TRUE)) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  }
+
+  # Always prints with "Coordinate system already present. Adding new coordinate system, which will replace the existing one."
+  # So this silences that
+  suppressMessages(p + ggplot2::geom_sf(data = grid_blocks, fill = NA))
 
 }

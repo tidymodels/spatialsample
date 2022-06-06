@@ -14,6 +14,9 @@ this function will not work for
 resamples made with non-spatial tibbles or data.frames.}
 
 \item{...}{Options passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}.}
+
+\item{show_grid}{When plotting \link{spatial_block_cv} objects, should the grid
+itself be drawn on top of the data? Set to FALSE to remove the grid.}
 }
 \value{
 A ggplot object with each fold assigned a color, made using

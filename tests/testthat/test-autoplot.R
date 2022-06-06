@@ -17,8 +17,11 @@ test_that("autoplot is stable", {
   p <- autoplot(ames_cluster)
   vdiffr::expect_doppelganger("cluster plots", p)
 
-  p <- autoplot(ames_block)
+  p <- autoplot(ames_block, show_grid = FALSE)
   vdiffr::expect_doppelganger("block plots", p)
+
+  p <- autoplot(ames_block)
+  vdiffr::expect_doppelganger("block plots with grid", p)
 
   p <- autoplot(ames_cluster$splits[[1]])
   vdiffr::expect_doppelganger("cluster split plots", p)
