@@ -38,8 +38,8 @@ check_v <- function(v,
   if (!is.numeric(v) || length(v) != 1) {
     rlang::abort("`v` must be a single integer.", call = call)
   }
-  if (v > max_v) {
 
+  if (v > max_v) {
     if (!allow_max_v) {
       rlang::abort(
         c(
@@ -54,12 +54,8 @@ check_v <- function(v,
 
     rlang::warn(
       c(
-        glue::glue(
-          "Fewer than {v} {objects} available for sampling",
-        ),
-        i = glue::glue(
-          "Setting `v` to {max_v}",
-        )
+        glue::glue("Fewer than {v} {objects} available for sampling"),
+        i = glue::glue("Setting `v` to {max_v}")
       ),
       call = call
     )
