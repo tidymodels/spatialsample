@@ -11,20 +11,20 @@
 #' @keywords internal
 buffer_indices <- function(data, indices, radius, buffer) {
 
+  if (identical(sf::st_crs(data), sf::NA_crs_)) {
+    rlang::abort(
+      c("`buffer` and `radius` require `data` to have a non-NA coordinate reference system",
+        "i" = "Set the CRS for your data using `sf::st_set_crs()`"
+      )
+    )
+  }
+
   if (sf::st_is_longlat(data) && !sf::sf_use_s2()) {
     rlang::abort(
       c(
         "`buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library",
         "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
         "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
-      )
-    )
-  }
-
-  if (identical(sf::st_crs(data), sf::NA_crs_)) {
-    rlang::abort(
-      c("`buffer` and `radius` require `data` to have a non-NA coordinate reference system",
-        "i" = "Set the CRS for your data using `sf::st_set_crs()`"
       )
     )
   }
