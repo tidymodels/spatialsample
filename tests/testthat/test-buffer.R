@@ -136,7 +136,7 @@ test_that("bad args", {
   s2_status <- sf::sf_use_s2()
   sf::sf_use_s2(FALSE)
   expect_snapshot(
-    buffer_indices(ames_sf, call = rlang::current_env()),
+    buffer_indices(ames_sf),
     error = TRUE
   )
   sf::sf_use_s2(s2_status)

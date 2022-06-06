@@ -10,7 +10,7 @@
 ---
 
     Code
-      buffer_indices(ames_sf, call = rlang::current_env())
+      buffer_indices(ames_sf)
     Condition
       Error:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
