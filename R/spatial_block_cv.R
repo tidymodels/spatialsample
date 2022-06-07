@@ -131,7 +131,12 @@ spatial_block_cv <- function(data,
   split_objs$v <- NULL
 
   ## Save some overall information
-  cv_att <- list(v = v, radius = radius, buffer = buffer)
+  cv_att <- list(v = v,
+                 method = method,
+                 relevant_only = relevant_only,
+                 radius = radius, 
+                 buffer = buffer,
+                 ...)
 
   new_rset(
     splits = split_objs$splits,

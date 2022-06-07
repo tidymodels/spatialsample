@@ -2,9 +2,12 @@
 % Please edit documentation in R/autoplot.R
 \name{autoplot.spatial_rset}
 \alias{autoplot.spatial_rset}
+\alias{autoplot.spatial_block_cv}
 \title{Create a ggplot for spatial resamples.}
 \usage{
 \method{autoplot}{spatial_rset}(object, ...)
+
+\method{autoplot}{spatial_block_cv}(object, show_grid = TRUE, ...)
 }
 \arguments{
 \item{object}{A \code{spatial_rset} object or a \code{spatial_rsplit} object.
@@ -14,6 +17,9 @@ this function will not work for
 resamples made with non-spatial tibbles or data.frames.}
 
 \item{...}{Options passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}.}
+
+\item{show_grid}{When plotting \link{spatial_block_cv} objects, should the grid
+itself be drawn on top of the data? Set to FALSE to remove the grid.}
 }
 \value{
 A ggplot object with each fold assigned a color, made using

@@ -22,8 +22,11 @@ test_that("autoplot is stable", {
   set.seed(123)
   ames_block <- spatial_block_cv(ames_sf)
 
-  p <- autoplot(ames_block)
+  p <- autoplot(ames_block, show_grid = FALSE)
   vdiffr::expect_doppelganger("block plots", p)
+
+  p <- autoplot(ames_block)
+  vdiffr::expect_doppelganger("block plots with grid", p)
 
   p <- autoplot(ames_block$splits[[1]])
   vdiffr::expect_doppelganger("block split plots", p)

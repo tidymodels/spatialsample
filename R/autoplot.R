@@ -28,6 +28,7 @@
 #' autoplot(boston_block)
 #' lapply(boston_block$splits, autoplot)
 #'
+#' @rdname autoplot.spatial_rset
 # registered in zzz.R
 #' @export
 autoplot.spatial_rset <- function(object, ...) {
@@ -70,4 +71,34 @@ autoplot.spatial_rsplit <- function(object, ...) {
   p <- p + ggplot2::scale_color_discrete(name = "Class")
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
+}
+
+#' @rdname autoplot.spatial_rset
+#' @param show_grid When plotting [spatial_block_cv] objects, should the grid
+#' itself be drawn on top of the data? Set to FALSE to remove the grid.
+#' @export
+autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ...) {
+  p <- autoplot.spatial_rset(object, ...)
+
+  if (!show_grid) return(p)
+
+  data <- object$splits[[1]]$data
+  grid_args <- list(x = data)
+  grid_args$cellsize <- attr(object, "cellsize", TRUE)
+  grid_args$offset <- attr(object, "offset", TRUE)
+  grid_args$n <- attr(object, "n", TRUE)
+  grid_args$crs <- attr(object, "crs", TRUE)
+  grid_args$what <- attr(object, "what", TRUE)
+  grid_args$square <- attr(object, "square", TRUE)
+  grid_args$flat_topped <- attr(object, "flat_topped", TRUE)
+  grid_blocks <- do.call(sf::st_make_grid, grid_args)
+
+  if (attr(object, "relevant_only", TRUE)) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  }
+
+  # Always prints with "Coordinate system already present. Adding new coordinate system, which will replace the existing one."
+  # So this silences that
+  suppressMessages(p + ggplot2::geom_sf(data = grid_blocks, fill = NA))
+
 }
