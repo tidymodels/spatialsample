@@ -128,6 +128,42 @@ test_that("systematic assignment -- continuous", {
   expect_true(all(good_holdout))
 })
 
+test_that("polygons are only assigned one fold", {
+  set.seed(11)
+
+  rs1 <- spatial_block_cv(boston_canopy, method = "continuous")
+  rs2 <- spatial_block_cv(boston_canopy, method = "snake")
+  rs3 <- spatial_block_cv(boston_canopy, method = "random")
+
+  expect_identical(
+    sum(map_int(rs1$splits, function(x) nrow(assessment(x)))),
+    nrow(boston_canopy)
+  )
+
+  expect_identical(
+    sum(map_int(rs2$splits, function(x) nrow(assessment(x)))),
+    nrow(boston_canopy)
+  )
+
+  expect_identical(
+    sum(map_int(rs3$splits, function(x) nrow(assessment(x)))),
+    nrow(boston_canopy)
+  )
+
+  good_holdout <- map_lgl(
+    c(
+      rs1$splits,
+      rs2$splits,
+      rs3$splits
+    ),
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
+
+})
+
 test_that("bad args", {
   set.seed(123)
   expect_snapshot(
