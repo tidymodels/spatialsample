@@ -177,7 +177,10 @@ systematic_block_cv <- function(data,
 generate_folds_from_blocks <- function(data, grid_blocks, v, n) {
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
-  indices <- row_ids_intersecting_fold_blocks(grid_blocks, data)
+  centroids <- sf::st_geometry(data)
+  centroids <- sf::st_centroid(centroids)
+
+  indices <- row_ids_intersecting_fold_blocks(grid_blocks, centroids)
 
   indices <- lapply(indices, default_complement, n = n)
   split_objs <- purrr::map(

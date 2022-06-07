@@ -213,8 +213,34 @@ test_that("using custom functions", {
   )
 })
 
+test_that("polygons are only assigned one fold", {
+  set.seed(11)
 
+  rs1 <- spatial_clustering_cv(boston_canopy, cluster_function = "hclust")
+  rs2 <- spatial_clustering_cv(boston_canopy, cluster_function = "kmeans")
 
+  expect_identical(
+    sum(map_int(rs1$splits, function(x) nrow(assessment(x)))),
+    nrow(boston_canopy)
+  )
+
+  expect_identical(
+    sum(map_int(rs2$splits, function(x) nrow(assessment(x)))),
+    nrow(boston_canopy)
+  )
+
+  good_holdout <- map_lgl(
+    c(
+      rs1$splits,
+      rs2$splits
+    ),
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
+
+})
 
 test_that("printing", {
   # The default RNG changed in 3.6.0
