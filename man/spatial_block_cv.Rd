@@ -9,8 +9,8 @@ spatial_block_cv(
   method = c("random", "snake", "continuous"),
   v = 10,
   relevant_only = TRUE,
-  radius = 0,
-  buffer = 0,
+  radius = NULL,
+  buffer = NULL,
   ...
 )
 }
@@ -30,11 +30,12 @@ to right, moving from the bottom row up.}
 data be included in fold labeling?}
 
 \item{radius}{Numeric: points within this distance of the initially-selected
-test points will be assigned to the assessment set.}
+test points will be assigned to the assessment set. If \code{NULL}, no radius is
+applied.}
 
-\item{buffer}{Numeric: points within this distance of the test set
-(after \code{radius} is applied)
-will be assigned to neither the analysis or assessment set.}
+\item{buffer}{Numeric: points within this distance of any point in the
+test set (after \code{radius} is applied) will be assigned to neither the analysis
+or assessment set. If \code{NULL}, no buffer is applied.}
 
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
 }

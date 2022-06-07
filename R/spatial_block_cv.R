@@ -57,8 +57,8 @@ spatial_block_cv <- function(data,
                              method = c("random", "snake", "continuous"),
                              v = 10,
                              relevant_only = TRUE,
-                             radius = 0,
-                             buffer = 0,
+                             radius = NULL,
+                             buffer = NULL,
                              ...) {
   method <- rlang::arg_match(method)
 
@@ -104,9 +104,6 @@ spatial_block_cv <- function(data,
     grid_box[4] <- grid_box[4] + abs(grid_box[4] * 0.001)
   }
 
-  if (missing(radius)) radius <- NULL
-  if (missing(buffer)) buffer <- NULL
-
   grid_blocks <- sf::st_make_grid(grid_box, ...)
   split_objs <- switch(
     method,
@@ -114,8 +111,8 @@ spatial_block_cv <- function(data,
       data,
       grid_blocks,
       v,
-      radius,
-      buffer
+      radius = radius,
+      buffer = buffer
     ),
     systematic_block_cv(
       data,
@@ -123,8 +120,8 @@ spatial_block_cv <- function(data,
       v,
       ordering = method,
       relevant_only,
-      radius,
-      buffer
+      radius = radius,
+      buffer = buffer
     )
   )
   v <- split_objs$v[[1]]
@@ -134,7 +131,7 @@ spatial_block_cv <- function(data,
   cv_att <- list(v = v,
                  method = method,
                  relevant_only = relevant_only,
-                 radius = radius, 
+                 radius = radius,
                  buffer = buffer,
                  ...)
 
@@ -146,7 +143,11 @@ spatial_block_cv <- function(data,
   )
 }
 
-random_block_cv <- function(data, grid_blocks, v, radius, buffer) {
+random_block_cv <- function(data,
+                            grid_blocks,
+                            v,
+                            radius = NULL,
+                            buffer = NULL) {
   n <- nrow(data)
 
   grid_blocks <- filter_grid_blocks(grid_blocks, data)
@@ -165,8 +166,8 @@ systematic_block_cv <- function(data,
                                 v,
                                 ordering = c("snake", "continuous"),
                                 relevant_only = TRUE,
-                                radius,
-                                buffer) {
+                                radius = NULL,
+                                buffer = NULL) {
   n <- nrow(data)
   ordering <- rlang::arg_match(ordering)
 

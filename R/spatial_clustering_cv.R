@@ -76,8 +76,8 @@ spatial_clustering_cv <- function(data,
                                   coords,
                                   v = 10,
                                   cluster_function = c("kmeans", "hclust"),
-                                  radius = 0,
-                                  buffer = 0,
+                                  radius = NULL,
+                                  buffer = NULL,
                                   ...) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
@@ -102,8 +102,6 @@ spatial_clustering_cv <- function(data,
     dists <- dist(coords)
     subclasses <- setdiff(subclasses, "spatial_rset")
   }
-  if (missing(radius)) radius <- NULL
-  if (missing(buffer)) buffer <- NULL
 
   split_objs <- spatial_clustering_splits(
     data = data,
@@ -131,8 +129,8 @@ spatial_clustering_splits <- function(data,
                                       dists,
                                       v = 10,
                                       cluster_function = c("kmeans", "hclust"),
-                                      radius = 0,
-                                      buffer = 0,
+                                      radius = NULL,
+                                      buffer = NULL,
                                       ...) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
