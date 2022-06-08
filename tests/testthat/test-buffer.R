@@ -208,8 +208,41 @@ test_that("using buffers", {
     )
   )
 
+
   # The default RNG changed in 3.6.0
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
+
+  # suppressMessages to avoid:
+  # + "Message"
+  # + "  Note: Using an external vector in selections is ambiguous."
+  # + "  i Use `all_of(group)` instead of `group` to silence this message."
+  # + "  i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
+  # + "  This message is displayed once per session."
+  # This is percolating up from rsample but I can't find where https://github.com/tidymodels/rsample/runs/6760867450?check_suite_focus=true#step:6:182
+  set.seed(11)
+  expect_snapshot(
+    suppressMessages(
+      spatial_buffer_vfold_cv(
+        boston_canopy,
+        v = 682,
+        radius = 500,
+        buffer = 500
+      )
+    )
+  )
+
+  set.seed(11)
+  expect_snapshot(
+    suppressMessages(
+      spatial_leave_location_out_cv(
+        ames_sf,
+        Neighborhood,
+        v = 682,
+        radius = 500,
+        buffer = 500
+      )
+    )
+  )
 
   set.seed(11)
   expect_snapshot(
