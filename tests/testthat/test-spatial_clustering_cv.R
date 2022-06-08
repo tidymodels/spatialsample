@@ -4,6 +4,11 @@ library(purrr)
 skip_if_not_installed("modeldata")
 
 data("Smithsonian", package = "modeldata")
+Smithsonian_sf <- sf::st_as_sf(
+  Smithsonian,
+  coords = c("longitude", "latitude"),
+  crs = 4326
+)
 
 test_that("using kmeans", {
   set.seed(11)
@@ -114,11 +119,6 @@ test_that("can pass the dots to kmeans", {
 })
 
 test_that("using sf", {
-  Smithsonian_sf <- sf::st_as_sf(
-    Smithsonian,
-    coords = c("longitude", "latitude"),
-    crs = 4326
-  )
 
   set.seed(11)
   rs1 <- spatial_clustering_cv(
@@ -194,12 +194,6 @@ test_that("using custom functions", {
       algorithm = "MacQueen"
     ),
     NA
-  )
-
-  Smithsonian_sf <- sf::st_as_sf(
-    Smithsonian,
-    coords = c("longitude", "latitude"),
-    crs = 4326
   )
 
   expect_error(

@@ -1,3 +1,13 @@
+# erroring when no S2
+
+    Code
+      spatial_block_cv(ames_sf)
+    Condition
+      Error in `spatial_block_cv()`:
+      ! `spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+
 # bad args
 
     Code

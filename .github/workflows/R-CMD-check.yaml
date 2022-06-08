@@ -56,6 +56,14 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt-get update
+          sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+          Rscript -e 'install.packages("sf", repos = "https://cloud.r-project.org")'
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true

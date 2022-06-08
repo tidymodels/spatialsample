@@ -2,6 +2,16 @@
 #'
 #' This method provides a good visualization method for spatial resampling.
 #'
+#' @details
+#' The plot method for `spatial_rset` displays which fold each observation
+#' is assigned to. Note that if data is assigned to multiple folds
+#' (which is common if resamples were created with a non-zero `radius`) only
+#' the "last" fold for each observation will appear on the plot.
+#' Consider adding `ggplot2::facet_wrap(~ fold)` to visualize all members of
+#' each fold separately.
+#' Alternatively, consider plotting each split using the `spatial_rsplit` method
+#' (for example, via `lapply(object$splits, autoplot)`).
+#'
 #' @param object A `spatial_rset` object or a `spatial_rsplit` object.
 #' Note that only resamples made from
 #' `sf` objects create `spatial_rset` and `spatial_rsplit` objects;
@@ -12,16 +22,11 @@
 #' @return A ggplot object with each fold assigned a color, made using
 #' [ggplot2::geom_sf()].
 #'
-#' @examplesIf rlang::is_installed("ggplot2") && rlang::is_installed("modeldata")
-#' data(ames, package = "modeldata")
-#' ames_sf <- sf::st_as_sf(
-#'   ames,
-#'   coords = c("Longitude", "Latitude"),
-#'   crs = 4326
-#' )
+#' @examples
 #'
-#' ames_block <- spatial_block_cv(ames_sf)
-#' autoplot(ames_block)
+#' boston_block <- spatial_block_cv(boston_canopy, v = 2)
+#' autoplot(boston_block)
+#' lapply(boston_block$splits, autoplot)
 #'
 #' @rdname autoplot.spatial_rset
 # registered in zzz.R
@@ -66,7 +71,6 @@ autoplot.spatial_rsplit <- function(object, ...) {
   p <- p + ggplot2::scale_color_discrete(name = "Class")
   p <- p + ggplot2::geom_sf(...)
   p + ggplot2::coord_sf()
-
 }
 
 #' @rdname autoplot.spatial_rset

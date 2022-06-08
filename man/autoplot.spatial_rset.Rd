@@ -28,16 +28,20 @@ A ggplot object with each fold assigned a color, made using
 \description{
 This method provides a good visualization method for spatial resampling.
 }
+\details{
+The plot method for \code{spatial_rset} displays which fold each observation
+is assigned to. Note that if data is assigned to multiple folds
+(which is common if resamples were created with a non-zero \code{radius}) only
+the "last" fold for each observation will appear on the plot.
+Consider adding \code{ggplot2::facet_wrap(~ fold)} to visualize all members of
+each fold separately.
+Alternatively, consider plotting each split using the \code{spatial_rsplit} method
+(for example, via \code{lapply(object$splits, autoplot)}).
+}
 \examples{
-\dontshow{if (rlang::is_installed("ggplot2") && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(ames, package = "modeldata")
-ames_sf <- sf::st_as_sf(
-  ames,
-  coords = c("Longitude", "Latitude"),
-  crs = 4326
-)
 
-ames_block <- spatial_block_cv(ames_sf)
-autoplot(ames_block)
-\dontshow{\}) # examplesIf}
+boston_block <- spatial_block_cv(boston_canopy, v = 2)
+autoplot(boston_block)
+lapply(boston_block$splits, autoplot)
+
 }

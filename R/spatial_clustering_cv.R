@@ -30,6 +30,7 @@
 #' @param coords A vector of variable names, typically spatial coordinates,
 #'  to partition the data into disjointed sets via k-means clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
+#' @inheritParams buffer_indices
 #' @param v The number of partitions of the data set.
 #' @param cluster_function Which function should be used for clustering?
 #' Options are either `"kmeans"` (to use [stats::kmeans()])
@@ -71,7 +72,13 @@
 #'
 #' @rdname spatial_clustering_cv
 #' @export
-spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("kmeans", "hclust"), ...) {
+spatial_clustering_cv <- function(data,
+                                  coords,
+                                  v = 10,
+                                  cluster_function = c("kmeans", "hclust"),
+                                  radius = NULL,
+                                  buffer = NULL,
+                                  ...) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }
@@ -84,6 +91,9 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     coords <- sf::st_centroid(sf::st_geometry(data))
     dists <- as.dist(sf::st_distance(coords))
   } else {
+    if (!missing(radius) || !missing(buffer)) {
+      rlang::abort("Neither `radius` or `buffer` can be used when providing non-`sf` objects to `data`.")
+    }
     coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
     if (is_empty(coords)) {
       rlang::abort("`coords` are required and must be variables in `data`.")
@@ -98,17 +108,14 @@ spatial_clustering_cv <- function(data, coords, v = 10, cluster_function = c("km
     dists = dists,
     v = v,
     cluster_function = cluster_function,
+    radius = radius,
+    buffer = buffer,
     ...
   )
 
-  ## We remove the holdout indices since it will save space and we can
-  ## derive them later when they are needed.
-
-  split_objs$splits <- map(split_objs$splits, rm_out)
-
   ## Save some overall information
 
-  cv_att <- list(v = v, repeats = 1)
+  cv_att <- list(v = v, repeats = 1, radius = radius, buffer = buffer)
 
   new_rset(
     splits = split_objs$splits,
@@ -122,12 +129,17 @@ spatial_clustering_splits <- function(data,
                                       dists,
                                       v = 10,
                                       cluster_function = c("kmeans", "hclust"),
+                                      radius = NULL,
+                                      buffer = NULL,
                                       ...) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }
 
-  v <- check_v(v, nrow(data), "data points", allow_max_v = FALSE)
+  v <- check_v(v, nrow(data), "data points", allow_max_v = FALSE, call = rlang::caller_env())
+
+  classes <- c("spatial_clustering_split")
+  if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
 
   classes <- c("spatial_clustering_split")
   if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
@@ -155,7 +167,17 @@ spatial_clustering_splits <- function(data,
 
   idx <- seq_len(n)
   indices <- split_unnamed(idx, folds)
-  indices <- lapply(indices, default_complement, n = n)
+  if (is.null(radius) && is.null(buffer)) {
+    indices <- lapply(indices, default_complement, n = n)
+  } else {
+    indices <- buffer_indices(
+      data,
+      indices,
+      radius,
+      buffer,
+      call = rlang::caller_env()
+    )
+  }
   split_objs <- purrr::map(
     indices,
     make_splits,

@@ -1,5 +1,12 @@
 # spatialsample (development version)
 
+* All resampling functions now support spatial buffering using two arguments.
+  `radius` lets you specify an _inclusion_ radius for your test set, where any
+  data within `radius` of the original assessment set will be added to the 
+  assessment set. `buffer` specifies an _exclusion_ buffer around the test set,
+  where any data within `buffer` of the assessment set (after `radius` is 
+  applied) will be excluded from both sets. 
+
 * `autoplot()` now has a method for spatial resamples built from `sf` objects.
 
 * `ggplot2` has been moved to Imports. It had been in Suggests.
