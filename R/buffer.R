@@ -34,13 +34,15 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
 
   n <- nrow(data)
 
-  if (!(identical(radius, 0) || identical(radius, 0L) || is.null(radius))) {
+  # only run radius checks if radius is not NULL (to prevent NAs from >)
+  run_radius <- !is.null(radius)
+  if (run_radius && radius > 0) {
     indices <- row_ids_within_dist(data, indices, radius)
   }
 
   # `buffer_indices` are _always_ needed
-  # so don't bother checking if `buffer` is non-0
-  if (is.null(buffer)) buffer <- 0
+  # so re-code a NULL buffer as a 0, which will buffer nothing
+  if (is.null(buffer)) buffer <- 0L
   buffer_indices <- row_ids_within_dist(data, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)

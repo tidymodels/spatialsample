@@ -35,6 +35,36 @@ test_that("buffering selects the expected points", {
     )
   )
 
+  expect_identical(
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 0
+    ),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = NULL
+    )
+  )
+
+  expect_identical(
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 0
+    ),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = NULL,
+      buffer = 0
+    )
+  )
+
   # No buffer or radius: only the selected point (2) should be in test:
   expect_identical(
     buffer_indices(
