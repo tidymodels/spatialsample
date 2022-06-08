@@ -74,6 +74,8 @@ is equal to V.</p>
   <span class="va">coords</span>,
   v <span class="op">=</span> <span class="fl">10</span>,
   cluster_function <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kmeans"</span>, <span class="st">"hclust"</span><span class="op">)</span>,
+  radius <span class="op">=</span> <span class="cn">NULL</span>,
+  buffer <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -94,6 +96,14 @@ This argument is ignored (with a warning) if <code>data</code> is an <code>sf</c
 Options are either <code>"kmeans"</code> (to use <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>)
 or <code>"hclust"</code> (to use <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust()</a></code>). You can also provide your own
 function; see <code>Details</code>.</p></dd>
+<dt>radius</dt>
+<dd><p>Numeric: points within this distance of the initially-selected
+test points will be assigned to the assessment set. If <code>NULL</code>, no radius is
+applied.</p></dd>
+<dt>buffer</dt>
+<dd><p>Numeric: points within this distance of any point in the
+test set (after <code>radius</code> is applied) will be assigned to neither the analysis
+or assessment set. If <code>NULL</code>, no buffer is applied.</p></dd>
 <dt>...</dt>
 <dd><p>Extra arguments passed on to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> or
 <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust()</a></code>.</p></dd>
@@ -137,13 +147,13 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 <span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">Smithsonian</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">latitude</span>, <span class="va">longitude</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   splits          id   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [10/10]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [15/5]&gt;</span>  Fold3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span>  Fold4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [5/15]&gt;</span> Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">smithsonian_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">Smithsonian</span>,</span>
@@ -158,11 +168,11 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [9/11]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [16/4]&gt;</span> Fold3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [5/15]&gt;</span> Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Can use hclust instead:</span></span>
 <span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">smithsonian_sf</span>, v <span class="op">=</span> <span class="fl">5</span>, cluster_function <span class="op">=</span> <span class="st">"hclust"</span><span class="op">)</span></span>
