@@ -19,6 +19,22 @@ test_that("buffering selects the expected points", {
   # should be conceptually straightforward: points X units away should be
   # "caught" by any radius or buffer (or the two combined) >= X
 
+  # No buffer or radius is identical to NULL:
+  expect_identical(
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = 0,
+      buffer = 0
+    ),
+    buffer_indices(
+      data = chosen_points,
+      indices = list(2),
+      radius = NULL,
+      buffer = NULL
+    )
+  )
+
   # No buffer or radius: only the selected point (2) should be in test:
   expect_identical(
     buffer_indices(

@@ -34,15 +34,13 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
 
   n <- nrow(data)
 
-  if (is.null(radius)) radius <- 0
-  if (is.null(buffer)) buffer <- 0
-
-  if (radius) {
+  if (!(identical(radius, 0) || identical(radius, 0L) || is.null(radius))) {
     indices <- row_ids_within_dist(data, indices, radius)
   }
 
   # `buffer_indices` are _always_ needed
   # so don't bother checking if `buffer` is non-0
+  if (is.null(buffer)) buffer <- 0
   buffer_indices <- row_ids_within_dist(data, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)
@@ -56,8 +54,8 @@ buffered_complement <- function(ind, buff_ind, n) {
 }
 
 row_ids_within_dist <- function(data, indices, dist) {
-  # initialize to integer(0) in case buffer == 0:
-  if (dist <= 0) return(lapply(seq_along(indices), function(x) integer(0)))
+  # initialize to integer(0) in case buffer is <= 0:
+  if (!(dist > 0)) return(lapply(seq_along(indices), function(x) integer(0)))
 
   purrr::map(
     # indices is the output of split_unnamed
