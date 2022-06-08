@@ -1,0 +1,128 @@
+# erroring when no S2
+
+    Code
+      suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500))
+    Condition
+      Error in `wrap_vfold()`:
+      ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+
+---
+
+    Code
+      suppressMessages(spatial_leave_location_out_cv(ames_sf, Neighborhood, buffer = 500))
+    Condition
+      Error in `wrap_vfold()`:
+      ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+
+# bad args
+
+    Code
+      spatial_buffer_vfold_cv(ames, buffer = 500)
+    Condition
+      Error in `wrap_vfold()`:
+      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
+      i Set the CRS for your data using `sf::st_set_crs()`
+
+---
+
+    Code
+      spatial_leave_location_out_cv(ames)
+    Condition
+      Error:
+      ! `group` should be a single character value for the column that will be used for splitting.
+
+---
+
+    Code
+      spatial_leave_location_out_cv(ames, Neighborhood, buffer = 500)
+    Condition
+      Error in `wrap_vfold()`:
+      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
+      i Set the CRS for your data using `sf::st_set_crs()`
+
+---
+
+    Code
+      spatial_leave_location_out_cv(ames_sf, v = c(5, 10))
+    Condition
+      Error:
+      ! `group` should be a single character value for the column that will be used for splitting.
+
+---
+
+    Code
+      spatial_buffer_vfold_cv(ames_sf, v = c(5, 10))
+    Condition
+      Error in `spatial_buffer_vfold_cv()`:
+      ! `v` must be a single positive integer.
+
+---
+
+    Code
+      spatial_leave_location_out_cv(ames_sf, Neighborhood, v = 60)
+    Condition
+      Warning in `spatial_leave_location_out_cv()`:
+      Fewer than 60 locations available for sampling
+      i Setting `v` to 28
+    Output
+      # A tibble: 28 x 2
+         splits             id    
+         <list>             <chr> 
+       1 <split [2816/114]> Fold01
+       2 <split [2928/2]>   Fold02
+       3 <split [2799/131]> Fold03
+       4 <split [2827/103]> Fold04
+       5 <split [2902/28]>  Fold05
+       6 <split [2920/10]>  Fold06
+       7 <split [2886/44]>  Fold07
+       8 <split [2691/239]> Fold08
+       9 <split [2779/151]> Fold09
+      10 <split [2748/182]> Fold10
+      # ... with 18 more rows
+
+---
+
+    Code
+      spatial_buffer_vfold_cv(boston_canopy, v = 683)
+    Condition
+      Warning in `spatial_buffer_vfold_cv()`:
+      Fewer than 683 rows available for sampling
+      i Setting `v` to 682
+    Output
+      #  682-fold spatial vfold cross-validation 
+      # A tibble: 682 x 2
+         splits          id     
+         <list>          <chr>  
+       1 <split [681/1]> Fold001
+       2 <split [681/1]> Fold002
+       3 <split [681/1]> Fold003
+       4 <split [681/1]> Fold004
+       5 <split [681/1]> Fold005
+       6 <split [681/1]> Fold006
+       7 <split [681/1]> Fold007
+       8 <split [681/1]> Fold008
+       9 <split [681/1]> Fold009
+      10 <split [681/1]> Fold010
+      # ... with 672 more rows
+
+# printing
+
+    #  10-fold spatial block cross-validation 
+    # A tibble: 10 x 2
+       splits             id    
+       <list>             <chr> 
+     1 <split [2082/848]> Fold01
+     2 <split [2570/360]> Fold02
+     3 <split [2801/129]> Fold03
+     4 <split [2848/82]>  Fold04
+     5 <split [2822/108]> Fold05
+     6 <split [2685/245]> Fold06
+     7 <split [2216/714]> Fold07
+     8 <split [2836/94]>  Fold08
+     9 <split [2609/321]> Fold09
+    10 <split [2901/29]>  Fold10
+

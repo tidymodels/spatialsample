@@ -22,6 +22,8 @@ reference:
     contents:
       - spatial_clustering_cv
       - spatial_block_cv
+      - spatial_buffer_vfold_cv
+      - spatial_leave_location_out_cv
   - title: Utilities
     contents:
       - reexports
