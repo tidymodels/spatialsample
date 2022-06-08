@@ -54,22 +54,24 @@ buffered_complement <- function(ind, buff_ind, n) {
 }
 
 row_ids_within_dist <- function(data, indices, dist) {
-  # initialize to integer(0) in case buffer is <= 0:
-  if (!(dist > 0)) return(lapply(seq_along(indices), function(x) integer(0)))
-
-  purrr::map(
-    # indices is the output of split_unnamed
-    indices,
-    # which_within_dist returns a vector of row IDs in sequential order
-    #
-    # In order to visualize (eventually) which observations were originally
-    # chosen for the test set and which were inside `radius`,
-    # we want the new indices to be appended to the end of the original indices,
-    # not sorted in
-    #
-    # So here we append the new indices to the old and de-duplicate them
-    ~ unique(c(.x, which_within_dist(data, .x, dist)))
-  )
+  if (dist > 0) {
+    purrr::map(
+      # indices is the output of split_unnamed
+      indices,
+      # which_within_dist returns a vector of row IDs in sequential order
+      #
+      # In order to visualize (eventually) which observations were originally
+      # chosen for the test set and which were inside `radius`,
+      # we want the new indices to be appended to the end of the original indices,
+      # not sorted in
+      #
+      # So here we append the new indices to the old and de-duplicate them
+      ~ unique(c(.x, which_within_dist(data, .x, dist)))
+    )
+  } else {
+    # initialize to integer(0) in case buffer is <= 0:
+    lapply(seq_along(indices), function(x) integer(0))
+  }
 }
 
 # Return row IDs for which elements of `data` are within `dist` of `data[idx, ]`
