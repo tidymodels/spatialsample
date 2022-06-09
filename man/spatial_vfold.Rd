@@ -62,7 +62,7 @@ assessment set within a fold.}
 \description{
 V-fold cross-validation (also known as k-fold cross-validation) randomly
 splits the data into V groups of roughly equal size (called "folds").
-A resample of the analysis data consisted of V-1 of the folds while the
+A resample of the analysis data consists of V-1 of the folds while the
 assessment set contains the final fold.
 This function adds the ability to apply an inclusion radius and exclusion
 buffer to the assessment set, ensuring that your analysis data is spatially
@@ -72,8 +72,8 @@ is equal to V.
 }
 \details{
 When \code{radius} and \code{buffer} are both \code{NULL}, \code{spatial_buffer_vfold_cv}
-is equivalent to \link[rsample:vfold_cv]{rsample::vfold_cv} and \code{leave_location_out_cv} is
-equivalent to \link[rsample:group_vfold_cv]{rsample::group_vfold_cv}.
+is equivalent to \code{\link[rsample:vfold_cv]{rsample::vfold_cv()}} and \code{leave_location_out_cv} is
+equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}.
 }
 \examples{
 \dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
