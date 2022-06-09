@@ -19,7 +19,7 @@ test_that("erroring when no S2", {
   # + "  This message is displayed once per session."
   # This is percolating up from rsample but I can't find where https://github.com/tidymodels/rsample/runs/6760867450?check_suite_focus=true#step:6:182
   expect_snapshot(
-    suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500)),
+    suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500, radius = NULL)),
     error = TRUE
   )
   expect_snapshot(
@@ -32,7 +32,7 @@ test_that("erroring when no S2", {
 test_that("spatial_buffer_vfold_cv", {
   skip_if_not(sf::sf_use_s2())
   set.seed(11)
-  rs1 <- spatial_buffer_vfold_cv(ames_sf)
+  rs1 <- spatial_buffer_vfold_cv(ames_sf, radius = NULL, buffer = NULL)
   sizes1 <- dim_rset(rs1)
 
   set.seed(11)
@@ -98,7 +98,25 @@ test_that("bad args", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
   expect_snapshot(
+    spatial_buffer_vfold_cv(ames, buffer = 500, radius = NULL),
+    error = TRUE
+  )
+
+  set.seed(123)
+  expect_snapshot(
+    spatial_buffer_vfold_cv(ames, radius = NULL),
+    error = TRUE
+  )
+
+  set.seed(123)
+  expect_snapshot(
     spatial_buffer_vfold_cv(ames, buffer = 500),
+    error = TRUE
+  )
+
+  set.seed(123)
+  expect_snapshot(
+    spatial_buffer_vfold_cv(ames),
     error = TRUE
   )
 
@@ -120,7 +138,7 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(ames_sf, v = c(5, 10)),
+    spatial_buffer_vfold_cv(ames_sf, v = c(5, 10), buffer = NULL, radius = NULL),
     error = TRUE
   )
 
@@ -133,8 +151,9 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(boston_canopy, v = 683)
+    spatial_buffer_vfold_cv(boston_canopy, v = 683, buffer = NULL, radius = NULL)
   )
+
 })
 
 test_that("printing", {
@@ -150,7 +169,7 @@ test_that("printing", {
 test_that("rsplit labels", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
-  rs <- spatial_buffer_vfold_cv(ames_sf, v = 2)
+  rs <- spatial_buffer_vfold_cv(ames_sf, v = 2, buffer = NULL, radius = NULL)
   all_labs <- map_df(rs$splits, labels)
   original_id <- rs[, grepl("^id", names(rs))]
   expect_equal(all_labs, original_id)

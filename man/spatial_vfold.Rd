@@ -8,8 +8,8 @@
 spatial_buffer_vfold_cv(
   data,
   v = 10,
-  radius = NULL,
-  buffer = NULL,
+  radius,
+  buffer,
   repeats = 1,
   strata = NULL,
   breaks = 4,
@@ -19,7 +19,7 @@ spatial_buffer_vfold_cv(
 
 spatial_leave_location_out_cv(
   data,
-  group = NULL,
+  group,
   v = NULL,
   radius = NULL,
   buffer = NULL,
@@ -55,9 +55,11 @@ of stratifying groups that are too small.}
 
 \item{...}{Not currently used.}
 
-\item{group}{A variable in \code{data} (single character or name) used for
-grouping observations with the same value to either the analysis or
-assessment set within a fold.}
+\item{group}{A variable in data (single character or name) used to create
+folds. For leave location out CV, this should be a variable containing
+the locations to group observations by, for leave time out CV the
+time blocks to group by, and for leave location and time out the
+spatiotemporal blocks to group by.}
 }
 \description{
 V-fold cross-validation (also known as k-fold cross-validation) randomly
@@ -77,7 +79,11 @@ equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}.
 }
 \examples{
 \dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-boston_vfold <- spatial_buffer_vfold_cv(boston_canopy, buffer = 500)
+boston_vfold <- spatial_buffer_vfold_cv(
+  boston_canopy,
+  buffer = 500,
+  radius = NULL
+)
 data(ames, package = "modeldata")
 ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 ames_neighborhoods <- spatial_leave_location_out_cv(ames_sf, Neighborhood)

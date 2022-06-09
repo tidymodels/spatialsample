@@ -35,7 +35,7 @@ test_that("autoplot is stable", {
   sf::sf_proj_network(enable = TRUE)
 
   set.seed(123)
-  boston_buffer <- spatial_block_cv(boston_canopy, buffer = 5000)
+  boston_buffer <- spatial_block_cv(boston_canopy, buffer = 5000, radius = NULL)
 
   p <- autoplot(boston_buffer)
   vdiffr::expect_doppelganger("buffered rset plot", p)
@@ -47,7 +47,8 @@ test_that("autoplot is stable", {
   boston_vfold_buffer <- spatial_buffer_vfold_cv(
     boston_canopy,
     v = 10,
-    buffer = 5000
+    buffer = 5000,
+    radius = NULL
   )
 
   p <- autoplot(boston_vfold_buffer)

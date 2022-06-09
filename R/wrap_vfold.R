@@ -17,6 +17,11 @@
 #'
 #' @inheritParams rsample::vfold_cv
 #' @inheritParams rsample::group_vfold_cv
+#' @param group A variable in data (single character or name) used to create
+#' folds. For leave location out CV, this should be a variable containing
+#' the locations to group observations by, for leave time out CV the
+#' time blocks to group by, and for leave location and time out the
+#' spatiotemporal blocks to group by.
 #' @inheritParams buffer_indices
 #'
 #' @references
@@ -35,7 +40,11 @@
 #' @rdname spatial_vfold
 #'
 #' @examplesIf sf::sf_use_s2() && rlang::is_installed("modeldata")
-#' boston_vfold <- spatial_buffer_vfold_cv(boston_canopy, buffer = 500)
+#' boston_vfold <- spatial_buffer_vfold_cv(
+#'   boston_canopy,
+#'   buffer = 500,
+#'   radius = NULL
+#' )
 #' data(ames, package = "modeldata")
 #' ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 #' ames_neighborhoods <- spatial_leave_location_out_cv(ames_sf, Neighborhood)
@@ -43,13 +52,30 @@
 #' @export
 spatial_buffer_vfold_cv <- function(data,
                                     v = 10,
-                                    radius = NULL,
-                                    buffer = NULL,
+                                    radius,
+                                    buffer,
                                     repeats = 1,
                                     strata = NULL,
                                     breaks = 4,
                                     pool = 0.1,
                                     ...) {
+
+  if (missing(radius) || missing(buffer)) {
+    use_vfold <- NULL
+    if (missing(radius) && missing(buffer)) {
+      use_vfold <- c(i = "Or use `rsample::vfold_cv() to use a non-spatial V-fold")
+    }
+    rlang::abort(
+      c(
+        "`spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided",
+        i = "Set either `radius` or `buffer` to NULL to not use that argument",
+        use_vfold
+      )
+
+    )
+  }
+  if (missing(radius)) radius <- NULL
+  if (missing(buffer)) buffer <- NULL
 
   n <- nrow(data)
   v <- check_v(v, n, "rows")
@@ -97,7 +123,7 @@ spatial_buffer_vfold_cv <- function(data,
 #'
 #' @export
 spatial_leave_location_out_cv <- function(data,
-                                          group = NULL,
+                                          group,
                                           v = NULL,
                                           radius = NULL,
                                           buffer = NULL,
@@ -107,7 +133,7 @@ spatial_leave_location_out_cv <- function(data,
     group <- tidyselect::eval_select(rlang::enquo(group), data)
   }
 
-  if (length(group) == 0) {
+  if (missing(group) || length(group) == 0) {
     group <- NULL
   } else {
     if (is.null(v)) v <- length(unique(data[[group]]))

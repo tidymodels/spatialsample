@@ -1,7 +1,7 @@
 # erroring when no S2
 
     Code
-      suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500))
+      suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500, radius = NULL))
     Condition
       Error in `wrap_vfold()`:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
@@ -21,11 +21,39 @@
 # bad args
 
     Code
-      spatial_buffer_vfold_cv(ames, buffer = 500)
+      spatial_buffer_vfold_cv(ames, buffer = 500, radius = NULL)
     Condition
       Error in `wrap_vfold()`:
       ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
       i Set the CRS for your data using `sf::st_set_crs()`
+
+---
+
+    Code
+      spatial_buffer_vfold_cv(ames, radius = NULL)
+    Condition
+      Error in `spatial_buffer_vfold_cv()`:
+      ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
+      i Set either `radius` or `buffer` to NULL to not use that argument
+
+---
+
+    Code
+      spatial_buffer_vfold_cv(ames, buffer = 500)
+    Condition
+      Error in `spatial_buffer_vfold_cv()`:
+      ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
+      i Set either `radius` or `buffer` to NULL to not use that argument
+
+---
+
+    Code
+      spatial_buffer_vfold_cv(ames)
+    Condition
+      Error in `spatial_buffer_vfold_cv()`:
+      ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
+      i Set either `radius` or `buffer` to NULL to not use that argument
+      i Or use `rsample::vfold_cv() to use a non-spatial V-fold
 
 ---
 
@@ -55,7 +83,7 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(ames_sf, v = c(5, 10))
+      spatial_buffer_vfold_cv(ames_sf, v = c(5, 10), buffer = NULL, radius = NULL)
     Condition
       Error in `spatial_buffer_vfold_cv()`:
       ! `v` must be a single positive integer.
@@ -87,7 +115,7 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(boston_canopy, v = 683)
+      spatial_buffer_vfold_cv(boston_canopy, v = 683, buffer = NULL, radius = NULL)
     Condition
       Warning in `spatial_buffer_vfold_cv()`:
       Fewer than 683 rows available for sampling
