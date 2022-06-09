@@ -253,3 +253,46 @@ test_that("using buffers", {
   )
 
 })
+
+test_that("buffers respect units", {
+  set.seed(123)
+  rs1 <- spatial_block_cv(
+    boston_canopy,
+    v = 2,
+    method = "snake",
+    radius = 500,
+    buffer = 500
+  )
+  set.seed(123)
+  rs2 <- spatial_block_cv(
+    boston_canopy,
+    v = 2,
+    method = "snake",
+    radius = units::as_units(500, "ft"),
+    buffer = units::as_units(500, "ft")
+  )
+  attr(rs2, "radius") <- 500
+  attr(rs2, "buffer") <- 500
+  expect_identical(rs1, rs2)
+
+  set.seed(123)
+  rs1 <- spatial_block_cv(
+    ames_sf,
+    v = 2,
+    method = "snake",
+    radius = 500,
+    buffer = 500
+  )
+  set.seed(123)
+  rs2 <- spatial_block_cv(
+    ames_sf,
+    v = 2,
+    method = "snake",
+    radius = units::as_units(500, "m"),
+    buffer = units::as_units(500, "m")
+  )
+  attr(rs2, "radius") <- 500
+  attr(rs2, "buffer") <- 500
+  expect_identical(rs1, rs2)
+
+})
