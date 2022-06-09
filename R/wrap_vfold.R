@@ -2,7 +2,7 @@
 #'
 #' V-fold cross-validation (also known as k-fold cross-validation) randomly
 #' splits the data into V groups of roughly equal size (called "folds").
-#' A resample of the analysis data consisted of V-1 of the folds while the
+#' A resample of the analysis data consists of V-1 of the folds while the
 #' assessment set contains the final fold.
 #' This function adds the ability to apply an inclusion radius and exclusion
 #' buffer to the assessment set, ensuring that your analysis data is spatially
