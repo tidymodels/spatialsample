@@ -96,7 +96,7 @@ spatial_block_cv <- function(data,
     # basically: spherical geometry means sometimes the straight line of the
     # grid will exclude points within the bounding box
     #
-    # so here we'll expand our boundary by 0.1% in order to always contain our
+    # so here we'll expand our boundary by a small bit in order to always contain our
     # points within the grid
     grid_box <- expand_grid(grid_box)
   }
