@@ -50,6 +50,6 @@
       # A tibble: 2 x 2
         splits             id   
         <list>             <chr>
-      1 <split [192/2174]> Fold1
-      2 <split [445/2029]> Fold2
+      1 <split [209/2505]> Fold1
+      2 <split [2/2470]>   Fold2
 

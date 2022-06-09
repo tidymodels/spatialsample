@@ -45,22 +45,29 @@
 ---
 
     Code
-      spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 5)
+      spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 28)
     Condition
       Warning:
       Not all folds contained blocks with data:
-      x 5 folds were requested, but only 4 contain any data.
+      x 28 folds were requested, but only 27 contain any data.
       x Empty folds were dropped.
       i To avoid this, set `relevant_only = TRUE`.
     Output
-      #  4-fold spatial block cross-validation 
-      # A tibble: 4 x 2
-        splits              id   
-        <list>              <chr>
-      1 <split [1966/964]>  Fold1
-      2 <split [2557/373]>  Fold2
-      3 <split [2541/389]>  Fold3
-      4 <split [1726/1204]> Fold4
+      #  27-fold spatial block cross-validation 
+      # A tibble: 27 x 2
+         splits             id    
+         <list>             <chr> 
+       1 <split [2790/140]> Fold01
+       2 <split [2726/204]> Fold02
+       3 <split [2820/110]> Fold03
+       4 <split [2877/53]>  Fold04
+       5 <split [2851/79]>  Fold05
+       6 <split [2877/53]>  Fold06
+       7 <split [2886/44]>  Fold07
+       8 <split [2736/194]> Fold08
+       9 <split [2919/11]>  Fold09
+      10 <split [2855/75]>  Fold10
+      # ... with 17 more rows
 
 ---
 
@@ -69,29 +76,23 @@
     Condition
       Warning in `spatial_block_cv()`:
       Fewer than 60 blocks available for sampling
-      i Setting `v` to 17
+      i Setting `v` to 54
     Output
-      #  17-fold spatial block cross-validation 
-      # A tibble: 17 x 2
+      #  54-fold spatial block cross-validation 
+      # A tibble: 54 x 2
          splits             id    
          <list>             <chr> 
-       1 <split [2904/26]>  Fold01
-       2 <split [2859/71]>  Fold02
-       3 <split [2715/215]> Fold03
-       4 <split [2591/339]> Fold04
-       5 <split [2901/29]>  Fold05
-       6 <split [2900/30]>  Fold06
-       7 <split [2856/74]>  Fold07
-       8 <split [2848/82]>  Fold08
-       9 <split [2922/8]>   Fold09
-      10 <split [2636/294]> Fold10
-      11 <split [2836/94]>  Fold11
-      12 <split [2376/554]> Fold12
-      13 <split [2909/21]>  Fold13
-      14 <split [2872/58]>  Fold14
-      15 <split [2609/321]> Fold15
-      16 <split [2563/367]> Fold16
-      17 <split [2583/347]> Fold17
+       1 <split [2917/13]>  Fold01
+       2 <split [2818/112]> Fold02
+       3 <split [2926/4]>   Fold03
+       4 <split [2928/2]>   Fold04
+       5 <split [2929/1]>   Fold05
+       6 <split [2896/34]>  Fold06
+       7 <split [2905/25]>  Fold07
+       8 <split [2900/30]>  Fold08
+       9 <split [2929/1]>   Fold09
+      10 <split [2923/7]>   Fold10
+      # ... with 44 more rows
 
 ---
 
@@ -100,29 +101,23 @@
     Condition
       Warning in `spatial_block_cv()`:
       Fewer than 60 blocks available for sampling
-      i Setting `v` to 17
+      i Setting `v` to 54
     Output
-      #  17-fold spatial block cross-validation 
-      # A tibble: 17 x 2
+      #  54-fold spatial block cross-validation 
+      # A tibble: 54 x 2
          splits             id    
          <list>             <chr> 
-       1 <split [2376/554]> Fold01
-       2 <split [2591/339]> Fold02
-       3 <split [2859/71]>  Fold03
-       4 <split [2922/8]>   Fold04
-       5 <split [2848/82]>  Fold05
-       6 <split [2715/215]> Fold06
-       7 <split [2563/367]> Fold07
-       8 <split [2836/94]>  Fold08
-       9 <split [2609/321]> Fold09
-      10 <split [2901/29]>  Fold10
-      11 <split [2636/294]> Fold11
-      12 <split [2909/21]>  Fold12
-      13 <split [2872/58]>  Fold13
-      14 <split [2856/74]>  Fold14
-      15 <split [2904/26]>  Fold15
-      16 <split [2900/30]>  Fold16
-      17 <split [2583/347]> Fold17
+       1 <split [2745/185]> Fold01
+       2 <split [2803/127]> Fold02
+       3 <split [2900/30]>  Fold03
+       4 <split [2927/3]>   Fold04
+       5 <split [2915/15]>  Fold05
+       6 <split [2918/12]>  Fold06
+       7 <split [2887/43]>  Fold07
+       8 <split [2854/76]>  Fold08
+       9 <split [2927/3]>   Fold09
+      10 <split [2870/60]>  Fold10
+      # ... with 44 more rows
 
 # printing
 
@@ -130,14 +125,14 @@
     # A tibble: 10 x 2
        splits             id    
        <list>             <chr> 
-     1 <split [2082/848]> Fold01
-     2 <split [2570/360]> Fold02
-     3 <split [2801/129]> Fold03
-     4 <split [2848/82]>  Fold04
-     5 <split [2822/108]> Fold05
-     6 <split [2685/245]> Fold06
-     7 <split [2216/714]> Fold07
-     8 <split [2836/94]>  Fold08
-     9 <split [2609/321]> Fold09
-    10 <split [2901/29]>  Fold10
+     1 <split [2524/406]> Fold01
+     2 <split [2656/274]> Fold02
+     3 <split [2476/454]> Fold03
+     4 <split [2771/159]> Fold04
+     5 <split [2607/323]> Fold05
+     6 <split [2762/168]> Fold06
+     7 <split [2718/212]> Fold07
+     8 <split [2665/265]> Fold08
+     9 <split [2642/288]> Fold09
+    10 <split [2549/381]> Fold10
 

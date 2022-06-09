@@ -98,10 +98,7 @@ spatial_block_cv <- function(data,
     #
     # so here we'll expand our boundary by 0.1% in order to always contain our
     # points within the grid
-    grid_box[1] <- grid_box[1] - abs(grid_box[1] * 0.001)
-    grid_box[2] <- grid_box[2] - abs(grid_box[2] * 0.001)
-    grid_box[3] <- grid_box[3] + abs(grid_box[3] * 0.001)
-    grid_box[4] <- grid_box[4] + abs(grid_box[4] * 0.001)
+    grid_box <- expand_grid(grid_box)
   }
 
   grid_blocks <- sf::st_make_grid(grid_box, ...)
@@ -141,6 +138,14 @@ spatial_block_cv <- function(data,
     attrib = cv_att,
     subclass = c("spatial_block_cv", "spatial_rset", "rset")
   )
+}
+
+expand_grid <- function(grid_box) {
+  grid_box[1] <- grid_box[1] - abs(grid_box[1] * 0.00001)
+  grid_box[2] <- grid_box[2] - abs(grid_box[2] * 0.00001)
+  grid_box[3] <- grid_box[3] + abs(grid_box[3] * 0.00001)
+  grid_box[4] <- grid_box[4] + abs(grid_box[4] * 0.00001)
+  grid_box
 }
 
 random_block_cv <- function(data,

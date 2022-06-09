@@ -83,6 +83,9 @@ autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ...) {
   if (!show_grid) return(p)
 
   data <- object$splits[[1]]$data
+
+  if (sf::st_is_longlat(data)) data <- sf::st_as_sfc(expand_grid(sf::st_bbox(data)))
+
   grid_args <- list(x = data)
   grid_args$cellsize <- attr(object, "cellsize", TRUE)
   grid_args$offset <- attr(object, "offset", TRUE)
