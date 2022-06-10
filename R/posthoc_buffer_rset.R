@@ -156,11 +156,11 @@ spatial_leave_location_out_cv <- function(data,
                  buffer = buffer)
 
   if ("sf" %in% class(data)) {
-    rset_class <- c("leave_location_out_cv", "spatial_rset", "rset")
-    rsplit_class <- c("leave_location_out_split", "spatial_rsplit")
+    rset_class <- c("spatial_leave_location_out_cv", "spatial_rset", "rset")
+    rsplit_class <- c("spatial_leave_location_out_cv", "spatial_rsplit")
   } else {
-    rset_class <- c("leave_location_out_cv", "rset")
-    rsplit_class <- c("leave_location_out_split")
+    rset_class <- c("spatial_leave_location_out_cv", "rset")
+    rsplit_class <- c("spatial_leave_location_out_cv")
   }
 
   posthoc_buffer_rset(

@@ -97,6 +97,7 @@
       Fewer than 60 locations available for sampling
       i Setting `v` to 28
     Output
+      #  28-fold spatial leave-location-out cross-validation 
       # A tibble: 28 x 2
          splits             id    
          <list>             <chr> 
