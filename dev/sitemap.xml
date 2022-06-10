@@ -49,6 +49,9 @@
     <loc>https://spatialsample.tidymodels.org/dev/reference/spatial_clustering_cv.html</loc>
   </url>
   <url>
+    <loc>https://spatialsample.tidymodels.org/dev/reference/spatial_vfold.html</loc>
+  </url>
+  <url>
     <loc>https://spatialsample.tidymodels.org/dev/reference/spatialsample-package.html</loc>
   </url>
 </urlset>
