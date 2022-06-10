@@ -35,13 +35,46 @@ test_that("autoplot is stable", {
   sf::sf_proj_network(enable = TRUE)
 
   set.seed(123)
-  boston_buffer <- spatial_block_cv(boston_canopy, buffer = 5000)
+  boston_buffer <- spatial_block_cv(boston_canopy, buffer = 5000, radius = NULL)
 
   p <- autoplot(boston_buffer)
   vdiffr::expect_doppelganger("buffered rset plot", p)
 
   p <- autoplot(boston_buffer$splits[[1]])
   vdiffr::expect_doppelganger("buffered rsample plot", p)
+
+  set.seed(123)
+  boston_vfold_buffer <- spatial_buffer_vfold_cv(
+    boston_canopy,
+    v = 10,
+    buffer = 5000,
+    radius = NULL
+  )
+
+  p <- autoplot(boston_vfold_buffer)
+  vdiffr::expect_doppelganger("buffered vfold plot", p)
+
+  set.seed(123)
+  boston_vfold_buffer <- spatial_buffer_vfold_cv(
+    boston_canopy,
+    v = 682,
+    radius = 1,
+    buffer = 5000
+  )
+
+  # chose the fourth split purely because it looks cool
+  p <- autoplot(boston_vfold_buffer$splits[[4]])
+  vdiffr::expect_doppelganger("buffered vfold split", p)
+
+  set.seed(123)
+  ames_neighborhoods <- spatial_leave_location_out_cv(ames_sf, Neighborhood)
+
+  p <- autoplot(ames_neighborhoods)
+  vdiffr::expect_doppelganger("buffered LLO set plot", p)
+
+  p <- autoplot(ames_neighborhoods$splits[[1]])
+  vdiffr::expect_doppelganger("buffered LLO split plot", p)
+
 
   expect_snapshot(
     autoplot(ames_non_sf),
