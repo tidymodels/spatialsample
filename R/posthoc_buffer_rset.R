@@ -51,9 +51,9 @@
 #'
 #' @export
 spatial_buffer_vfold_cv <- function(data,
-                                    v = 10,
                                     radius,
                                     buffer,
+                                    v = 10,
                                     repeats = 1,
                                     strata = NULL,
                                     breaks = 4,
@@ -68,7 +68,7 @@ spatial_buffer_vfold_cv <- function(data,
     rlang::abort(
       c(
         "`spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided",
-        i = "Set either `radius` or `buffer` to NULL to not use that argument",
+        i = "Use `NULL` for resampling without one of `radius` or `buffer`, like `radius = NULL, buffer = 5000`",
         use_vfold
       )
 
@@ -80,7 +80,7 @@ spatial_buffer_vfold_cv <- function(data,
   n <- nrow(data)
   v <- check_v(v, n, "rows")
 
-  indices <- rsample::vfold_cv(
+  rset <- rsample::vfold_cv(
     data = data,
     v = v,
     repeats = repeats,
@@ -104,9 +104,9 @@ spatial_buffer_vfold_cv <- function(data,
     rsplit_class <- c("spatial_buffer_vfold_split")
   }
 
-  wrap_vfold(
+  posthoc_buffer_rset(
     data = data,
-    indices = indices,
+    rset = rset,
     rsplit_class = rsplit_class,
     rset_class = rset_class,
     radius = radius,
@@ -142,7 +142,7 @@ spatial_leave_location_out_cv <- function(data,
 
   n <- nrow(data)
 
-  indices <- rsample::group_vfold_cv(
+  rset <- rsample::group_vfold_cv(
     data = data,
     v = v,
     group = group,
@@ -162,9 +162,9 @@ spatial_leave_location_out_cv <- function(data,
     rsplit_class <- c("leave_location_out_split")
   }
 
-  wrap_vfold(
+  posthoc_buffer_rset(
     data = data,
-    indices = indices,
+    rset = rset,
     rsplit_class = rsplit_class,
     rset_class = rset_class,
     radius = radius,
@@ -176,18 +176,18 @@ spatial_leave_location_out_cv <- function(data,
 
 }
 
-wrap_vfold <- function(data,
-                       indices,
-                       rsplit_class,
-                       rset_class,
-                       radius,
-                       buffer,
-                       n,
-                       v,
-                       cv_att) {
+posthoc_buffer_rset <- function(data,
+                                rset,
+                                rsplit_class,
+                                rset_class,
+                                radius,
+                                buffer,
+                                n,
+                                v,
+                                cv_att) {
   # This basically undoes everything post-`split_unnamed` for us
   # so we're back to an unnamed list of assessment-set indices
-  indices <- purrr::map(indices$splits, as.integer, "assessment")
+  indices <- purrr::map(rset$splits, as.integer, "assessment")
 
   if (is.null(radius) && is.null(buffer)) {
     indices <- lapply(indices, default_complement, n = n)
