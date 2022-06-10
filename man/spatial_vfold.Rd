@@ -75,8 +75,8 @@ is equal to V.
 }
 \details{
 When \code{radius} and \code{buffer} are both \code{NULL}, \code{spatial_buffer_vfold_cv}
-is equivalent to \code{\link[rsample:vfold_cv]{rsample::vfold_cv()}} and \code{leave_location_out_cv} is
-equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}.
+is equivalent to \code{\link[rsample:vfold_cv]{rsample::vfold_cv()}} and \code{spatial_leave_location_out_cv}
+is equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}.
 }
 \examples{
 \dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

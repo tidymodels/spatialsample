@@ -13,8 +13,8 @@
 #'
 #' @details
 #' When `radius` and `buffer` are both `NULL`, `spatial_buffer_vfold_cv`
-#' is equivalent to [rsample::vfold_cv()] and `leave_location_out_cv` is
-#' equivalent to [rsample::group_vfold_cv()].
+#' is equivalent to [rsample::vfold_cv()] and `spatial_leave_location_out_cv`
+#' is equivalent to [rsample::group_vfold_cv()].
 #'
 #' @inheritParams rsample::vfold_cv
 #' @inheritParams rsample::group_vfold_cv
