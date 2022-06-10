@@ -207,7 +207,7 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 5)
+    spatial_block_cv(ames_sf, method = "snake", relevant_only = FALSE, v = 28)
   )
 
   set.seed(123)
