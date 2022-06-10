@@ -3,7 +3,7 @@
 * `spatial_buffer_vfold_cv()` is a new function which wraps 
   `rsample::vfold_cv()`, allowing users to add inclusion radii and exclusion
   buffers to their vfold resamples. This is the supported way to perform
-  spatially buffered leave one out cross validation (set `v` to `nrow(data)`).
+  spatially buffered leave-one-out cross validation (set `v` to `nrow(data)`).
   
 * `spatial_leave_location_out_cv()` is a new function with wraps 
   `rsample::group_vfold_cv()`, allowing users to add inclusion radii and 

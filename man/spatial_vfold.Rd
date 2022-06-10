@@ -56,9 +56,9 @@ of stratifying groups that are too small.}
 \item{...}{Not currently used.}
 
 \item{group}{A variable in data (single character or name) used to create
-folds. For leave location out CV, this should be a variable containing
-the locations to group observations by, for leave time out CV the
-time blocks to group by, and for leave location and time out the
+folds. For leave-location-out CV, this should be a variable containing
+the locations to group observations by, for leave-time-out CV the
+time blocks to group by, and for leave-location-and-time-out the
 spatiotemporal blocks to group by.}
 }
 \description{
