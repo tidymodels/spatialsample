@@ -143,14 +143,14 @@
     # A tibble: 10 x 2
        splits             id    
        <list>             <chr> 
-     1 <split [2082/848]> Fold01
-     2 <split [2570/360]> Fold02
-     3 <split [2801/129]> Fold03
-     4 <split [2848/82]>  Fold04
-     5 <split [2822/108]> Fold05
-     6 <split [2685/245]> Fold06
-     7 <split [2216/714]> Fold07
-     8 <split [2836/94]>  Fold08
-     9 <split [2609/321]> Fold09
-    10 <split [2901/29]>  Fold10
+     1 <split [2524/406]> Fold01
+     2 <split [2656/274]> Fold02
+     3 <split [2476/454]> Fold03
+     4 <split [2771/159]> Fold04
+     5 <split [2607/323]> Fold05
+     6 <split [2762/168]> Fold06
+     7 <split [2718/212]> Fold07
+     8 <split [2665/265]> Fold08
+     9 <split [2642/288]> Fold09
+    10 <split [2549/381]> Fold10
 
