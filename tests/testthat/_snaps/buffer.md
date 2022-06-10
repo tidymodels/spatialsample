@@ -47,7 +47,7 @@
       suppressMessages(spatial_buffer_vfold_cv(boston_canopy, v = 682, radius = 500,
         buffer = 500))
     Output
-      #  682-fold spatial vfold cross-validation 
+      #  682-fold spatial cross-validation 
       # A tibble: 682 x 2
          splits          id     
          <list>          <chr>  
@@ -73,6 +73,7 @@
       Fewer than 682 locations available for sampling
       i Setting `v` to 28
     Output
+      #  28-fold spatial leave-location-out cross-validation 
       # A tibble: 28 x 2
          splits             id    
          <list>             <chr> 
