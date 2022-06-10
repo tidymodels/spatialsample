@@ -36,7 +36,7 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
 
   # only run radius checks if radius is not NULL (to prevent NAs from >)
   run_radius <- !is.null(radius)
-  if (run_radius && radius > 0) {
+  if (run_radius && units::set_units(radius, NULL) > 0) {
     indices <- row_ids_within_dist(data, indices, radius)
   }
 
@@ -56,7 +56,7 @@ buffered_complement <- function(ind, buff_ind, n) {
 }
 
 row_ids_within_dist <- function(data, indices, dist) {
-  if (dist > 0) {
+  if (units::set_units(dist, NULL) > 0) {
     purrr::map(
       # indices is the output of split_unnamed
       indices,
