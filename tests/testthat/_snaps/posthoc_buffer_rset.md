@@ -3,7 +3,7 @@
     Code
       suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500, radius = NULL))
     Condition
-      Error in `posthoc_buffer_rset()`:
+      Error in `spatial_buffer_vfold_cv()`:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
       i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
       i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
@@ -13,7 +13,7 @@
     Code
       suppressMessages(spatial_leave_location_out_cv(ames_sf, Neighborhood, buffer = 500))
     Condition
-      Error in `posthoc_buffer_rset()`:
+      Error in `spatial_leave_location_out_cv()`:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
       i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
       i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
@@ -23,7 +23,7 @@
     Code
       spatial_buffer_vfold_cv(ames, buffer = 500, radius = NULL)
     Condition
-      Error in `posthoc_buffer_rset()`:
+      Error in `spatial_buffer_vfold_cv()`:
       ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
       i Set the CRS for your data using `sf::st_set_crs()`
 
@@ -68,7 +68,7 @@
     Code
       spatial_leave_location_out_cv(ames, Neighborhood, buffer = 500)
     Condition
-      Error in `posthoc_buffer_rset()`:
+      Error in `spatial_leave_location_out_cv()`:
       ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
       i Set the CRS for your data using `sf::st_set_crs()`
 
