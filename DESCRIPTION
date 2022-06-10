@@ -32,6 +32,7 @@ Imports:
     sf,
     tibble,
     tidyselect,
+    units,
     vctrs (>= 0.3.6)
 Suggests: 
     covr,
@@ -41,7 +42,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
-    units,
     vdiffr,
     yardstick
 VignetteBuilder: 
