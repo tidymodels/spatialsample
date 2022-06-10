@@ -121,7 +121,7 @@
       Fewer than 683 rows available for sampling
       i Setting `v` to 682
     Output
-      #  682-fold spatial vfold cross-validation 
+      #  682-fold spatial cross-validation 
       # A tibble: 682 x 2
          splits          id     
          <list>          <chr>  

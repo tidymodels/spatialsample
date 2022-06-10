@@ -37,7 +37,7 @@ print.spatial_block_cv <- function(x, ...) {
 #' @export
 pretty.spatial_leave_location_out_cv <- function(x, ...) {
   details <- attributes(x)
-  res <- paste0(details$v, "-fold spatial leave location out cross-validation")
+  res <- paste0(details$v, "-fold spatial leave-location-out cross-validation")
   res
 }
 
@@ -55,7 +55,7 @@ print.spatial_leave_location_out_cv <- function(x, ...) {
 #' @export
 pretty.spatial_buffer_vfold_cv <- function(x, ...) {
   details <- attributes(x)
-  res <- paste0(details$v, "-fold spatial vfold cross-validation")
+  res <- paste0(details$v, "-fold spatial cross-validation")
   res
 }
 
