@@ -146,7 +146,7 @@ spatial_leave_location_out_cv <- function(data,
   rset <- rsample::group_vfold_cv(
     data = data,
     v = v,
-    group = group,
+    group = {{ group }},
     ...
   )
 
