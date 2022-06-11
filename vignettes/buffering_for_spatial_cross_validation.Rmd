@@ -28,7 +28,7 @@ library(spatialsample)
 
 By default, most spatial cross validation methods in spatialsample don't automatically create buffer zones. Take for instance `spatial_block_cv()`, which creates a number of "blocks" in a grid and assigns data to folds based on the block its centroid falls in:
 
-```{r boston-block, animation.hook="gifski", fig.width=7, fig.height=5}
+```{r boston-block, fig.width=7, fig.height=5}
 set.seed(123)
 blocks <- spatial_block_cv(boston_canopy, v = 5)
   
