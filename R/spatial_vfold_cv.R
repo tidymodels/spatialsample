@@ -85,7 +85,7 @@ spatial_buffer_vfold_cv <- function(data,
     data = data,
     v = v,
     repeats = repeats,
-    strata = strata,
+    strata = {{ strata }},
     breaks = breaks,
     pool = pool,
     ...
