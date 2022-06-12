@@ -55,10 +55,10 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for spatial_rset</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
 
 <span class="co"># S3 method for spatial_block_cv</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, show_grid <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, show_grid <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,6 +71,10 @@ this function will not work for
 resamples made with non-spatial tibbles or data.frames.</p></dd>
 <dt>...</dt>
 <dd><p>Options passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code>.</p></dd>
+<dt>alpha</dt>
+<dd><p>Opacity, passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf()</a></code>.
+Values of alpha range from 0 to 1, with lower values corresponding to more
+transparent colors.</p></dd>
 <dt>show_grid</dt>
 <dd><p>When plotting <a href="spatial_block_cv.html">spatial_block_cv</a> objects, should the grid
 itself be drawn on top of the data? Set to FALSE to remove the grid.</p></dd>
