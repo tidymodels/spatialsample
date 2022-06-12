@@ -86,7 +86,7 @@ through the `autoplot()` function:
 autoplot(folds)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-2022-06-12_boston_static-1.png" width="100%" />
 
 We can use the same function to visualize each fold separately:
 
@@ -96,7 +96,7 @@ library(purrr)
 walk(folds$splits, function(x) print(autoplot(x)))
 ```
 
-<img src="man/figures/README-boston-anim-.gif" width="100%" />
+<img src="man/figures/README-2022-06-12_boston-anim-.gif" width="100%" />
 
 So far, we’ve only scratched the surface of the functionality
 spatialsample provides. For more information, check out the [Getting
