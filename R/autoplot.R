@@ -18,6 +18,9 @@
 #' this function will not work for
 #' resamples made with non-spatial tibbles or data.frames.
 #' @param ... Options passed to [ggplot2::geom_sf()].
+#' @param alpha Opacity, passed to [ggplot2::geom_sf()].
+#' Values of alpha range from 0 to 1, with lower values corresponding to more
+#' transparent colors.
 #'
 #' @return A ggplot object with each fold assigned a color, made using
 #' [ggplot2::geom_sf()].
@@ -31,7 +34,7 @@
 #' @rdname autoplot.spatial_rset
 # registered in zzz.R
 #' @export
-autoplot.spatial_rset <- function(object, ...) {
+autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
   fold <- NULL
 
   object <- purrr::map2_dfr(
@@ -44,12 +47,12 @@ autoplot.spatial_rset <- function(object, ...) {
     data = object,
     mapping = ggplot2::aes(color = fold, fill = fold)
   )
-  p <- p + ggplot2::geom_sf(...)
+  p <- p + ggplot2::geom_sf(..., alpha = alpha)
   p + ggplot2::coord_sf()
 }
 
 #' @export
-autoplot.spatial_rsplit <- function(object, ...) {
+autoplot.spatial_rsplit <- function(object, ..., alpha = 0.6) {
   # .Class. is named to not interfere with normal column names
   .Class. <- NULL
 
@@ -69,7 +72,7 @@ autoplot.spatial_rsplit <- function(object, ...) {
                        mapping = ggplot2::aes(color = .Class., fill = .Class.))
   p <- p + ggplot2::scale_fill_discrete(name = "Class")
   p <- p + ggplot2::scale_color_discrete(name = "Class")
-  p <- p + ggplot2::geom_sf(...)
+  p <- p + ggplot2::geom_sf(..., alpha = alpha)
   p + ggplot2::coord_sf()
 }
 
@@ -77,8 +80,8 @@ autoplot.spatial_rsplit <- function(object, ...) {
 #' @param show_grid When plotting [spatial_block_cv] objects, should the grid
 #' itself be drawn on top of the data? Set to FALSE to remove the grid.
 #' @export
-autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ...) {
-  p <- autoplot.spatial_rset(object, ...)
+autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ..., alpha = 0.6) {
+  p <- autoplot.spatial_rset(object, ..., alpha = alpha)
 
   if (!show_grid) return(p)
 
