@@ -66,13 +66,13 @@ In this example, the `boston_canopy` data on tree cover in Boston, MA is resampl
 
 In addition to resampling algorithms, spatialsample provides methods to visualize resamples using [ggplot2](https://ggplot2.tidyverse.org/) through the `autoplot()` function:
 
-```{r}
+```{r 2022-06-12_boston_static, fig.width=7, fig.height=5}
 autoplot(folds)
 ```
 
 We can use the same function to visualize each fold separately:
 
-```{r boston-anim, animation.hook="gifski", fig.width=7, fig.height=5}
+```{r 2022-06-12_boston-anim, animation.hook="gifski", fig.width=7, fig.height=5}
 library(purrr)
 
 walk(folds$splits, function(x) print(autoplot(x)))
