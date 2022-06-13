@@ -90,6 +90,8 @@ spatial_block_cv <- function(data,
     )
   }
 
+  centroids <- sf::st_centroid(sf::st_geometry(data))
+
   grid_box <- sf::st_bbox(data)
   if (sf::st_is_longlat(data)) {
     # cf https://github.com/ropensci/stplanr/pull/467
@@ -106,6 +108,7 @@ spatial_block_cv <- function(data,
     method,
     "random" = random_block_cv(
       data,
+      centroids,
       grid_blocks,
       v,
       radius = radius,
@@ -113,6 +116,7 @@ spatial_block_cv <- function(data,
     ),
     systematic_block_cv(
       data,
+      centroids,
       grid_blocks,
       v,
       ordering = method,
@@ -149,13 +153,14 @@ expand_grid <- function(grid_box, expansion = 0.00001) {
 }
 
 random_block_cv <- function(data,
+                            centroids,
                             grid_blocks,
                             v,
                             radius = NULL,
                             buffer = NULL) {
-  n <- nrow(data)
+  n <- length(centroids)
 
-  grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
 
   n_blocks <- length(grid_blocks)
   v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
@@ -163,20 +168,21 @@ random_block_cv <- function(data,
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
 
-  generate_folds_from_blocks(data, grid_blocks, v, n, radius, buffer)
+  generate_folds_from_blocks(data, centroids, grid_blocks, v, n, radius, buffer)
 }
 
 systematic_block_cv <- function(data,
+                                centroids,
                                 grid_blocks,
                                 v,
                                 ordering = c("snake", "continuous"),
                                 relevant_only = TRUE,
                                 radius = NULL,
                                 buffer = NULL) {
-  n <- nrow(data)
+  n <- length(centroids)
   ordering <- rlang::arg_match(ordering)
 
-  if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
 
   n_blocks <- length(grid_blocks)
   v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
@@ -186,7 +192,7 @@ systematic_block_cv <- function(data,
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- folds
-  if (!relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, data)
+  if (!relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
 
   num_folds <- length(unique(grid_blocks$fold))
   if (num_folds != v) {
@@ -200,14 +206,11 @@ systematic_block_cv <- function(data,
     v <- num_folds
   }
 
-  generate_folds_from_blocks(data, grid_blocks, v, n, radius, buffer)
+  generate_folds_from_blocks(data, centroids, grid_blocks, v, n, radius, buffer)
 }
 
-generate_folds_from_blocks <- function(data, grid_blocks, v, n, radius, buffer) {
+generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radius, buffer) {
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
-
-  centroids <- sf::st_geometry(data)
-  centroids <- sf::st_centroid(centroids)
 
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, centroids)
 
@@ -230,9 +233,9 @@ generate_folds_from_blocks <- function(data, grid_blocks, v, n, radius, buffer) 
   )
 }
 
-filter_grid_blocks <- function(grid_blocks, data) {
+filter_grid_blocks <- function(grid_blocks, centroids) {
   block_contains_points <- purrr::map_lgl(
-    sf::st_intersects(grid_blocks, data),
+    sf::st_intersects(grid_blocks, centroids),
     sgbp_is_not_empty
   )
   if ("data.frame" %in% class(grid_blocks)) {

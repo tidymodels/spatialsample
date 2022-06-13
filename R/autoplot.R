@@ -105,7 +105,8 @@ autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ..., alpha = 0.6
   grid_blocks <- do.call(sf::st_make_grid, grid_args)
 
   if (attr(object, "relevant_only", TRUE)) {
-    grid_blocks <- filter_grid_blocks(grid_blocks, data)
+    centroids <- sf::st_centroid(sf::st_geometry(data))
+    grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
   }
 
   # Always prints with "Coordinate system already present. Adding new coordinate system, which will replace the existing one."

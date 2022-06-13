@@ -21,7 +21,7 @@
     Condition
       Error in `spatial_clustering_cv()`:
       ! The number of data points is less than `v = 100` (20)
-      i Set `v` to a smaller value than {max_v}
+      i Set `v` to a smaller value than 20
 
 # using sf
 

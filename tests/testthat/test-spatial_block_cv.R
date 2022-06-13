@@ -177,6 +177,19 @@ test_that("polygons are only assigned one fold", {
 
 })
 
+test_that("blocks are filtered based on centroids", {
+  set.seed(123)
+  rs1 <- spatial_block_cv(boston_canopy, v = 18, cellsize = 15000)
+  expect_true(
+    all(
+      purrr::map_lgl(
+        rs1$splits,
+        ~ !is.null(nrow(assessment(.x))) && nrow(assessment(.x)) > 0
+      )
+    )
+  )
+})
+
 test_that("bad args", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
