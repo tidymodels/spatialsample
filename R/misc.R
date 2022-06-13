@@ -46,7 +46,7 @@ check_v <- function(v,
           glue::glue(
             "The number of {objects} is less than `v = {v}` ({max_v})"
           ),
-          i = "Set `v` to a smaller value than {max_v}"
+          i = glue::glue("Set `v` to a smaller value than {max_v}")
         ),
         call = call
       )
