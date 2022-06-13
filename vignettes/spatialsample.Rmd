@@ -17,8 +17,7 @@ knitr::opts_chunk$set(
 
 ```{r, include = FALSE}
 library(ggplot2)
-theme_set(theme_minimal() + 
-            theme(text = element_text(family = "serif")))
+theme_set(theme_minimal())
 ```
 
 
