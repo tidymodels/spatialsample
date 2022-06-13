@@ -85,7 +85,7 @@ spatial_buffer_vfold_cv <- function(data,
     data = data,
     v = v,
     repeats = repeats,
-    strata = strata,
+    strata = {{ strata }},
     breaks = breaks,
     pool = pool,
     ...
@@ -146,7 +146,7 @@ spatial_leave_location_out_cv <- function(data,
   rset <- rsample::group_vfold_cv(
     data = data,
     v = v,
-    group = group,
+    group = {{ group }},
     ...
   )
 

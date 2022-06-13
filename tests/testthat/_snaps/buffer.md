@@ -44,8 +44,7 @@
 ---
 
     Code
-      suppressMessages(spatial_buffer_vfold_cv(boston_canopy, v = 682, radius = 500,
-        buffer = 500))
+      spatial_buffer_vfold_cv(boston_canopy, v = 682, radius = 500, buffer = 500)
     Output
       #  682-fold spatial cross-validation 
       # A tibble: 682 x 2
@@ -66,8 +65,8 @@
 ---
 
     Code
-      suppressMessages(spatial_leave_location_out_cv(ames_sf, Neighborhood, v = 682,
-        radius = 500, buffer = 500))
+      spatial_leave_location_out_cv(ames_sf, Neighborhood, v = 682, radius = 500,
+        buffer = 500)
     Condition
       Warning in `spatial_leave_location_out_cv()`:
       Fewer than 682 locations available for sampling

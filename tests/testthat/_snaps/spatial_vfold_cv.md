@@ -1,7 +1,7 @@
 # erroring when no S2
 
     Code
-      suppressMessages(spatial_buffer_vfold_cv(ames_sf, buffer = 500, radius = NULL))
+      spatial_buffer_vfold_cv(ames_sf, buffer = 500, radius = NULL)
     Condition
       Error in `spatial_buffer_vfold_cv()`:
       ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library

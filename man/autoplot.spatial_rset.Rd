@@ -5,9 +5,9 @@
 \alias{autoplot.spatial_block_cv}
 \title{Create a ggplot for spatial resamples.}
 \usage{
-\method{autoplot}{spatial_rset}(object, ...)
+\method{autoplot}{spatial_rset}(object, ..., alpha = 0.6)
 
-\method{autoplot}{spatial_block_cv}(object, show_grid = TRUE, ...)
+\method{autoplot}{spatial_block_cv}(object, show_grid = TRUE, ..., alpha = 0.6)
 }
 \arguments{
 \item{object}{A \code{spatial_rset} object or a \code{spatial_rsplit} object.
@@ -17,6 +17,10 @@ this function will not work for
 resamples made with non-spatial tibbles or data.frames.}
 
 \item{...}{Options passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}.}
+
+\item{alpha}{Opacity, passed to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}.
+Values of alpha range from 0 to 1, with lower values corresponding to more
+transparent colors.}
 
 \item{show_grid}{When plotting \link{spatial_block_cv} objects, should the grid
 itself be drawn on top of the data? Set to FALSE to remove the grid.}
