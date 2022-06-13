@@ -29,7 +29,7 @@
     Condition
       Error:
       ! The number of rows is less than `v = 10` (5)
-      i Set `v` to a smaller value than {max_v}
+      i Set `v` to a smaller value than 5
 
 # check_v updates v appropriately
 
