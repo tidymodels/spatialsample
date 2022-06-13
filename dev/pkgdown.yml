@@ -1,9 +1,9 @@
 pandoc: 2.14.2
-pkgdown: 2.0.3
+pkgdown: 2.0.4
 pkgdown_sha: ~
 articles:
   spatialsample: spatialsample.html
-last_built: 2022-06-12T22:11Z
+last_built: 2022-06-13T19:27Z
 urls:
   reference: https://spatialsample.tidymodels.org/reference
   article: https://spatialsample.tidymodels.org/articles

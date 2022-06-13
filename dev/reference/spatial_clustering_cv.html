@@ -85,32 +85,47 @@ is equal to V.</p>
     <dl><dt>data</dt>
 <dd><p>A data frame or an <code>sf</code> object (often from <code><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">sf::read_sf()</a></code>
 or <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">sf::st_as_sf()</a></code>), to split into folds.</p></dd>
+
+
 <dt>coords</dt>
 <dd><p>A vector of variable names, typically spatial coordinates,
 to partition the data into disjointed sets via k-means clustering.
 This argument is ignored (with a warning) if <code>data</code> is an <code>sf</code> object.</p></dd>
+
+
 <dt>v</dt>
 <dd><p>The number of partitions of the data set.</p></dd>
+
+
 <dt>cluster_function</dt>
 <dd><p>Which function should be used for clustering?
 Options are either <code>"kmeans"</code> (to use <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>)
 or <code>"hclust"</code> (to use <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust()</a></code>). You can also provide your own
 function; see <code>Details</code>.</p></dd>
+
+
 <dt>radius</dt>
 <dd><p>Numeric: points within this distance of the initially-selected
 test points will be assigned to the assessment set. If <code>NULL</code>, no radius is
 applied.</p></dd>
+
+
 <dt>buffer</dt>
 <dd><p>Numeric: points within this distance of any point in the
 test set (after <code>radius</code> is applied) will be assigned to neither the analysis
 or assessment set. If <code>NULL</code>, no buffer is applied.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Extra arguments passed on to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> or
 <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust()</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with classes <code>spatial_clustering_cv</code>, <code>spatial_rset</code>,
+    
+
+<p>A tibble with classes <code>spatial_clustering_cv</code>, <code>spatial_rset</code>,
 <code>rset</code>, <code>tbl_df</code>, <code>tbl</code>, and <code>data.frame</code>.
 The results include a column for the data split objects and
 an identification variable <code>id</code>.
@@ -147,13 +162,13 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 <span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">Smithsonian</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">latitude</span>, <span class="va">longitude</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [5/15]&gt;</span> Fold5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   splits          id   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [10/10]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span>  Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [15/5]&gt;</span>  Fold4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">smithsonian_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">Smithsonian</span>,</span>
@@ -198,7 +213,7 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>

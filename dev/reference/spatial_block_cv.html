@@ -75,6 +75,8 @@ blocks they fall into.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>An object of class <code>sf</code> or <code>sfc</code>.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>The method used to sample blocks for cross validation folds.
 Currently supports <code>"random"</code>, which randomly assigns blocks to folds,
@@ -82,25 +84,38 @@ Currently supports <code>"random"</code>, which randomly assigns blocks to folds
 then the next from right to left, and repeats from there,
 and <code>"continuous"</code>, which labels each row from left
 to right, moving from the bottom row up.</p></dd>
+
+
 <dt>v</dt>
 <dd><p>The number of partitions of the data set.</p></dd>
+
+
 <dt>relevant_only</dt>
 <dd><p>For systematic sampling, should only blocks containing
 data be included in fold labeling?</p></dd>
+
+
 <dt>radius</dt>
 <dd><p>Numeric: points within this distance of the initially-selected
 test points will be assigned to the assessment set. If <code>NULL</code>, no radius is
 applied.</p></dd>
+
+
 <dt>buffer</dt>
 <dd><p>Numeric: points within this distance of any point in the
 test set (after <code>radius</code> is applied) will be assigned to neither the analysis
 or assessment set. If <code>NULL</code>, no buffer is applied.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed to <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">sf::st_make_grid()</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with classes <code>spatial_block_cv</code>,  <code>spatial_rset</code>, <code>rset</code>,
+    
+
+<p>A tibble with classes <code>spatial_block_cv</code>,  <code>spatial_rset</code>, <code>rset</code>,
 <code>tbl_df</code>, <code>tbl</code>, and <code>data.frame</code>. The results include a column for the
 data split objects and an identification variable <code>id</code>.</p>
     </div>
@@ -138,9 +153,9 @@ Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits            id   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [431/251]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [446/236]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [487/195]&gt;</span> Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [415/267]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [467/215]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [482/200]&gt;</span> Fold3</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -155,7 +170,7 @@ Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>
