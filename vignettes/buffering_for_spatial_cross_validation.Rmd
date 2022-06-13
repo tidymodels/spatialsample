@@ -10,9 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE,
-  out.width = '100%'
+  comment = "#>"
 )
 ```
 
@@ -22,7 +20,7 @@ One of the most common methods for introducing this distance is to "buffer" the 
 
 To begin, we're going to need to load spatialsample:
 
-```{r setup, eval=TRUE}
+```{r setup}
 library(spatialsample)
 ```
 
@@ -37,32 +35,10 @@ blocks <- spatial_block_cv(boston_canopy, v = 5)
 autoplot(blocks)
 ```
 
-```{r echo=FALSE}
-ggplot2::ggsave("boston_blocks.png", width = 7, height = 5, dpi = 72)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks.png")
-```
-
-
 If we look at the individual folds, we can see that the assessment data directly borders the analysis data for each given fold:
 
 ```{r boston-block-gif, animation.hook="gifski", fig.width=7, fig.height=5}
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
-```
-
-```{r echo=FALSE}
-gifski::save_gif(
-  purrr::walk(blocks$splits, function(x) print(autoplot(x))),
-  "boston_blocks_gif.gif",
-  width = 7 * 72,
-  height = 5 * 72
-)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_gif.gif")
 ```
 
 This is a downside of standard blocking cross-validation approaches: while it does introduce some spatial separation between the analysis and assessment sets for data at the middle of the block, data towards the edges may not be separated at all. 
@@ -80,19 +56,6 @@ Now when we plot the folds separately, we can see that a strip of data around ea
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
-```{r echo=FALSE}
-gifski::save_gif(
-  purrr::walk(blocks$splits, function(x) print(autoplot(x))),
-  "boston_blocks_buffer_gif.gif",
-  width = 7 * 72,
-  height = 5 * 72
-)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_buffer_gif.gif")
-```
-
 By default, `buffer` is assumed to be in the same units as your data, as determined by the data's coordinate reference system. To apply buffers of other units, use the `units` package to explicitly specify what units your buffer is in.
 
 For instance, `boston_canopy` uses units of US feet for distance. To specify a buffer in meters instead, we can use:
@@ -106,19 +69,6 @@ blocks <- spatial_block_cv(
 )
 
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
-```
-
-```{r echo=FALSE}
-gifski::save_gif(
-  purrr::walk(blocks$splits, function(x) print(autoplot(x))),
-  "boston_blocks_buffer_m_gif.gif",
-  width = 7 * 72,
-  height = 5 * 72
-)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_buffer_m_gif.gif")
 ```
 
 Note that, when you're using non-point data, the distance between data is calculated as the shortest distance between any points in two observations. For instance, buffers on polygon data will exclude data based on the edge-to-edge distance between observations, rather than centroid to centroid.
@@ -136,19 +86,6 @@ blocks <- spatial_block_cv(
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
-```{r echo=FALSE}
-gifski::save_gif(
-  purrr::walk(blocks$splits, function(x) print(autoplot(x))),
-  "boston_blocks_buffer_eps_gif.gif",
-  width = 7 * 72,
-  height = 5 * 72
-)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_buffer_eps_gif.gif")
-```
-
 ## Inclusion radii
 
 In addition to exclusion buffers, spatialsample also provides a way to add an _inclusion_ buffer (or as we call it, an "inclusion radius") around your assessment set. Simply set the `radius` argument in any spatial cross-validation function to your desired distance, and any data within that inclusion radius will be added to the assessment set:
@@ -164,24 +101,11 @@ blocks <- spatial_block_cv(
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
-```{r echo=FALSE}
-gifski::save_gif(
-  purrr::walk(blocks$splits, function(x) print(autoplot(x))),
-  "boston_blocks_radius_eps_gif.gif",
-  width = 7 * 72,
-  height = 5 * 72
-)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_radius_eps_gif.gif")
-```
-
 This argument is handled the same way as `buffer`, with the same caveats: unless units are specified explicitly, `radius` is assumed to be in the same units as your data's coordinate reference system; distances are calculated between the closest parts of observations; and values of 0 do not apply a radius. 
 
 Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, [leave one disc out cross-validation](https://cran.r-project.org/package=sperrorest) using spatialsample:
 
-```{r boston-block-disc-visible, results='hide', fig.show='hide'}
+```{r boston-block-disc-visible, eval = FALSE}
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
   boston_canopy, 
@@ -192,21 +116,20 @@ blocks <- spatial_buffer_vfold_cv(
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
-```{r echo=FALSE}
-gifski::save_gif(
-  # Without filtering, this creates an 11 minute long GIF
-  # which is possibly not the best use of disc space
-  #
-  # ...no matter how badly I want to ship an 11 minute GIF in a CRAN package 
-  purrr::walk(head(blocks, 60)$splits, function(x) print(autoplot(x))),
-  "boston_blocks_disc_visible.gif",
-  width = 7 * 72,
-  height = 5 * 72
+```{r boston-block-disc-executed, echo = FALSE, animation.hook="gifski", fig.width=7, fig.height=5}
+set.seed(123)
+blocks <- spatial_buffer_vfold_cv(
+  boston_canopy, 
+  v = nrow(boston_canopy), 
+  radius = 1500,
+  buffer = 1500
 )
-```
 
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_blocks_disc_visible.gif")
+# Without filtering, this creates an 11 minute long GIF
+# which is possibly not the best use of disc space
+#
+# ...no matter how badly I want to ship an 11 minute GIF in a CRAN package 
+purrr::walk(head(blocks, 60)$splits, function(x) print(autoplot(x)))
 ```
 
 When both `radius` and `buffer` are specified, spatialsample first applies the inclusion radius to the original randomly-selected assessment set, adding any data within the radius to the assessment set. Next, the exclusion buffer is applied to all the points in the new (post-radius) assessment set, removing any data within the buffer from the analysis set. 
@@ -215,14 +138,6 @@ Importantly, this means that `buffer` is _not_ simply applying a "doughnut" arou
  
 ```{r boston-both, fig.width=7, fig.height=5}
 autoplot(blocks$splits[[12]])
-```
-
-```{r echo=FALSE}
-ggplot2::ggsave("boston_both.png", height = 5, width = 7, dpi = 72)
-```
-
-```{r eval=TRUE, echo=FALSE}
-knitr::include_graphics("boston_both.png")
 ```
 
 This leaves more data in your analysis set for fitting the model, while still ensuring your assessment data is spatially removed.
