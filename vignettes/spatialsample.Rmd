@@ -109,7 +109,7 @@ library(ggplot2)
 
 cv_res %>%
   unnest(.preds) %>%
-  left_join(cv_rmse) %>%
+  left_join(cv_rmse, by = "id") %>%
   ggplot(aes(Longitude, Latitude, color = .estimate)) + 
   geom_point(alpha = 0.5) +
   labs(color = "RMSE") +
