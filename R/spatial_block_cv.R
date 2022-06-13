@@ -233,9 +233,9 @@ generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radiu
   )
 }
 
-filter_grid_blocks <- function(grid_blocks, data) {
+filter_grid_blocks <- function(grid_blocks, centroids) {
   block_contains_points <- purrr::map_lgl(
-    sf::st_intersects(grid_blocks, data),
+    sf::st_intersects(grid_blocks, centroids),
     sgbp_is_not_empty
   )
   if ("data.frame" %in% class(grid_blocks)) {
