@@ -46,4 +46,14 @@ This data is made available under the Public Domain Dedication and License
 v1.0 whose full text can be found at:
 \url{http://opendatacommons.org/licenses/pddl/1.0/}.
 }
+\details{
+Note that this dataset is in the EPSG:2249
+(NAD83 / Massachusetts Mainland (ftUS)) coordinate reference system, which
+might not be installed by default on your computer.
+To install the coordinate reference system over the internet, run
+\code{sf::sf_proj_network(TRUE)} before working with \code{boston_canopy} to install
+the coordinate reference system itself, and \code{\link[sf:sf_project]{sf::sf_add_proj_units()}} to
+add US customary units to your units database. These steps only need to be
+taken once per computer (or per PROJ installation).
+}
 \keyword{datasets}
