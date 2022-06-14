@@ -27,7 +27,7 @@ library(spatialsample)
 
 ## Exclusion buffers
 
-By default, most spatial cross validation methods in spatialsample don't automatically create buffer zones. Take for instance `spatial_block_cv()`, which creates a number of "blocks" in a grid and assigns data to folds based on the block its centroid falls in:
+By default, most spatial cross-validation methods in spatialsample don't automatically create buffer zones. Take for instance `spatial_block_cv()`, which creates a number of "blocks" in a grid and assigns data to folds based on the block its centroid falls in:
 
 ```{r boston-block, fig.width=7, fig.height=5}
 set.seed(123)
@@ -74,7 +74,7 @@ purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 
 Note that, when you're using non-point data, the distance between data is calculated as the shortest distance between any points in two observations. For instance, buffers on polygon data will exclude data based on the edge-to-edge distance between observations, rather than centroid to centroid.
 
-One special case, however, is when `buffer` is set to 0. In these cases, spatialsample won't apply a buffer at all. While polygons that share an edge are within 0 distance of each other, when calculated from edge-to-edge, we think that setting `buffer = 0` would intuitively apply 0 (that is, "no") buffer. If you want to be sure to only capture adjacent polygons in a buffer, set `buffer` to a tiny, non-0 value:
+One special case, however, is when `buffer` is set to 0. In this case, spatialsample won't apply a buffer at all. While polygons that share an edge are within 0 distance of each other, when calculated from edge-to-edge, we think that setting `buffer = 0` would intuitively apply 0 (that is, "no") buffer. If you want to be sure to only capture adjacent polygons in a buffer, set `buffer` to a tiny, non-0 value:
 
 ```{r boston-block-buffer-eps-gif, animation.hook="gifski", fig.width=7, fig.height=5}
 set.seed(123)
@@ -104,7 +104,7 @@ purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 
 This argument is handled the same way as `buffer`, with the same caveats: unless units are specified explicitly, `radius` is assumed to be in the same units as your data's coordinate reference system; distances are calculated between the closest parts of observations; and values of 0 do not apply a radius. 
 
-Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, [leave one disc out cross-validation](https://cran.r-project.org/package=sperrorest) using spatialsample:
+Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, [leave-one-disc-out cross-validation](https://cran.r-project.org/package=sperrorest) using spatialsample:
 
 ```{r boston-block-disc-visible, eval = FALSE}
 set.seed(123)
