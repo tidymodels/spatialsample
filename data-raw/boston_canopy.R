@@ -71,5 +71,5 @@ names(heat) <- names(heat_metrics)
 boston_canopy <- sf::st_join(boston_canopy, heat, sf::st_within, left = FALSE)
 boston_canopy <- dplyr::relocate(boston_canopy, geometry, .after = everything())
 
-usethis::use_data(boston_canopy, overwrite = TRUE)
+usethis::use_data(boston_canopy, overwrite = TRUE, internal = TRUE)
 unlink(working_dir, TRUE)
