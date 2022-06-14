@@ -119,6 +119,29 @@
       10 <split [2870/60]>  Fold10
       # ... with 44 more rows
 
+---
+
+    Code
+      spatial_block_cv(boston_canopy, n = 200)
+    Message
+      Only 1.7% of blocks contained any data
+      i Check to make sure your block sizes make sense for your data
+    Output
+      #  10-fold spatial block cross-validation 
+      # A tibble: 10 x 2
+         splits           id    
+         <list>           <chr> 
+       1 <split [613/69]> Fold01
+       2 <split [613/69]> Fold02
+       3 <split [614/68]> Fold03
+       4 <split [614/68]> Fold04
+       5 <split [614/68]> Fold05
+       6 <split [614/68]> Fold06
+       7 <split [614/68]> Fold07
+       8 <split [614/68]> Fold08
+       9 <split [614/68]> Fold09
+      10 <split [614/68]> Fold10
+
 # printing
 
     #  10-fold spatial block cross-validation 
