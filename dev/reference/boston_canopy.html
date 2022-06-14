@@ -143,6 +143,16 @@ containing 682 records of 22 variables:</p><dl><dt>grid_id</dt>
 Heat data is from <a href="https://data.boston.gov/dataset/hex-mean-heat-index2" class="external-link">https://data.boston.gov/dataset/hex-mean-heat-index2</a>.
 Most field definitions are from <a href="https://data.boston.gov/dataset/canopy-change-assessment-data-dictionary" class="external-link">https://data.boston.gov/dataset/canopy-change-assessment-data-dictionary</a>.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Note that this dataset is in the EPSG:2249
+(NAD83 / Massachusetts Mainland (ftUS)) coordinate reference system (CRS),
+which may not be installed by default on your computer. Before working with
+<code>boston_canopy</code>, run:</p><ul><li><p><code>sf::sf_proj_network(TRUE)</code> to install the CRS itself</p></li>
+<li><p><code><a href="https://r-spatial.github.io/sf/reference/sf_project.html" class="external-link">sf::sf_add_proj_units()</a></code> to add US customary units to your units
+database</p></li>
+</ul><p>These steps only need to be taken once per computer (or per PROJ installation).</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
