@@ -12,3 +12,4 @@
 ^doc$
 ^Meta$
 ^data-raw$
+^vignettes/articles$

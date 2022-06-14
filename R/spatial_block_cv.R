@@ -2,7 +2,7 @@
 #'
 #' Block cross-validation splits the area of your data into a number of
 #' grid cells, or "blocks", and then assigns all data into folds based on the
-#' blocks they fall into.
+#' blocks their centroid falls into.
 #'
 #' @details
 #' The grid blocks can be controlled by passing arguments to
