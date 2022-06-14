@@ -27,23 +27,113 @@ The resampled objects created by spatialsample can be used in many of the same w
 data("ames", package = "modeldata")
 ```
 
-Let's say that the sale price of these houses depends on the year they were built, their living area (size), and the type of house they are (duplex vs. townhouse vs. single family), along with perhaps interactions between type and house size. 
+The Ames housing data is a normal [tibble](https://tibble.tidyverse.org/). While many of the functions in spatialsample support standard tibbles, several require that our data be an [sf](https://r-spatial.github.io/sf/) object in order to properly handle spatial distance calcuations. We can transform our Ames data into an sf object using the `sf::st_as_sf()` function:
+
+```{r}
+ames_sf <- sf::st_as_sf(
+  ames,
+  # "coords" is in x/y order -- so longitude goes first!
+  coords = c("Longitude", "Latitude"),
+  # Set our coordinate reference system to EPSG:4326,
+  # the standard WGS84 geodetic coordinate reference system
+  crs = 4326
+)
+```
+
+For this vignette, we'll try to model the sale prices of the houses in the Ames data set. Let's say that the sale price of these houses depends on the year they were built, their living area (size), and the type of house they are (duplex vs. townhouse vs. single family), along with perhaps interactions between type and house size. 
 
 ```{r, eval = FALSE}
 log10(Sale_Price) ~ Year_Built + Gr_Liv_Area +  Bldg_Type
 ```
 
-This relationship may exhibit spatial autocorrelation across the city of Ames, and we can use a spatial resampling strategy to evaluate such a model. We can create `v = 15` spatial cross-validation folds with `spatial_clustering_cv()`, which uses k-means clustering to identify the sets:
+This relationship may exhibit spatial autocorrelation across the city of Ames, and we can use any of the several different methods provided by spatialsample to try and investigate it. 
+
+For instance, we could create `v = 15` spatial cross-validation folds with `spatial_clustering_cv()`, which [uses k-means clustering in order to divide the data into folds](https://doi.org/10.1109/IGARSS.2012.6352393). We can then visualize those folds using the `autoplot()` function from spatialsample:
 
 ```{r}
 library(spatialsample)
 
 set.seed(123)
-folds <- spatial_clustering_cv(ames, coords = c("Latitude", "Longitude"), v = 15)
-folds
+cluster_folds <- spatial_clustering_cv(
+  ames_sf, 
+  v = 15
+)
+
+autoplot(cluster_folds)
 ```
 
-The `folds` object is an `rset` object that contains many resamples or `rsplit` objects in the `splits` column. The resulting partitions do not necessarily contain an equal number of observations.
+The `folds` object is an `rset` object that contains many resamples or `rsplit` objects in the `splits` column. The resulting partitions do not necessarily contain an equal number of observations:
+
+```{r}
+cluster_folds
+```
+
+But while spatial clustering is _a_ method for spatial cross-validation using spatialsample, it is not the only method available. The other methods are broadly similar, breaking the data into a number of (not necessarily even) folds based on spatial arrangement. 
+
+For instance, the `spatial_block_cv()` function will perform [spatial blocking](https://doi.org/10.1111/ecog.02881) with your data:
+
+```{r}
+set.seed(123)
+block_folds <- spatial_block_cv(
+  ames_sf, 
+  v = 15
+)
+
+autoplot(block_folds)
+```
+
+If you already have a sense of what locations in your data are likely to be closely related, you can also use the `spatial_leave_location_out_cv()` function to perform [leave-location-out cross-validation](https://doi.org/10.1016/j.envsoft.2017.12.001). For instance, we can split the Ames data into folds based on neighborhoods using this function:
+
+```{r}
+set.seed(123)
+location_folds <- spatial_leave_location_out_cv(
+  ames_sf,
+  group = Neighborhood,
+  v = 15
+)
+
+autoplot(location_folds)
+```
+
+And last but not least, 
+[spatially-buffered v-fold cross-validation](https://doi.org/10.1111/geb.12161).
+
+```{r}
+set.seed(123)
+buffer_folds <- spatial_buffer_vfold_cv(
+  ames_sf,
+  v = 15,
+  radius = NULL,
+  buffer = 200
+)
+
+autoplot(buffer_folds)
+```
+
+Just looking at the default `autoplot()` output, it isn't immediately obvious
+that our `buffer` did anything. However, if we plot each `rsplit` object separately, we can see that we've created a small exclusion buffer around our test set:
+
+```{r buffer-gif, animation.hook="gifski", fig.width=7, fig.height=5}
+purrr::walk(buffer_folds$splits, function(x) print(autoplot(x)))
+```
+
+Points inside of this buffer are included in neither the analysis nor assessment sets, making sure you're enforcing a minimum amount of spatial extrapolation when predicting on new data. For more information on this process, check out the buffering vignette!
+
+We've now got a lot of different resamples floating around! We're going to fit the same models to each of them, in the same way, using the same code. In order to make that task a little easier, let's add a new column named `type` to signal what type of resample each fold is from, and then combine them into a new data frame:
+
+```{r}
+cluster_folds$type <- "cluster"
+block_folds$type <- "block"
+location_folds$type <- "location"
+buffer_folds$type <- "buffer"
+
+resamples <- dplyr::bind_rows(
+  cluster_folds,
+  block_folds,
+  location_folds,
+  buffer_folds
+)
+```
 
 Now let's write a function that will, for each resample:
 
@@ -61,10 +151,11 @@ compute_preds <- function(splits) {
   # identify the assessment set
   holdout <- assessment(splits)
   # return the assessment set, with true and predicted price
-  tibble::tibble(Longitude = holdout$Longitude, 
-                 Latitude = holdout$Latitude,
-                 Sale_Price = log10(holdout$Sale_Price), 
-                 .pred = predict(mod, holdout))
+  tibble::tibble(
+    geometry = holdout$geometry,
+    Sale_Price = log10(holdout$Sale_Price), 
+    .pred = predict(mod, holdout)
+  )
 }
 ```
 
@@ -72,7 +163,7 @@ compute_preds <- function(splits) {
 We can apply this function to just one of the `splits`.
 
 ```{r}
-compute_preds(folds$splits[[7]]) 
+compute_preds(cluster_folds$splits[[7]]) 
 ```
 
 
@@ -82,10 +173,8 @@ Or we can apply this function to all of the `splits`, using `purrr::map()`.
 library(purrr)
 library(dplyr)
 
-cv_res <- folds %>%
+cv_res <- resamples %>%
   mutate(.preds = map(splits, compute_preds))
-
-cv_res
 ```
 
 We can `unnest()` these results and [use yardstick to compute any regression metrics appropriate to this modeling analysis](https://yardstick.tidymodels.org/reference/index.html#section-regression-metrics), such as `yardstick::rmse()`:
@@ -96,7 +185,7 @@ library(yardstick)
 
 cv_rmse <- cv_res %>%
   unnest(.preds) %>%
-  group_by(id) %>%
+  group_by(id, type) %>%
   rmse(Sale_Price, .pred)
 
 cv_rmse
@@ -109,11 +198,12 @@ library(ggplot2)
 
 cv_res %>%
   unnest(.preds) %>%
-  left_join(cv_rmse, by = "id") %>%
-  ggplot(aes(Longitude, Latitude, color = .estimate)) + 
-  geom_point(alpha = 0.5) +
+  left_join(cv_rmse, by = c("id", "type")) %>%
+  ggplot(aes(color = .estimate)) + 
+  geom_sf(aes(geometry = geometry), alpha = 0.5) +
   labs(color = "RMSE") +
-  scale_color_viridis_c()
+  scale_color_viridis_c() + 
+  facet_wrap(~ type)
 ```
 
-The area of highest RMSE is close to a more industrial area of Ames, by a large Department of Transportation complex.
+As you can see, the results you get are highly dependent on how you group your data! It's important to make sure you use the right method for your data (and, for methods like spatial blocking and buffered cross-validation, the right distances).
