@@ -58,11 +58,9 @@ test_data <- function() {
   x
 }
 
-delayedAssign("rset_subclasses", {
-  list(
-    spatial_block_cv = spatial_block_cv(test_data()),
-    spatial_clustering_cv = spatial_clustering_cv(test_data()),
-    spatial_buffer_vfold_cv = spatial_buffer_vfold_cv(test_data(), radius = 1, buffer = 1),
+rset_subclasses <- list(
+    spatial_block_cv              = spatial_block_cv(test_data()),
+    spatial_clustering_cv         = spatial_clustering_cv(test_data()),
+    spatial_buffer_vfold_cv       = spatial_buffer_vfold_cv(test_data(), radius = 1, buffer = 1),
     spatial_leave_location_out_cv = spatial_leave_location_out_cv(test_data(), idx)
   )
-})
