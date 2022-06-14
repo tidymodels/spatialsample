@@ -234,6 +234,12 @@ test_that("bad args", {
   expect_snapshot(
     spatial_block_cv(ames_sf, v = 60)
   )
+
+  set.seed(123)
+  expect_snapshot(
+    spatial_block_cv(boston_canopy, n = 200)
+  )
+
 })
 
 test_that("printing", {

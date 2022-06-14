@@ -104,6 +104,7 @@ spatial_block_cv <- function(data,
   }
 
   grid_blocks <- sf::st_make_grid(grid_box, ...)
+  original_number_of_blocks <- length(grid_blocks)
   split_objs <- switch(
     method,
     "random" = random_block_cv(
@@ -125,6 +126,20 @@ spatial_block_cv <- function(data,
       buffer = buffer
     )
   )
+
+  percent_used <- split_objs$filtered_number_of_blocks[[1]] / original_number_of_blocks
+
+  if (percent_used < 0.1) {
+    percent_used <- round(percent_used * 100, 2)
+    rlang::inform(
+      c(
+        glue::glue("Only {percent_used}% of blocks contain any data"),
+        i = "Check that your block sizes make sense for your data"
+      )
+    )
+  }
+  split_objs$filtered_number_of_blocks <- NULL
+
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
 
@@ -210,6 +225,7 @@ systematic_block_cv <- function(data,
 }
 
 generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radius, buffer) {
+  filtered_number_of_blocks <- nrow(grid_blocks)
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, centroids)
@@ -229,7 +245,8 @@ generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radiu
   tibble::tibble(
     splits = split_objs,
     id = names0(length(split_objs), "Fold"),
-    v = v
+    v = v,
+    filtered_number_of_blocks = filtered_number_of_blocks
   )
 }
 
