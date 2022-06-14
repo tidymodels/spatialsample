@@ -126,18 +126,14 @@ test_that("vec_rbind() returns a bare tibble", {
 })
 
 test_that("vec_cbind() returns a bare tibble", {
-  vec_cbind_no_repair <- function(...) {
-    vec_cbind(..., .name_repair = "minimal")
-  }
-
   for (x in rset_subclasses) {
     tbl <- tib_upcast(x)
 
     expect_identical(vec_cbind(x), vec_cbind(tbl))
-    expect_identical(vec_cbind_no_repair(x, x), vec_cbind_no_repair(tbl, tbl))
-    expect_identical(vec_cbind_no_repair(x, tbl), vec_cbind_no_repair(tbl, tbl))
+    expect_snapshot(expect_identical(vec_cbind(x, x), vec_cbind(tbl, tbl)))
+    expect_snapshot(expect_identical(vec_cbind(x, tbl), vec_cbind(tbl, tbl)))
 
     expect_s3_class_bare_tibble(vec_cbind(x))
-    expect_s3_class_bare_tibble(vec_cbind_no_repair(x, x))
+    expect_snapshot(expect_s3_class_bare_tibble(vec_cbind(x, x)))
   }
 })
