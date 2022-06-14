@@ -133,8 +133,8 @@ spatial_block_cv <- function(data,
     percent_used <- round(percent_used * 100, 2)
     rlang::inform(
       c(
-        glue::glue("Only {percent_used}% of blocks contained any data"),
-        i = "Check to make sure your block sizes make sense for your data"
+        glue::glue("Only {percent_used}% of blocks contain any data"),
+        i = "Check that your block sizes make sense for your data"
       )
     )
   }

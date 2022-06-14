@@ -124,8 +124,8 @@
     Code
       spatial_block_cv(boston_canopy, n = 200)
     Message
-      Only 1.7% of blocks contained any data
-      i Check to make sure your block sizes make sense for your data
+      Only 1.7% of blocks contain any data
+      i Check that your block sizes make sense for your data
     Output
       #  10-fold spatial block cross-validation 
       # A tibble: 10 x 2
