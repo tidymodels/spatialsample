@@ -36,6 +36,7 @@ Imports:
     vctrs (>= 0.3.6)
 Suggests: 
     covr,
+    gifski,
     knitr,
     lwgeom,
     modeldata,
