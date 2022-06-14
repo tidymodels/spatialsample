@@ -105,7 +105,7 @@ This argument is handled the same way as `buffer`, with the same caveats:
 - Distances are calculated between the closest parts of observations.
 - Values of zero do not apply a radius. 
 
-Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, [leave-one-disc-out cross-validation](https://cran.r-project.org/package=sperrorest) using spatialsample:
+Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, leave-one-disc-out cross-validation using spatialsample:
 
 ```{r boston-block-disc-visible, eval = FALSE}
 set.seed(123)
