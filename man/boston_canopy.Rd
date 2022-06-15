@@ -44,7 +44,7 @@ as well as temperature and heat index data for July 2019. Data is aggregated
 to a grid of regular 25 hectare hexagons, clipped to city boundaries.
 This data is made available under the Public Domain Dedication and License
 v1.0 whose full text can be found at:
-\url{http://opendatacommons.org/licenses/pddl/1.0/}.
+\url{https://opendatacommons.org/licenses/pddl/1-0/}.
 }
 \details{
 Note that this dataset is in the EPSG:2249

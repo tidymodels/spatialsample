@@ -6,7 +6,7 @@
 #' to a grid of regular 25 hectare hexagons, clipped to city boundaries.
 #' This data is made available under the Public Domain Dedication and License
 #' v1.0 whose full text can be found at:
-#' \url{http://opendatacommons.org/licenses/pddl/1.0/}.
+#' \url{https://opendatacommons.org/licenses/pddl/1-0/}.
 #'
 #' Note that this dataset is in the EPSG:2249
 #' (NAD83 / Massachusetts Mainland (ftUS)) coordinate reference system (CRS),
