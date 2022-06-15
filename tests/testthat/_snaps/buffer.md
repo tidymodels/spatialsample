@@ -38,8 +38,8 @@
       # A tibble: 2 x 2
         splits           id   
         <list>           <chr>
-      1 <split [63/500]> Fold1
-      2 <split [77/496]> Fold2
+      1 <split [37/553]> Fold1
+      2 <split [54/529]> Fold2
 
 ---
 

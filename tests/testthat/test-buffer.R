@@ -307,19 +307,19 @@ test_that("buffers respect units", {
     ames_sf,
     v = 2,
     method = "snake",
-    radius = 500,
-    buffer = 500
+    radius = 100,
+    buffer = 100
   )
   set.seed(123)
   rs2 <- spatial_block_cv(
     ames_sf,
     v = 2,
     method = "snake",
-    radius = units::as_units(500, "m"),
-    buffer = units::as_units(500, "m")
+    radius = units::as_units(100, "m"),
+    buffer = units::as_units(100, "m")
   )
-  attr(rs2, "radius") <- 500
-  attr(rs2, "buffer") <- 500
+  attr(rs2, "radius") <- 100
+  attr(rs2, "buffer") <- 100
   expect_identical(rs1, rs2)
 
 })

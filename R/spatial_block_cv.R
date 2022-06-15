@@ -266,7 +266,7 @@ make_snake_ordering <- function(folds, grid_blocks) {
   rowtab <- table(
     purrr::map_dbl(
       grid_blocks,
-      ~ sf::st_bbox(.x)[["xmin"]]
+      ~ sf::st_bbox(.x)[["ymin"]]
     )
   )
   sum_rowtab <- cumsum(rowtab)
