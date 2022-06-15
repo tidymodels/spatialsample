@@ -54,17 +54,32 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="spatialsample-development-version">spatialsample (development version)<a class="anchor" aria-label="anchor" href="#spatialsample-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="spatialsample-020">spatialsample 0.2.0<a class="anchor" aria-label="anchor" href="#spatialsample-020"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
 <ul><li><p><code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> is a new function which wraps <code><a href="https://rsample.tidymodels.org/reference/vfold_cv.html" class="external-link">rsample::vfold_cv()</a></code>, allowing users to add inclusion radii and exclusion buffers to their vfold resamples. This is the supported way to perform spatially buffered leave-one-out cross validation (set <code>v</code> to <code>nrow(data)</code>).</p></li>
 <li><p><code><a href="../reference/spatial_vfold.html">spatial_leave_location_out_cv()</a></code> is a new function with wraps <code><a href="https://rsample.tidymodels.org/reference/group_vfold_cv.html" class="external-link">rsample::group_vfold_cv()</a></code>, allowing users to add inclusion radii and exclusion buffers to their vfold resamples.</p></li>
-<li><p>All resampling functions now support spatial buffering using two arguments. <code>radius</code> lets you specify an <em>inclusion</em> radius for your test set, where any data within <code>radius</code> of the original assessment set will be added to the assessment set. <code>buffer</code> specifies an <em>exclusion</em> buffer around the test set, where any data within <code>buffer</code> of the assessment set (after <code>radius</code> is applied) will be excluded from both sets.</p></li>
-<li><p><code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> now has a method for spatial resamples built from <code>sf</code> objects.</p></li>
-<li><p><code>ggplot2</code> has been moved to Imports. It had been in Suggests.</p></li>
-<li><p><code><a href="../reference/spatial_block_cv.html">spatial_block_cv()</a></code> is a new function for performing spatial block cross validation. It currently supports randomly assigning blocks to folds.</p></li>
+<li><p><code><a href="../reference/spatial_block_cv.html">spatial_block_cv()</a></code> is a new function for performing spatial block cross-validation. It currently supports randomly assigning blocks to folds.</p></li>
 <li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> gains an argument, <code>cluster_function</code>, which specifies what type of clustering to perform. <code>cluster_function = "kmeans"</code>, the default, uses <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> for k-means clustering, while <code>cluster_function = "hclust"</code> uses <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">stats::hclust()</a></code> for hierarchical clustering. Users can also provide their own clustering function.</p></li>
-<li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> now supports <code>sf</code> objects! Coordinates are inferred automatically when using <code>sf</code> objects, and anything passed to <code>coords</code> will be ignored with a warning. Clusters made using <code>sf</code> objects will take coordinate reference systems into account (using [sf::st_distance()]), unlike those made using data frames.</p></li>
-<li><p><code>sf</code> has been added to Imports.</p></li>
+<li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> now supports <code>sf</code> objects! Coordinates are inferred automatically when using <code>sf</code> objects, and anything passed to <code>coords</code> will be ignored with a warning. Clusters made using <code>sf</code> objects will take coordinate reference systems into account (using <code><a href="https://r-spatial.github.io/sf/reference/geos_measures.html" class="external-link">sf::st_distance()</a></code>), unlike those made using data frames.</p></li>
+<li><p>All resampling functions now support spatial buffering using two arguments. <code>radius</code> lets you specify an <em>inclusion</em> radius for your test set, where any data within <code>radius</code> of the original assessment set will be added to the assessment set. <code>buffer</code> specifies an <em>exclusion</em> buffer around the test set, where any data within <code>buffer</code> of the assessment set (after <code>radius</code> is applied) will be excluded from both sets.</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> now has a method for spatial resamples built from <code>sf</code> objects. It works both on <code>rset</code> objects and on <code>rsplit</code> objects, and has a special method for outputs from <code><a href="../reference/spatial_block_cv.html">spatial_block_cv()</a></code>.</p></li>
+<li><p><code>boston_canopy</code> is a new dataset with data on tree canopy change over time in Boston, Massachusetts, USA. It uses a projected coordinate reference system and US customary units; see <code><a href="../reference/boston_canopy.html">?boston_canopy</a></code> for instructions on how to install these into your PROJ installation if needed.</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="documentation-0-2-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-2-0"></a></h3>
+<ul><li><p>The “Getting Started” vignette has been revised to demonstrate the new features and clustering methods.</p></li>
+<li><p>A new vignette has been added walking through the spatial buffering process.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="dependency-changes-0-2-0">Dependency changes<a class="anchor" aria-label="anchor" href="#dependency-changes-0-2-0"></a></h3>
+<ul><li><p>R versions before 3.4 are no longer supported.</p></li>
+<li><p><code>glue</code>, <code>sf</code>, and <code>units</code> have been added to Imports.</p></li>
+<li><p><code>ggplot2</code> has been moved to Imports. It had been in Suggests.</p></li>
+<li><p><code>covr</code>, <code>gifski</code>, <code>lwgeom</code>, and <code>vdiffr</code> are now in Suggests.</p></li>
+<li><p><code>rlang</code> now has a minimum version of 1.0.0 (was previously unversioned).</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="spatialsample-010">spatialsample 0.1.0<a class="anchor" aria-label="anchor" href="#spatialsample-010"></a></h2><p class="text-muted">CRAN release: 2021-03-04</p>
 <ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li></ul></div>
