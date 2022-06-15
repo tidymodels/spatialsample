@@ -75,8 +75,6 @@ spatial_buffer_vfold_cv <- function(data,
 
     )
   }
-  if (missing(radius)) radius <- NULL
-  if (missing(buffer)) buffer <- NULL
 
   n <- nrow(data)
   v <- check_v(v, n, "rows")
