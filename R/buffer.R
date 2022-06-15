@@ -33,17 +33,22 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   }
 
   n <- nrow(data)
+  distmat <- sf::st_distance(data)
 
   # only run radius checks if radius is not NULL (to prevent NAs from >)
   run_radius <- !is.null(radius)
   if (run_radius && units::set_units(radius, NULL) > 0) {
-    indices <- row_ids_within_dist(data, indices, radius)
+    # In case `radius` has no units, assume it's in the same units as `data`
+    units(radius) <- units(distmat)
+    indices <- row_ids_within_dist(distmat, indices, radius)
   }
 
   # `buffer_indices` are _always_ needed
   # so re-code a NULL buffer as a 0, which will buffer nothing
   if (is.null(buffer)) buffer <- 0L
-  buffer_indices <- row_ids_within_dist(data, indices, buffer)
+  # In case `buffer` has no units, assume it's in the same units as `data`
+  units(buffer) <- units(distmat)
+  buffer_indices <- row_ids_within_dist(distmat, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)
 }
@@ -55,7 +60,7 @@ buffered_complement <- function(ind, buff_ind, n) {
   )
 }
 
-row_ids_within_dist <- function(data, indices, dist) {
+row_ids_within_dist <- function(distmat, indices, dist) {
   if (units::set_units(dist, NULL) > 0) {
     purrr::map(
       # indices is the output of split_unnamed
@@ -68,7 +73,7 @@ row_ids_within_dist <- function(data, indices, dist) {
       # not sorted in
       #
       # So here we append the new indices to the old and de-duplicate them
-      ~ unique(c(.x, which_within_dist(data, .x, dist)))
+      ~ unique(c(.x, which_within_dist(distmat, .x, dist)))
     )
   } else {
     # initialize to integer(0) in case buffer is <= 0:
@@ -79,11 +84,11 @@ row_ids_within_dist <- function(data, indices, dist) {
 # Return row IDs for which elements of `data` are within `dist` of `data[idx, ]`
 # Note that data[idx, ] are within any positive distance of themselves
 # and as such are returned by this function
-which_within_dist <- function(data, idx, dist) {
-  which(
-    purrr::map_lgl(
-      sf::st_is_within_distance(data, data[idx, ], dist = dist),
-      sgbp_is_not_empty
+which_within_dist <- function(distmat, idx, dist) {
+  unlist(
+    purrr::map(
+      idx,
+      ~ which(distmat[.x, ] <= dist)
     )
   )
 }

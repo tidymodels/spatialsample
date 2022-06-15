@@ -8,6 +8,17 @@
 #' v1.0 whose full text can be found at:
 #' \url{http://opendatacommons.org/licenses/pddl/1.0/}.
 #'
+#' Note that this dataset is in the EPSG:2249
+#' (NAD83 / Massachusetts Mainland (ftUS)) coordinate reference system (CRS),
+#' which may not be installed by default on your computer. Before working with
+#' `boston_canopy`, run:
+#'
+#' - `sf::sf_proj_network(TRUE)` to install the CRS itself
+#' - [sf::sf_add_proj_units()] to add US customary units to your units
+#' database
+#'
+#' These steps only need to be taken once per computer (or per PROJ installation).
+#'
 #' @format A data frame (of class `sf`, `tbl_df`, `tbl`, and `data.frame`)
 #' containing 682 records of 22 variables:
 #' \describe{

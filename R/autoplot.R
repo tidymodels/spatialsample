@@ -35,26 +35,31 @@
 # registered in zzz.R
 #' @export
 autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
-  fold <- NULL
+  # .fold. is named to not interfere with normal column names
+  .fold. <- NULL
 
   object <- purrr::map2_dfr(
     object$splits,
     object$id,
-    ~ cbind(assessment(.x), fold = .y)
+    ~ cbind(assessment(.x), .fold. = .y)
   )
 
   p <- ggplot2::ggplot(
     data = object,
-    mapping = ggplot2::aes(color = fold, fill = fold)
+    mapping = ggplot2::aes(color = .fold., fill = .fold.)
   )
   p <- p + ggplot2::geom_sf(..., alpha = alpha)
+  p <- p + ggplot2::guides(
+    colour = ggplot2::guide_legend("Fold"),
+    fill = ggplot2::guide_legend("Fold")
+  )
   p + ggplot2::coord_sf()
 }
 
 #' @export
 autoplot.spatial_rsplit <- function(object, ..., alpha = 0.6) {
-  # .Class. is named to not interfere with normal column names
-  .Class. <- NULL
+  # .class. is named to not interfere with normal column names
+  .class. <- NULL
 
   ins <- object$in_id
   outs <- if (identical(object$out_id, NA)) {
@@ -63,15 +68,17 @@ autoplot.spatial_rsplit <- function(object, ..., alpha = 0.6) {
     object$out_id
   }
   object <- object$data
-  object$.Class. <- NA
-  object$.Class.[ins] <- "Analysis"
-  object$.Class.[outs] <- "Assessment"
-  object$.Class.[is.na(object$.Class.)] <- "Buffer"
+  object$.class. <- NA
+  object$.class.[ins] <- "Analysis"
+  object$.class.[outs] <- "Assessment"
+  object$.class.[is.na(object$.class.)] <- "Buffer"
 
   p <- ggplot2::ggplot(data = object,
-                       mapping = ggplot2::aes(color = .Class., fill = .Class.))
-  p <- p + ggplot2::scale_fill_discrete(name = "Class")
-  p <- p + ggplot2::scale_color_discrete(name = "Class")
+                       mapping = ggplot2::aes(color = .class., fill = .class.))
+  p <- p + ggplot2::guides(
+    colour = ggplot2::guide_legend("Class"),
+    fill = ggplot2::guide_legend("Class")
+  )
   p <- p + ggplot2::geom_sf(..., alpha = alpha)
   p + ggplot2::coord_sf()
 }
