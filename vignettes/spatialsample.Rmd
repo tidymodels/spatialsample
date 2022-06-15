@@ -192,7 +192,7 @@ cv_rmse
 
 It looks like the RMSE may vary across the city, so we can join the metrics back up to our results and plot them.
 
-```{r fig.width=9, fig.height=6}
+```{r fig.width=6, fig.height=10}
 library(ggplot2)
 
 cv_res %>%
@@ -202,7 +202,7 @@ cv_res %>%
   geom_sf(aes(geometry = geometry), alpha = 0.5) +
   labs(color = "RMSE") +
   scale_color_viridis_c() + 
-  facet_wrap(~ type)
+  facet_wrap(vars(type), ncol = 1)
 ```
 
 As you can see, the results you get are highly dependent on how you resample your data! It's important to use the right method for your data (and, for methods like spatial blocking and buffered cross-validation, the right distances).
