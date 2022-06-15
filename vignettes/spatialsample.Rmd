@@ -92,45 +92,18 @@ location_folds <-
 autoplot(location_folds)
 ```
 
-And last but not least, 
-[spatially-buffered v-fold cross-validation](https://doi.org/10.1111/geb.12161):
-
-```{r}
-set.seed(123)
-buffer_folds <- 
-  spatial_buffer_vfold_cv(
-    ames_sf,
-    v = 15,
-    radius = NULL,
-    buffer = 200
-  )
-
-autoplot(buffer_folds)
-```
-
-Just looking at the default `autoplot()` output, it isn't immediately obvious
-that our `buffer` did anything. However, if we plot each `rsplit` object separately, we can see that we've created a small exclusion buffer around each test (otherwise known as assessment) set:
-
-```{r buffer-gif, animation.hook="gifski", fig.width=7, fig.height=5}
-purrr::walk(buffer_folds$splits, function(x) print(autoplot(x)))
-```
-
-Points inside of this buffer are included in neither the analysis nor assessment sets, making sure you're enforcing a minimum amount of spatial extrapolation when predicting on new data. For more information on this process, check out the [buffering vignette](https://spatialsample.tidymodels.org/dev/articles/buffering.html)!
-
 We've now got a lot of different resamples floating around! We're going to fit the same models to each of them, in the same way, using the same code. In order to make that task a little easier, let's add a new column named `type` to signal what type of resample each fold is from, and then combine them into a new data frame:
 
 ```{r}
 cluster_folds$type <- "cluster"
 block_folds$type <- "block"
 location_folds$type <- "location"
-buffer_folds$type <- "buffer"
 
 resamples <- 
   dplyr::bind_rows(
     cluster_folds,
     block_folds,
-    location_folds,
-    buffer_folds
+    location_folds
   )
 ```
 
