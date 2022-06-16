@@ -75,6 +75,17 @@ test_that("autoplot is stable", {
   p <- autoplot(ames_neighborhoods$splits[[1]])
   vdiffr::expect_doppelganger("buffered LLO split plot", p)
 
+  # Not setting seed because this _should_ be deterministic
+  boston_snake <- spatial_block_cv(
+    boston_canopy,
+    v = 10,
+    method = "snake",
+    relevant_only = FALSE,
+    n = c(10, 23)
+  )
+  p <- autoplot(boston_snake)
+  vdiffr::expect_doppelganger("snake flips rows the right way", p)
+
 
   expect_snapshot(
     autoplot(ames_non_sf),

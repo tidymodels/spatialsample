@@ -91,6 +91,18 @@ test_that("systematic assignment -- snake", {
     }
   )
   expect_true(all(good_holdout))
+
+  # Not setting seed because this _should_ be deterministic
+  boston_snake <- spatial_block_cv(
+    boston_canopy,
+    v = 10,
+    method = "snake",
+    relevant_only = FALSE,
+    n = c(10, 23)
+  )
+  expect_snapshot(boston_snake)
+  expect_snapshot(as.integer(boston_snake$splits[[1]]))
+
 })
 
 test_that("systematic assignment -- continuous", {
