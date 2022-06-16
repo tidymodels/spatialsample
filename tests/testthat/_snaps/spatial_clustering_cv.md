@@ -23,6 +23,14 @@
       ! The number of data points is less than `v = 100` (20)
       i Set `v` to a smaller value than 20
 
+---
+
+    Code
+      spatial_clustering_cv(Smithsonian, name)
+    Condition
+      Error in `spatial_clustering_cv()`:
+      ! `coords` must be numeric variables in `data`.
+
 # using sf
 
     Code
