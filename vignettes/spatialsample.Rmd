@@ -11,7 +11,6 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
   fig.height = 5.75,
   eval = requireNamespace("gifski", quietly = TRUE) && requireNamespace("modeldata", quietly = TRUE) && sf::sf_use_s2()
 )

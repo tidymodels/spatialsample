@@ -6,8 +6,7 @@ title: "Buffering"
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
-  fig.height = 5,
+  fig.height = 5.75,
   eval = requireNamespace("gifski", quietly = TRUE) && requireNamespace("knitr", quietly = TRUE)
 )
 library(ggplot2)
