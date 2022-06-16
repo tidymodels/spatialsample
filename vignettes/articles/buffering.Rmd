@@ -6,10 +6,12 @@ title: "Buffering"
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
-  fig.height = 5,
+  fig.width = 8,
+  fig.height = 5.75,
   eval = requireNamespace("gifski", quietly = TRUE) && requireNamespace("knitr", quietly = TRUE)
 )
+library(ggplot2)
+theme_set(theme_minimal())
 ```
 
 The goal of spatialsample is to provide functions and classes for spatial resampling to use with [rsample](https://rsample.tidymodels.org/). Keeping the data used to train a spatial model (what we call a training or analysis set) separate from the data used to evaluate that model (what we call a testing or assessment set) provides a more realistic view of how well it will perform when extrapolating to new locations.
