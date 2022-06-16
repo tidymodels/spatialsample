@@ -99,6 +99,9 @@ spatial_clustering_cv <- function(data,
       rlang::abort("`coords` are required and must be variables in `data`.")
     }
     coords <- data[coords]
+    if (!all(purrr::map_lgl(coords, is.numeric))) {
+      rlang::abort("`coords` must be numeric variables in `data`.")
+    }
     dists <- dist(coords)
     subclasses <- setdiff(subclasses, "spatial_rset")
   }

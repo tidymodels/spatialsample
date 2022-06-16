@@ -104,6 +104,12 @@ test_that("bad args", {
     ),
     error = TRUE
   )
+
+  expect_snapshot(
+    spatial_clustering_cv(Smithsonian, name),
+    error = TRUE
+  )
+
 })
 
 test_that("can pass the dots to kmeans", {
