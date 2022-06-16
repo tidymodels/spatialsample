@@ -107,11 +107,11 @@
 <span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span><span class="va">boston_canopy</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
   
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-1.png" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-1.png" width="768"></p>
 <p>If we look at the individual folds, we can see that the assessment data directly borders the analysis data for each given fold:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-gif-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-gif-.gif" width="768"></p>
 <p>This is a downside of standard blocking cross-validation approaches; while it does introduce some spatial separation between the analysis and assessment sets for data at the middle of the block, data towards the edges may not be separated at all.</p>
 <p>Applying an exclusion buffer around each assessment fold lets us change that. To create these exclusion buffers while using any cross-validation function in spatialsample, we can use a standardized <code>buffer</code> argument:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -120,7 +120,7 @@
 <p>Now when we plot the folds separately, we can see that a strip of data around each assessment block has been assigned to neither the analysis or assessment fold. Instead, it’s been removed entirely in order to provide some distance between the two sets:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-buffer-gif-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-buffer-gif-.gif" width="768"></p>
 <p>By default, <code>buffer</code> is assumed to be in the same units as your data, as determined by the data’s coordinate reference system. To apply buffers of other units, use the <code>units</code> package to explicitly specify what units your buffer is in.</p>
 <p>For instance, <code>boston_canopy</code> uses units of US feet for distance. To specify a buffer in meters instead, we can use:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -132,7 +132,7 @@
 <span class="op">)</span>
 
 <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-buffer-m-gif-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-buffer-m-gif-.gif" width="768"></p>
 <p>Note that, when you’re using non-point data, the distance between observations is calculated as the shortest distance between any points in two observations. For instance, buffers on polygon data will exclude data based on the edge-to-edge distance between observations, rather than centroid to centroid.</p>
 <p>One special case, however, is when <code>buffer</code> is set to 0. In this case, spatialsample won’t apply a buffer at all. While polygons that share an edge are within 0 distance of each other, when calculated from edge-to-edge, we think that setting <code>buffer = 0</code> would intuitively apply zero (that is, <em>no</em>) buffer. If you want to be sure to only capture adjacent polygons in a buffer, set <code>buffer</code> to a tiny, non-zero value:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -144,7 +144,7 @@
 <span class="op">)</span>
 
 <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-buffer-eps-gif-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-buffer-eps-gif-.gif" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="inclusion-radii">Inclusion radii<a class="anchor" aria-label="anchor" href="#inclusion-radii"></a>
@@ -159,7 +159,7 @@
 <span class="op">)</span>
 
 <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-radius-eps-gif-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-radius-eps-gif-.gif" width="768"></p>
 <p>This argument is handled the same way as <code>buffer</code>, with the same caveats:</p>
 <ul>
 <li>Unless units are specified explicitly, <code>radius</code> is assumed to be in the same units as your data’s coordinate reference system.</li>
@@ -176,12 +176,12 @@
   buffer <span class="op">=</span> <span class="fl">1500</span>
 <span class="op">)</span>
 <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-block-disc-executed-.gif" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-block-disc-executed-.gif" width="768"></p>
 <p>When both <code>radius</code> and <code>buffer</code> are specified, spatialsample first applies the inclusion radius to the original randomly-selected assessment set, adding any data within the radius to the assessment set. Next, the exclusion buffer is applied to all the points in the new (post-radius) assessment set, removing any data within the buffer from the analysis set.</p>
 <p>Note that this means that <code>buffer</code> is <em>not</em> simply applying a “doughnut” around the circular “radius”, but is buffering each test point separately. See for instance the non-uniform buffer region that happens when there’s a gap in the data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">$</span><span class="va">splits</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p><img src="buffering_files/figure-html/boston-both-1.png" width="672"></p>
+<p><img src="buffering_files/figure-html/boston-both-1.png" width="768"></p>
 <p>This leaves more data in your analysis set for fitting the model, while still ensuring your assessment data is spatially removed.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

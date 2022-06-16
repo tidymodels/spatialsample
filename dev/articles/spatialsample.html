@@ -118,7 +118,7 @@
 <span class="va">cluster_folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv</a></span><span class="op">(</span><span class="va">ames_sf</span>, v <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">cluster_folds</span><span class="op">)</span></code></pre></div>
-<p><img src="spatialsample_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="spatialsample_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <p>Our <code>cluster_folds</code> object is an <code>rset</code> object that contains many resamples or <code>rsplit</code> objects in the <code>splits</code> column. The resulting partitions do not necessarily contain an equal number of observations:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cluster_folds</span>
@@ -148,7 +148,7 @@
 <span class="va">block_folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span><span class="va">ames_sf</span>, v <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">block_folds</span><span class="op">)</span></code></pre></div>
-<p><img src="spatialsample_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="spatialsample_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
 <p>If you already have a sense of what locations in your data are likely to be closely related, you can also use the <code><a href="../reference/spatial_vfold.html">spatial_leave_location_out_cv()</a></code> function to perform <a href="https://doi.org/10.1016/j.envsoft.2017.12.001" class="external-link">leave-location-out cross-validation</a>. For instance, we can split the Ames data into folds based on neighborhoods using this function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
@@ -160,7 +160,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">location_folds</span><span class="op">)</span></code></pre></div>
-<p><img src="spatialsample_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="spatialsample_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
 <p>We’ve now got a lot of different resamples floating around! We’re going to fit the same models to each of them, in the same way, using the same code. In order to make that task a little easier, let’s add a new column named <code>type</code> to signal what type of resample each fold is from, and then combine them into a new data frame:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cluster_folds</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="st">"cluster"</span>
@@ -265,7 +265,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"RMSE"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<p><img src="spatialsample_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
+<p><img src="spatialsample_files/figure-html/unnamed-chunk-15-1.png" width="768"></p>
 <p>As you can see, the results you get are highly dependent on how you resample your data! It’s important to use the right method for your data (and, for methods like spatial blocking and buffered cross-validation, the right distances).</p>
   </main>
 </div>
