@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   buffering: buffering.html
   spatialsample: spatialsample.html
-last_built: 2022-06-16T02:11Z
+last_built: 2022-06-16T02:28Z
 urls:
   reference: https://spatialsample.tidymodels.org/reference
   article: https://spatialsample.tidymodels.org/articles
