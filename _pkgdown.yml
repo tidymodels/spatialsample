@@ -15,7 +15,7 @@ development:
 
 figures:
   fig.width: 8
-  fig.height: 5.75
+  fig.height: ~
 
 reference:
   - title: Resampling Methods

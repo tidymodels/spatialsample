@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
-  fig.height = 5,
+  fig.height = 5.75,
   eval = requireNamespace("gifski", quietly = TRUE) && requireNamespace("modeldata", quietly = TRUE) && sf::sf_use_s2()
 )
 ```
@@ -165,7 +165,7 @@ cv_rmse
 
 It looks like the RMSE may vary across the city, so we can join the metrics back up to our results and plot them.
 
-```{r fig.width=6, fig.height=10}
+```{r fig.height=12}
 library(ggplot2)
 
 cv_res %>%
