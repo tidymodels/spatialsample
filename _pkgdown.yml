@@ -10,6 +10,10 @@ template:
     in_header: |
       <script defer data-domain="spatialsample.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
+authors:
+  Michael Mahoney:
+    href: "https://www.mm218.dev/"
+
 development:
   mode: auto
 
