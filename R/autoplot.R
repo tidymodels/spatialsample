@@ -29,7 +29,7 @@
 #'
 #' boston_block <- spatial_block_cv(boston_canopy, v = 2)
 #' autoplot(boston_block)
-#' lapply(boston_block$splits, autoplot)
+#' autoplot(boston_block$splits[[1]])
 #'
 #' @rdname autoplot.spatial_rset
 # registered in zzz.R
