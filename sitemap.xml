@@ -1,21 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://spatialsample.tidymodels.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/articles/buffering.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/articles/spatialsample.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://spatialsample.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/pretty.spatial_clustering_cv.html</loc>
+    <loc>https://spatialsample.tidymodels.org/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/autoplot.spatial_rset.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/boston_canopy.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/buffer_indices.html</loc>
+  </url>
+  <url>
+    <loc>https://spatialsample.tidymodels.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://spatialsample.tidymodels.org/reference/reexports.html</loc>
   </url>
   <url>
+    <loc>https://spatialsample.tidymodels.org/reference/spatial_block_cv.html</loc>
+  </url>
+  <url>
     <loc>https://spatialsample.tidymodels.org/reference/spatial_clustering_cv.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/reference/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/spatial_vfold.html</loc>
   </url>
   <url>
-    <loc>https://spatialsample.tidymodels.org/articles/spatialsample.html</loc>
+    <loc>https://spatialsample.tidymodels.org/reference/spatialsample-package.html</loc>
   </url>
 </urlset>
