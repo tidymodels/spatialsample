@@ -1,3 +1,5 @@
+# spatialsample (development version)
+
 # spatialsample 0.2.0
 
 ## New features

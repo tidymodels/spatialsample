@@ -13,3 +13,4 @@
 ^Meta$
 ^data-raw$
 ^vignettes/articles$
+^CRAN-SUBMISSION$
