@@ -80,11 +80,20 @@ is equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}
 }
 \examples{
 \dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-boston_vfold <- spatial_buffer_vfold_cv(
-  boston_canopy,
+
+data(Smithsonian, package = "modeldata")
+Smithsonian_sf <- sf::st_as_sf(
+  Smithsonian,
+  coords = c("longitude", "latitude"),
+  crs = 4326
+)
+
+spatial_buffer_vfold_cv(
+  Smithsonian_sf,
   buffer = 500,
   radius = NULL
 )
+
 data(ames, package = "modeldata")
 ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 ames_neighborhoods <- spatial_leave_location_out_cv(ames_sf, Neighborhood)
