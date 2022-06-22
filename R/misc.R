@@ -30,13 +30,32 @@ split_unnamed <- function(x, f) {
 }
 
 ### Functions below are spatialsample-specific
+
+#' Check that "v" is sensible
+#'
+#' @param v The number of partitions of the data set. Set to `NULL` or `Inf` to
+#' set it to the maximum sensible value (for leave-one-X-out cross-validation).
+#' @keywords internal
 check_v <- function(v,
                     max_v,
                     objects,
                     allow_max_v = TRUE,
                     call = rlang::caller_env()) {
-  if (!is.numeric(v) || length(v) != 1 || v < 1) {
+
+  if (is.null(v)) v <- Inf
+
+  if (!rlang::is_integerish(v) || length(v) != 1 || v < 1) {
     rlang::abort("`v` must be a single positive integer.", call = call)
+  }
+
+  if (is.infinite(v)) {
+    if (!allow_max_v) {
+      rlang::abort(
+        "`v` cannot be `NULL` or `Inf` for this function",
+        call = call
+      )
+    }
+    v <- max_v
   }
 
   if (v > max_v) {

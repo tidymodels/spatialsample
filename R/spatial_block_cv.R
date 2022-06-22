@@ -30,6 +30,7 @@
 #' then the next from right to left, and repeats from there,
 #' and `"continuous"`, which labels each row from left
 #' to right, moving from the bottom row up.
+#' @inheritParams check_v
 #' @inheritParams rsample::vfold_cv
 #' @param relevant_only For systematic sampling, should only blocks containing
 #' data be included in fold labeling?

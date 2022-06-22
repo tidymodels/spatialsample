@@ -37,7 +37,8 @@ applied.}
 test set (after \code{radius} is applied) will be assigned to neither the analysis
 or assessment set. If \code{NULL}, no buffer is applied.}
 
-\item{v}{The number of partitions of the data set.}
+\item{v}{The number of partitions of the data set. Set to \code{NULL} or \code{Inf} to
+set it to the maximum sensible value (for leave-one-X-out cross-validation).}
 
 \item{repeats}{The number of times to repeat the V-fold partitioning.}
 

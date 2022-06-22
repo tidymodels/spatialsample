@@ -40,3 +40,27 @@
       Fewer than 10 rows available for sampling
       i Setting `v` to 5
 
+# check_v handles NULL and Inf appropriately
+
+    Code
+      check_v(c(Inf, 1))
+    Condition
+      Error:
+      ! `v` must be a single positive integer.
+
+---
+
+    Code
+      check_v(Inf, 5, "rows", FALSE)
+    Condition
+      Error:
+      ! `v` cannot be `NULL` or `Inf` for this function
+
+---
+
+    Code
+      check_v(NULL, 5, "rows", FALSE)
+    Condition
+      Error:
+      ! `v` cannot be `NULL` or `Inf` for this function
+

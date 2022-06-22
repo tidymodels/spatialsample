@@ -16,6 +16,7 @@
 #' is equivalent to [rsample::vfold_cv()] and `spatial_leave_location_out_cv`
 #' is equivalent to [rsample::group_vfold_cv()].
 #'
+#' @inheritParams check_v
 #' @inheritParams rsample::vfold_cv
 #' @inheritParams rsample::group_vfold_cv
 #' @param group A variable in data (single character or name) used to create

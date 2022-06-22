@@ -28,3 +28,32 @@ test_that("check_v updates v appropriately", {
     5
   )
 })
+
+test_that("check_v handles NULL and Inf appropriately", {
+
+  expect_snapshot(
+    check_v(c(Inf, 1)),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    check_v(Inf, 5, "rows", FALSE),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    check_v(NULL, 5, "rows", FALSE),
+    error = TRUE
+  )
+
+  expect_identical(
+    check_v(NULL, 5, "rows"),
+    5
+  )
+
+  expect_identical(
+    check_v(Inf, 5, "rows"),
+    5
+  )
+
+})
