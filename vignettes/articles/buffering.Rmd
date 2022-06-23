@@ -37,7 +37,7 @@ autoplot(blocks)
 
 If we look at the individual folds, we can see that the assessment data directly borders the analysis data for each given fold:
 
-```{r boston-block-gif, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-gif, animation.hook="gifski"}
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
@@ -52,7 +52,7 @@ blocks <- spatial_block_cv(boston_canopy, v = 5, buffer = 1500)
 
 Now when we plot the folds separately, we can see that a strip of data around each assessment block has been assigned to neither the analysis or assessment fold. Instead, it's been removed entirely in order to provide some distance between the two sets:
 
-```{r boston-block-buffer-gif, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-buffer-gif, animation.hook="gifski"}
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
@@ -60,7 +60,7 @@ By default, `buffer` is assumed to be in the same units as your data, as determi
 
 For instance, `boston_canopy` uses units of US feet for distance. To specify a buffer in meters instead, we can use:
 
-```{r boston-block-buffer-m-gif, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-buffer-m-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy, 
@@ -75,7 +75,7 @@ Note that, when you're using non-point data, the distance between observations i
 
 One special case, however, is when `buffer` is set to 0. In this case, spatialsample won't apply a buffer at all. While polygons that share an edge are within 0 distance of each other, when calculated from edge-to-edge, we think that setting `buffer = 0` would intuitively apply zero (that is, _no_) buffer. If you want to be sure to only capture adjacent polygons in a buffer, set `buffer` to a tiny, non-zero value:
 
-```{r boston-block-buffer-eps-gif, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-buffer-eps-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy, 
@@ -90,7 +90,7 @@ purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 
 In addition to exclusion buffers, spatialsample also provides a way to add an _inclusion_ buffer (or as we call it, an "inclusion radius") around your assessment set. Simply set the `radius` argument in any spatial cross-validation function to your desired distance, and any data within that inclusion radius will be added to the assessment set:
 
-```{r boston-block-radius-eps-gif, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-radius-eps-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy, 
@@ -109,7 +109,7 @@ This argument is handled the same way as `buffer`, with the same caveats:
 
 Both `radius` and `buffer` can be specified at the same time. This makes it possible to implement, for instance, leave-one-disc-out cross-validation using spatialsample:
 
-```{r boston-block-disc-visible, eval = FALSE}
+```{r 2022-06-23_boston-block-disc-visible, eval = FALSE}
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
   boston_canopy, 
@@ -120,7 +120,7 @@ blocks <- spatial_buffer_vfold_cv(
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
-```{r boston-block-disc-executed, echo = FALSE, animation.hook="gifski"}
+```{r 2022-06-23_boston-block-disc-executed, echo = FALSE, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
   boston_canopy, 
