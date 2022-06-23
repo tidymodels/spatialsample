@@ -40,9 +40,9 @@ jobs:
         shell: Rscript {0}
 
       - uses: actions/upload-artifact@v3
-          with:
-            name: individual-png
-            path: png_test.png # or path/to/artifact
+        with:
+          name: individual-png
+          path: png_test.png # or path/to/artifact
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
