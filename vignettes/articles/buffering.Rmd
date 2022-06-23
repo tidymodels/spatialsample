@@ -53,7 +53,11 @@ blocks <- spatial_block_cv(boston_canopy, v = 5, buffer = 1500)
 Now when we plot the folds separately, we can see that a strip of data around each assessment block has been assigned to neither the analysis or assessment fold. Instead, it's been removed entirely in order to provide some distance between the two sets:
 
 ```{r 2022-06-23_boston-block-buffer-gif, animation.hook="gifski"}
-purrr::walk(blocks$splits, function(x) print(autoplot(x)))
+purrr::walk(blocks$splits, function(x) {
+  p <- autoplot(x)
+  ggplot2::ggsave("png_test.png", p)
+  print(p)
+})
 ```
 
 By default, `buffer` is assumed to be in the same units as your data, as determined by the data's coordinate reference system. To apply buffers of other units, use the `units` package to explicitly specify what units your buffer is in.
