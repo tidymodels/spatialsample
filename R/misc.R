@@ -33,8 +33,8 @@ split_unnamed <- function(x, f) {
 
 #' Check that "v" is sensible
 #'
-#' @param v The number of partitions of the data set. Set to `NULL` or `Inf` to
-#' set it to the maximum sensible value (for leave-one-X-out cross-validation).
+#' @param v The number of partitions for the resampling. Set to `NULL` or `Inf`
+#' for the maximum sensible value (for leave-one-X-out cross-validation).
 #' @keywords internal
 check_v <- function(v,
                     max_v,
