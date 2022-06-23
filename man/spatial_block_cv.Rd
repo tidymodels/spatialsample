@@ -24,7 +24,8 @@ then the next from right to left, and repeats from there,
 and \code{"continuous"}, which labels each row from left
 to right, moving from the bottom row up.}
 
-\item{v}{The number of partitions of the data set.}
+\item{v}{The number of partitions for the resampling. Set to \code{NULL} or \code{Inf}
+for the maximum sensible value (for leave-one-X-out cross-validation).}
 
 \item{relevant_only}{For systematic sampling, should only blocks containing
 data be included in fold labeling?}
