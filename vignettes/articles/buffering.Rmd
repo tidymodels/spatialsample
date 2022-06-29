@@ -3,20 +3,11 @@ title: "Buffering"
 ---
 
 ```{r, include = FALSE}
-out_dev <- "png"
-if (requireNamespace("ragg", TRUE)) {
-  ragg_png <- function(..., res = 192) {
-    ragg::agg_png(..., res = res, units = "in")
-  }
-  out_dev <- "ragg_png"
-}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 8,
   fig.height = 5.75,
-  dev = out_dev,
-  fig.ext = "png",
   eval = requireNamespace("gifski", quietly = TRUE) && requireNamespace("knitr", quietly = TRUE)
 )
 
