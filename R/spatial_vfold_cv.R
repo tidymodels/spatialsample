@@ -99,11 +99,21 @@ spatial_buffer_vfold_cv <- function(data,
     ...
   )
 
+  if (!missing(strata)) {
+    strata <- tidyselect::vars_select(names(data), {{ strata }})
+    if (length(strata) == 0) strata <- NULL
+  }
+
+  if (is.null(strata)) strata <- FALSE
+  names(strata) <- NULL
+
   cv_att <- list(v = v,
                  repeats = repeats,
-                 strata = !is.null(strata),
-                 radius = radius,
-                 buffer = buffer)
+                 strata  = strata,
+                 breaks  = breaks,
+                 pool    = pool,
+                 radius  = radius,
+                 buffer  = buffer)
 
   if ("sf" %in% class(data)) {
     rset_class <- c("spatial_buffer_vfold_cv", "spatial_rset", "rset")

@@ -1,5 +1,8 @@
 # spatialsample (development version)
 
+* `spatial_buffer_vfold_cv()`'s `strata` attribute is now the name of the column
+  used for stratification, or FALSE if there was no stratification.
+
 # spatialsample 0.2.0
 
 ## New features
