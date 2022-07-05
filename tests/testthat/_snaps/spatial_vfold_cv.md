@@ -60,7 +60,7 @@
     Code
       spatial_leave_location_out_cv(ames)
     Condition
-      Error:
+      Error in `rsample::group_vfold_cv()`:
       ! `group` should be a single character value for the column that will be used for splitting.
 
 ---
@@ -77,7 +77,7 @@
     Code
       spatial_leave_location_out_cv(ames_sf, v = c(5, 10))
     Condition
-      Error:
+      Error in `rsample::group_vfold_cv()`:
       ! `group` should be a single character value for the column that will be used for splitting.
 
 ---
