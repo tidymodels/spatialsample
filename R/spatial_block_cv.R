@@ -82,7 +82,7 @@ spatial_block_cv <- function(data,
     )
   }
 
-  is_longlat <- sf::st_is_longlat(data) || sf::st_crs(data) == sf::NA_crs_
+  is_longlat <- !(sf::st_crs(data) == sf::NA_crs_) && sf::st_is_longlat(data)
   if (is_longlat && !sf::sf_use_s2()) {
     rlang::abort(
       c(

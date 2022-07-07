@@ -1,5 +1,16 @@
 # spatialsample (development version)
 
+* `spatial_block_cv()`, `spatial_buffer_vfold_cv()`, and buffering now support
+  using sf or sfc objects with a missing CRS. The assumption is that data in an
+  NA CRS is projected, with all distance values in the same unit as the 
+  projection. Trying to use alternative units will fail. Set a CRS if these
+  assumptions aren't correct.
+  
+* `spatial_buffer_vfold_cv()` and buffering no longer support tibble or 
+  data.frame inputs (they now require sf or sfc objects). It was not easy to 
+  use these to begin with, but should have been an error all along: use 
+  `rsample::vfold_cv()` instead or transform your data into an sf object.
+
 # spatialsample 0.2.0
 
 ## New features
