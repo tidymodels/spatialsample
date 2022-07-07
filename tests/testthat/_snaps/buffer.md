@@ -1,11 +1,27 @@
 # bad args
 
     Code
-      spatial_clustering_cv(ames_sf, buffer = 50)
+      spatial_clustering_cv(ames_sf, buffer = 0.01)
     Condition
-      Error in `spatial_clustering_cv()`:
-      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
-      i Set the CRS for your data using `sf::st_set_crs()`
+      Warning in `spatial_clustering_cv()`:
+      `buffer` and `radius` expect `data` to have an appropriate coordinate reference system
+      i If possible, try setting a CRS using `sf::st_set_crs()`.
+      i Otherwise, spatialsample will assume your data is in projected coordinates with meters as a distance unit
+    Output
+      #  10-fold spatial cross-validation 
+      # A tibble: 10 x 2
+         splits             id    
+         <list>             <chr> 
+       1 <split [2403/191]> Fold01
+       2 <split [2074/191]> Fold02
+       3 <split [2303/448]> Fold03
+       4 <split [2239/239]> Fold04
+       5 <split [2129/349]> Fold05
+       6 <split [2344/155]> Fold06
+       7 <split [2221/565]> Fold07
+       8 <split [2214/331]> Fold08
+       9 <split [2775/153]> Fold09
+      10 <split [2053/308]> Fold10
 
 ---
 

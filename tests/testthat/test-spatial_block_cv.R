@@ -212,8 +212,7 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_)),
-    error = TRUE
+    spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
   )
 
   skip_if_not(sf::sf_use_s2())

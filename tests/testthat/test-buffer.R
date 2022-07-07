@@ -171,9 +171,9 @@ test_that("bad args", {
     ames,
     coords = c("Longitude", "Latitude")
   )
+  set.seed(123)
   expect_snapshot(
-    spatial_clustering_cv(ames_sf, buffer = 50),
-    error = TRUE
+    spatial_clustering_cv(ames_sf, buffer = 0.01)
   )
   ames_sf <- sf::st_set_crs(
     ames_sf,

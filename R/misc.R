@@ -87,3 +87,7 @@ check_v <- function(v,
 # Check sparse geometry binary predicate for empty elements
 # See ?sf::sgbp for more information on the data structure
 sgbp_is_not_empty <- function(x) !identical(x, integer(0))
+
+is_sf <- function(x) {
+  inherits(x, "sf") || inherits(x, "sfc")
+}

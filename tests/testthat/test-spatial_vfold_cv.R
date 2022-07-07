@@ -89,26 +89,22 @@ test_that("spatial_leave_location_out_cv", {
 test_that("bad args", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
+
+  set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(ames, buffer = 500, radius = NULL),
+    spatial_buffer_vfold_cv(ames_sf, radius = NULL),
     error = TRUE
   )
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(ames, radius = NULL),
+    spatial_buffer_vfold_cv(ames_sf, buffer = 500),
     error = TRUE
   )
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(ames, buffer = 500),
-    error = TRUE
-  )
-
-  set.seed(123)
-  expect_snapshot(
-    spatial_buffer_vfold_cv(ames),
+    spatial_buffer_vfold_cv(ames_sf),
     error = TRUE
   )
 

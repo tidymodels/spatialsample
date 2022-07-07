@@ -95,7 +95,8 @@ autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ..., alpha = 0.6
   data <- object$splits[[1]]$data
 
   plot_data <- data
-  if (sf::st_is_longlat(data)) {
+  is_longlat <- sf::st_is_longlat(data) || sf::st_crs(data) == sf::NA_crs_
+  if (is_longlat) {
     plot_data <- sf::st_bbox(data)
     plot_data <- expand_grid(plot_data)
     plot_data <- sf::st_as_sfc(plot_data)

@@ -71,6 +71,15 @@ spatial_buffer_vfold_cv <- function(data,
                                     pool = 0.1,
                                     ...) {
 
+  if (!is_sf(data)) {
+    rlang::abort(
+      c(
+        "`spatial_buffer_vfold_cv()` currently only supports `sf` objects.",
+        i = "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
+      )
+    )
+  }
+
   if (missing(radius) || missing(buffer)) {
     use_vfold <- NULL
     if (missing(radius) && missing(buffer)) {
@@ -82,7 +91,6 @@ spatial_buffer_vfold_cv <- function(data,
         i = "Use `NULL` for resampling without one of `radius` or `buffer`, like `radius = NULL, buffer = 5000`",
         use_vfold
       )
-
     )
   }
 

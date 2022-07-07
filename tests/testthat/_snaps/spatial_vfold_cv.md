@@ -21,16 +21,7 @@
 # bad args
 
     Code
-      spatial_buffer_vfold_cv(ames, buffer = 500, radius = NULL)
-    Condition
-      Error in `spatial_buffer_vfold_cv()`:
-      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
-      i Set the CRS for your data using `sf::st_set_crs()`
-
----
-
-    Code
-      spatial_buffer_vfold_cv(ames, radius = NULL)
+      spatial_buffer_vfold_cv(ames_sf, radius = NULL)
     Condition
       Error in `spatial_buffer_vfold_cv()`:
       ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
@@ -39,7 +30,7 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(ames, buffer = 500)
+      spatial_buffer_vfold_cv(ames_sf, buffer = 500)
     Condition
       Error in `spatial_buffer_vfold_cv()`:
       ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
@@ -48,7 +39,7 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(ames)
+      spatial_buffer_vfold_cv(ames_sf)
     Condition
       Error in `spatial_buffer_vfold_cv()`:
       ! `spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided
@@ -60,7 +51,7 @@
     Code
       spatial_leave_location_out_cv(ames)
     Condition
-      Error:
+      Error in `rsample::group_vfold_cv()`:
       ! `group` should be a single character value for the column that will be used for splitting.
 
 ---
@@ -69,15 +60,15 @@
       spatial_leave_location_out_cv(ames, Neighborhood, buffer = 500)
     Condition
       Error in `spatial_leave_location_out_cv()`:
-      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
-      i Set the CRS for your data using `sf::st_set_crs()`
+      ! Buffering indices currently only supports `sf` objects.
+      i Try converting `data` to an `sf` object via `sf::st_as_sf()`.
 
 ---
 
     Code
       spatial_leave_location_out_cv(ames_sf, v = c(5, 10))
     Condition
-      Error:
+      Error in `rsample::group_vfold_cv()`:
       ! `group` should be a single character value for the column that will be used for splitting.
 
 ---
