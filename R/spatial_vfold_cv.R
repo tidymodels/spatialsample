@@ -71,18 +71,19 @@ spatial_buffer_vfold_cv <- function(data,
                                     pool = 0.1,
                                     ...) {
 
+  standard_checks(data, "`spatial_buffer_vfold_cv()`")
+
   if (missing(radius) || missing(buffer)) {
     use_vfold <- NULL
     if (missing(radius) && missing(buffer)) {
-      use_vfold <- c(i = "Or use `rsample::vfold_cv() to use a non-spatial V-fold")
+      use_vfold <- c(i = "Or use `rsample::vfold_cv() to use a non-spatial V-fold.")
     }
     rlang::abort(
       c(
-        "`spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided",
-        i = "Use `NULL` for resampling without one of `radius` or `buffer`, like `radius = NULL, buffer = 5000`",
+        "`spatial_buffer_vfold_cv()` requires both `radius` and `buffer` be provided.",
+        i = "Use `NULL` for resampling without one of `radius` or `buffer`, like `radius = NULL, buffer = 5000`.",
         use_vfold
       )
-
     )
   }
 

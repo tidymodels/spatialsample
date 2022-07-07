@@ -12,25 +12,7 @@
 #' @keywords internal
 buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_env()) {
 
-  if (identical(sf::st_crs(data), sf::NA_crs_)) {
-    rlang::abort(
-      c("`buffer` and `radius` require `data` to have a non-NA coordinate reference system",
-        "i" = "Set the CRS for your data using `sf::st_set_crs()`"
-      ),
-      call = call
-    )
-  }
-
-  if (sf::st_is_longlat(data) && !sf::sf_use_s2()) {
-    rlang::abort(
-      c(
-        "`buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library",
-        "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
-        "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
-      ),
-      call = call
-    )
-  }
+  standard_checks(data, "Buffering", call)
 
   n <- nrow(data)
   distmat <- sf::st_distance(data)
@@ -39,7 +21,7 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   run_radius <- !is.null(radius)
   if (run_radius && units::set_units(radius, NULL) > 0) {
     # In case `radius` has no units, assume it's in the same units as `data`
-    units(radius) <- units(distmat)
+    if (!identical(sf::st_crs(data), sf::NA_crs_)) units(radius) <- units(distmat)
     indices <- row_ids_within_dist(distmat, indices, radius)
   }
 
@@ -47,7 +29,7 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   # so re-code a NULL buffer as a 0, which will buffer nothing
   if (is.null(buffer)) buffer <- 0L
   # In case `buffer` has no units, assume it's in the same units as `data`
-  units(buffer) <- units(distmat)
+  if (!identical(sf::st_crs(data), sf::NA_crs_)) units(buffer) <- units(distmat)
   buffer_indices <- row_ids_within_dist(distmat, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)
