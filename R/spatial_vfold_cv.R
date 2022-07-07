@@ -223,6 +223,8 @@ posthoc_buffer_rset <- function(data,
     v = v
   )
 
+  split_objs$splits <- map(split_objs$splits, rm_out, buffer = buffer)
+
   new_rset(
     splits = split_objs$splits,
     ids = split_objs[, grepl("^id", names(split_objs))],

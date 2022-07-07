@@ -144,6 +144,8 @@ spatial_block_cv <- function(data,
   v <- split_objs$v[[1]]
   split_objs$v <- NULL
 
+  split_objs$splits <- map(split_objs$splits, rm_out, buffer = buffer)
+
   ## Save some overall information
   cv_att <- list(v = v,
                  method = method,
