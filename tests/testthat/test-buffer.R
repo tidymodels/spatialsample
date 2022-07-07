@@ -186,6 +186,8 @@ test_that("bad args", {
   # The default RNG changed in 3.6.0
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
 
+  skip_if_not(sf::sf_use_s2())
+
   set.seed(123)
   expect_snapshot(
     spatial_clustering_cv(ames_sf, buffer = 0.01)
