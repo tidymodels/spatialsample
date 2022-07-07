@@ -171,10 +171,6 @@ test_that("bad args", {
     ames,
     coords = c("Longitude", "Latitude")
   )
-  set.seed(123)
-  expect_snapshot(
-    spatial_clustering_cv(ames_sf, buffer = 0.01)
-  )
   ames_sf <- sf::st_set_crs(
     ames_sf,
     4326
@@ -186,6 +182,14 @@ test_that("bad args", {
     error = TRUE
   )
   sf::sf_use_s2(s2_status)
+
+  # The default RNG changed in 3.6.0
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+
+  set.seed(123)
+  expect_snapshot(
+    spatial_clustering_cv(ames_sf, buffer = 0.01)
+  )
 })
 
 ames_sf <- sf::st_as_sf(
