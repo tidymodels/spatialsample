@@ -104,9 +104,7 @@ spatial_buffer_vfold_cv <- function(data,
     if (length(strata) == 0) strata <- NULL
   }
 
-  if (is.null(strata)) strata <- FALSE
-  names(strata) <- NULL
-
+  if (!is.null(strata)) names(strata) <- NULL
   cv_att <- list(v = v,
                  repeats = repeats,
                  strata  = strata,
