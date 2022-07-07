@@ -11,6 +11,12 @@
   use these to begin with, but should have been an error all along: use 
   `rsample::vfold_cv()` instead or transform your data into an sf object.
 
+* `spatial_buffer_vfold_cv()` has had some attribute changes to match `rsample`:
+  * `strata` attribute is now the name of the column used for stratification, 
+     or not set if there was no stratification.
+  * `pool` and `breaks` have been added as attributes
+  * `radius` and `buffer` are now set to 0 if they were passed as `NULL`.
+
 # spatialsample 0.2.0
 
 ## New features
