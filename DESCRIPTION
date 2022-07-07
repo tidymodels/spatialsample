@@ -44,6 +44,8 @@ Suggests:
     testthat (>= 3.0.0),
     tidyr,
     vdiffr,
+    whisker,
+    withr,
     yardstick
 VignetteBuilder: 
     knitr
