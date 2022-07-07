@@ -31,59 +31,14 @@ rm_out <- function(x, buffer = NULL) {
   x
 }
 
-#' Check that "v" is sensible
-#'
-#' @param v The number of partitions for the resampling. Set to `NULL` or `Inf`
-#' for the maximum sensible value (for leave-one-X-out cross-validation).
-#' @keywords internal
-check_v <- function(v,
-                    max_v,
-                    objects,
-                    allow_max_v = TRUE,
-                    call = rlang::caller_env()) {
-
-  if (is.null(v)) v <- Inf
-
-  if (!rlang::is_integerish(v) || length(v) != 1 || v < 1) {
-    rlang::abort("`v` must be a single positive integer.", call = call)
-  }
-
-  if (is.infinite(v)) {
-    if (!allow_max_v) {
-      rlang::abort(
-        "`v` cannot be `NULL` or `Inf` for this function",
-        call = call
-      )
-    }
-    v <- max_v
-  }
-
-  if (v > max_v) {
-    if (!allow_max_v) {
-      rlang::abort(
-        c(
-          glue::glue(
-            "The number of {objects} is less than `v = {v}` ({max_v})"
-          ),
-          i = glue::glue("Set `v` to a smaller value than {max_v}")
-        ),
-        call = call
-      )
-    }
-
-    rlang::warn(
-      c(
-        glue::glue("Fewer than {v} {objects} available for sampling"),
-        i = glue::glue("Setting `v` to {max_v}")
-      ),
-      call = call
-    )
-
-    v <- max_v
-  }
-  v
-}
-
 # Check sparse geometry binary predicate for empty elements
 # See ?sf::sgbp for more information on the data structure
 sgbp_is_not_empty <- function(x) !identical(x, integer(0))
+
+is_sf <- function(x) {
+  inherits(x, "sf") || inherits(x, "sfc")
+}
+
+is_longlat <- function(x) {
+  !(sf::st_crs(x) == sf::NA_crs_) && sf::st_is_longlat(x)
+}
