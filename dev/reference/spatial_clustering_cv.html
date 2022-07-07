@@ -75,15 +75,15 @@ is equal to V.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spatial_clustering_cv</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">coords</span>,
-  v <span class="op">=</span> <span class="fl">10</span>,
-  cluster_function <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kmeans"</span>, <span class="st">"hclust"</span><span class="op">)</span>,
-  radius <span class="op">=</span> <span class="cn">NULL</span>,
-  buffer <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spatial_clustering_cv</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">coords</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  cluster_function <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kmeans"</span>, <span class="st">"hclust"</span><span class="op">)</span>,</span>
+<span>  radius <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -164,39 +164,39 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Smithsonian</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">Smithsonian</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">latitude</span>, <span class="va">longitude</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Smithsonian</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">Smithsonian</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">latitude</span>, <span class="va">longitude</span><span class="op">)</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   splits          id   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span>  Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [15/5]&gt;</span>  Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span>  Fold4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [10/10]&gt;</span> Fold5</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">smithsonian_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">Smithsonian</span>,</span></span>
+<span class="r-in"><span>  coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="co"># Set CRS to WGS84</span></span></span>
+<span class="r-in"><span>  crs <span class="op">=</span> <span class="fl">4326</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># When providing sf objects, coords are inferred automatically</span></span></span>
+<span class="r-in"><span><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">smithsonian_sf</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [5/15]&gt;</span> Fold3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">smithsonian_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">Smithsonian</span>,</span>
-<span class="r-in">  coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="co"># Set CRS to WGS84</span></span>
-<span class="r-in">  crs <span class="op">=</span> <span class="fl">4326</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># When providing sf objects, coords are inferred automatically</span></span>
-<span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">smithsonian_sf</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [9/11]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [16/4]&gt;</span> Fold3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [19/1]&gt;</span> Fold4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Can use hclust instead:</span></span>
-<span class="r-in"><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">smithsonian_sf</span>, v <span class="op">=</span> <span class="fl">5</span>, cluster_function <span class="op">=</span> <span class="st">"hclust"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [18/2]&gt;</span> Fold4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [9/11]&gt;</span> Fold5</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Can use hclust instead:</span></span></span>
+<span class="r-in"><span><span class="fu">spatial_clustering_cv</span><span class="op">(</span><span class="va">smithsonian_sf</span>, v <span class="op">=</span> <span class="fl">5</span>, cluster_function <span class="op">=</span> <span class="st">"hclust"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #  5-fold spatial cross-validation </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits         id   </span>
@@ -219,7 +219,7 @@ pp. 5372-5375, doi: 10.1109/IGARSS.2012.6352393.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>
