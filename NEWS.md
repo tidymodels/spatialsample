@@ -1,5 +1,8 @@
 # spatialsample (development version)
 
+* Functions will now return rsplits without `out_id`, like most rsample 
+  functions, whenever `buffer` is `NULL`.
+
 # spatialsample 0.2.0
 
 ## New features
