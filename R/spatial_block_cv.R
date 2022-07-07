@@ -63,40 +63,12 @@ spatial_block_cv <- function(data,
                              ...) {
   method <- rlang::arg_match(method)
 
-  if (!is_sf(data)) {
-    rlang::abort(
-      c(
-        "`spatial_block_cv()` currently only supports `sf` objects.",
-        i = "Try converting `data` to an `sf` object via `sf::st_as_sf()`."
-      )
-    )
-  }
-
-  if (sf::st_crs(data) == sf::NA_crs_) {
-    rlang::warn(
-      c(
-        "`spatial_block_cv()` expects your data to have an appropriate coordinate reference system (CRS).",
-        i = "If possible, try setting a CRS using `sf::st_set_crs()`.",
-        i = "Otherwise, `spatial_block_cv()` will assume your data is in projected coordinates with meters as a distance unit"
-      )
-    )
-  }
-
-  is_longlat <- !(sf::st_crs(data) == sf::NA_crs_) && sf::st_is_longlat(data)
-  if (is_longlat && !sf::sf_use_s2()) {
-    rlang::abort(
-      c(
-        "`spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library",
-        "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`",
-        "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`"
-      )
-    )
-  }
+  standard_checks(data, "`spatial_block_cv()`")
 
   centroids <- sf::st_centroid(sf::st_geometry(data))
 
   grid_box <- sf::st_bbox(data)
-  if (is_longlat) {
+  if (is_longlat(data)) {
     # cf https://github.com/ropensci/stplanr/pull/467
     # basically: spherical geometry means sometimes the straight line of the
     # grid will exclude points within the bounding box

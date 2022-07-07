@@ -4,9 +4,9 @@
       spatial_block_cv(ames_sf)
     Condition
       Error in `spatial_block_cv()`:
-      ! `spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library
-      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
-      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+      ! `spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library.
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`.
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`.
 
 # systematic assignment -- snake
 
@@ -153,10 +153,10 @@
     Code
       spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
     Condition
-      Warning:
+      Warning in `spatial_block_cv()`:
       `spatial_block_cv()` expects your data to have an appropriate coordinate reference system (CRS).
       i If possible, try setting a CRS using `sf::st_set_crs()`.
-      i Otherwise, `spatial_block_cv()` will assume your data is in projected coordinates with meters as a distance unit
+      i Otherwise, `spatial_block_cv()` will assume your data is in projected coordinates.
     Output
       #  10-fold spatial block cross-validation 
       # A tibble: 10 x 2

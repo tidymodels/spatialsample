@@ -4,9 +4,9 @@
       buffer_indices(ames_sf)
     Condition
       Error:
-      ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
-      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
-      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+      ! Buffering can only process geographic coordinates when using the s2 geometry library.
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`.
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`.
 
 ---
 
