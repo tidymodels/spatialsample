@@ -210,12 +210,6 @@ test_that("bad args", {
     error = TRUE
   )
 
-  set.seed(123)
-  expect_snapshot(
-    spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_)),
-    error = TRUE
-  )
-
   skip_if_not(sf::sf_use_s2())
 
   set.seed(123)
@@ -241,6 +235,11 @@ test_that("bad args", {
   )
 
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
+
+  set.seed(123)
+  expect_snapshot(
+    spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
+  )
 
   set.seed(123)
   expect_snapshot(

@@ -4,9 +4,9 @@
       spatial_block_cv(ames_sf)
     Condition
       Error in `spatial_block_cv()`:
-      ! `spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library
-      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
-      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+      ! `spatial_block_cv()` can only process geographic coordinates when using the s2 geometry library.
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`.
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`.
 
 # systematic assignment -- snake
 
@@ -83,15 +83,6 @@
 ---
 
     Code
-      spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
-    Condition
-      Error in `spatial_block_cv()`:
-      ! `spatial_block_cv()` requires your data to have an appropriate coordinate reference system (CRS).
-      i Try setting a CRS using `sf::st_set_crs()`.
-
----
-
-    Code
       spatial_block_cv(ames_sf, v = c(5, 10))
     Condition
       Error in `spatial_block_cv()`:
@@ -156,6 +147,31 @@
        9 <split [2929/1]>   Fold09
       10 <split [2923/7]>   Fold10
       # ... with 44 more rows
+
+---
+
+    Code
+      spatial_block_cv(sf::st_set_crs(ames_sf, sf::NA_crs_))
+    Condition
+      Warning in `spatial_block_cv()`:
+      `spatial_block_cv()` expects your data to have an appropriate coordinate reference system (CRS).
+      i If possible, try setting a CRS using `sf::st_set_crs()`.
+      i Otherwise, `spatial_block_cv()` will assume your data is in projected coordinates.
+    Output
+      #  10-fold spatial block cross-validation 
+      # A tibble: 10 x 2
+         splits             id    
+         <list>             <chr> 
+       1 <split [2539/391]> Fold01
+       2 <split [2647/283]> Fold02
+       3 <split [2653/277]> Fold03
+       4 <split [2649/281]> Fold04
+       5 <split [2644/286]> Fold05
+       6 <split [2626/304]> Fold06
+       7 <split [2657/273]> Fold07
+       8 <split [2779/151]> Fold08
+       9 <split [2389/541]> Fold09
+      10 <split [2787/143]> Fold10
 
 ---
 

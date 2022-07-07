@@ -1,21 +1,32 @@
 # bad args
 
     Code
-      spatial_clustering_cv(ames_sf, buffer = 50)
+      buffer_indices(ames_sf)
     Condition
-      Error in `spatial_clustering_cv()`:
-      ! `buffer` and `radius` require `data` to have a non-NA coordinate reference system
-      i Set the CRS for your data using `sf::st_set_crs()`
+      Error:
+      ! Buffering can only process geographic coordinates when using the s2 geometry library.
+      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`.
+      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`.
 
 ---
 
     Code
-      buffer_indices(ames_sf)
-    Condition
-      Error:
-      ! `buffer` and `radius` can only be used with geographic coordinates when using the s2 geometry library
-      i Reproject your data into a projected coordinate reference system using `sf::st_transform()`
-      i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`
+      spatial_clustering_cv(ames_sf, buffer = 0.01)
+    Output
+      #  10-fold spatial cross-validation 
+      # A tibble: 10 x 2
+         splits             id    
+         <list>             <chr> 
+       1 <split [2586/344]> Fold01
+       2 <split [2506/424]> Fold02
+       3 <split [2701/229]> Fold03
+       4 <split [2740/190]> Fold04
+       5 <split [2625/305]> Fold05
+       6 <split [2757/173]> Fold06
+       7 <split [2404/526]> Fold07
+       8 <split [2665/265]> Fold08
+       9 <split [2661/269]> Fold09
+      10 <split [2725/205]> Fold10
 
 # using buffers
 
