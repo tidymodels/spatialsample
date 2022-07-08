@@ -62,15 +62,3 @@ row_ids_within_dist <- function(distmat, indices, dist) {
     lapply(seq_along(indices), function(x) integer(0))
   }
 }
-
-# Return row IDs for which elements of `data` are within `dist` of `data[idx, ]`
-# Note that data[idx, ] are within any positive distance of themselves
-# and as such are returned by this function
-which_within_dist <- function(distmat, idx, dist) {
-  unlist(
-    purrr::map(
-      idx,
-      ~ which(distmat[.x, ] <= dist)
-    )
-  )
-}
