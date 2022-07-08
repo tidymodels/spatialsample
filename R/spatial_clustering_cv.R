@@ -116,6 +116,8 @@ spatial_clustering_cv <- function(data,
     ...
   )
 
+  split_objs$splits <- map(split_objs$splits, rm_out, buffer = buffer)
+
   ## Save some overall information
 
   cv_att <- list(v = v, repeats = 1, radius = radius, buffer = buffer)

@@ -9,12 +9,6 @@ names0 <- function(num, prefix = "x") {
   paste0(prefix, ind)
 }
 
-## This will remove the assessment indices from an rsplit object
-rm_out <- function(x) {
-  x$out_id <- NA
-  x
-}
-
 ## Get the indices of the analysis set from the assessment set
 default_complement <- function(ind, n) {
   list(
@@ -30,6 +24,12 @@ split_unnamed <- function(x, f) {
 }
 
 ### Functions below are spatialsample-specific
+
+## This will remove the assessment indices from an rsplit object
+rm_out <- function(x, buffer = NULL) {
+  if (is.null(buffer)) x$out_id <- NA
+  x
+}
 
 # Check sparse geometry binary predicate for empty elements
 # See ?sf::sgbp for more information on the data structure

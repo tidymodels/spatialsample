@@ -219,8 +219,12 @@ test_that("using buffers", {
     buffer = 0
   )
 
+  # These should be the only changes between 0 and NULL:
   attr(rs2, "radius") <- NULL
   attr(rs2, "buffer") <- NULL
+  attr(rs2, "fingerprint") <- attr(rs1, "fingerprint")
+  rs2$splits <- map(rs2$splits, rm_out)
+
   expect_identical(rs1, rs2)
 
   set.seed(11)

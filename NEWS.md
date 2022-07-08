@@ -1,5 +1,8 @@
 # spatialsample (development version)
 
+* Functions will now return rsplits without `out_id`, like most rsample 
+  functions, whenever `buffer` is `NULL`.
+
 * `spatial_block_cv()`, `spatial_buffer_vfold_cv()`, and buffering now support
   using sf or sfc objects with a missing CRS. The assumption is that data in an
   NA CRS is projected, with all distance values in the same unit as the 
