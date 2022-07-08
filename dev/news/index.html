@@ -55,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="spatialsample-development-version">spatialsample (development version)<a class="anchor" aria-label="anchor" href="#spatialsample-development-version"></a></h2>
-<ul><li><p><code><a href="../reference/spatial_block_cv.html">spatial_block_cv()</a></code>, <code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code>, and buffering now support using sf or sfc objects with a missing CRS. The assumption is that data in an NA CRS is projected, with all distance values in the same unit as the projection. Trying to use alternative units will fail. Set a CRS if these assumptions aren’t correct.</p></li>
+<ul><li><p>Functions will now return rsplits without <code>out_id</code>, like most rsample functions, whenever <code>buffer</code> is <code>NULL</code>.</p></li>
+<li><p><code><a href="../reference/spatial_block_cv.html">spatial_block_cv()</a></code>, <code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code>, and buffering now support using sf or sfc objects with a missing CRS. The assumption is that data in an NA CRS is projected, with all distance values in the same unit as the projection. Trying to use alternative units will fail. Set a CRS if these assumptions aren’t correct.</p></li>
 <li><p><code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> and buffering no longer support tibble or data.frame inputs (they now require sf or sfc objects). It was not easy to use these to begin with, but should have been an error all along: use <code><a href="https://rsample.tidymodels.org/reference/vfold_cv.html" class="external-link">rsample::vfold_cv()</a></code> instead or transform your data into an sf object.</p></li>
 <li>
 <p><code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> has had some attribute changes to match <code>rsample</code>:</p>
