@@ -55,22 +55,10 @@ row_ids_within_dist <- function(distmat, indices, dist) {
       # not sorted in
       #
       # So here we append the new indices to the old and de-duplicate them
-      ~ unique(c(.x, which_within_dist(distmat, .x, dist)))
+      ~ unique(c(.x, which_within_dist(as.numeric(distmat), as.numeric(.x), as.numeric(dist))))
     )
   } else {
     # initialize to integer(0) in case buffer is <= 0:
     lapply(seq_along(indices), function(x) integer(0))
   }
-}
-
-# Return row IDs for which elements of `data` are within `dist` of `data[idx, ]`
-# Note that data[idx, ] are within any positive distance of themselves
-# and as such are returned by this function
-which_within_dist <- function(distmat, idx, dist) {
-  unlist(
-    purrr::map(
-      idx,
-      ~ which(distmat[.x, ] <= dist)
-    )
-  )
 }
