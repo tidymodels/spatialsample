@@ -6,7 +6,7 @@
 #include <R_ext/Visibility.h>
 
 // code.cpp
-writable::integers which_within_dist(doubles_matrix<> distmat, doubles idx, double dist);
+cpp11::writable::integers which_within_dist(doubles_matrix<> distmat, doubles idx, double dist);
 extern "C" SEXP _spatialsample_which_within_dist(SEXP distmat, SEXP idx, SEXP dist) {
   BEGIN_CPP11
     return cpp11::as_sexp(which_within_dist(cpp11::as_cpp<cpp11::decay_t<doubles_matrix<>>>(distmat), cpp11::as_cpp<cpp11::decay_t<doubles>>(idx), cpp11::as_cpp<cpp11::decay_t<double>>(dist)));
