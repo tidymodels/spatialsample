@@ -7,7 +7,7 @@ cpp11::writable::integers which_within_dist(doubles_matrix<> distmat, doubles id
 
   int n_idx = idx.size();
   int n_matrix = distmat.ncol();
-  std::vector<int> out;
+  cpp11::writable::integers out;
 
   for (int i = 0; i < n_idx; i++) {
     for (int j = 0; j < n_matrix; j++) {
