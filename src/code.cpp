@@ -1,6 +1,7 @@
 #include <cpp11.hpp>
 #include <vector>
 using namespace cpp11;
+namespace writable = cpp11::writable;
 
 [[cpp11::register]]
 writable::integers which_within_dist(doubles_matrix<> distmat, doubles idx, double dist) {
