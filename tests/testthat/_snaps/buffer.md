@@ -72,6 +72,7 @@
        9 <split [663/7]> Fold009
       10 <split [665/7]> Fold010
       # ... with 672 more rows
+      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -98,6 +99,7 @@
        9 <split [2764/150]> Fold09
       10 <split [2501/324]> Fold10
       # ... with 18 more rows
+      # i Use `print(n = ...)` to see more rows
 
 ---
 
