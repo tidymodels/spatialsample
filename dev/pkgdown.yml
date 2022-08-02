@@ -1,10 +1,10 @@
 pandoc: 2.14.2
-pkgdown: 2.0.5
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   buffering: buffering.html
   spatialsample: spatialsample.html
-last_built: 2022-07-14T17:40Z
+last_built: 2022-08-02T22:55Z
 urls:
   reference: https://spatialsample.tidymodels.org/reference
   article: https://spatialsample.tidymodels.org/articles
