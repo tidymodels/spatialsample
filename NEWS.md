@@ -1,5 +1,8 @@
 # spatialsample (development version)
 
+* Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains
+  a package author) moves to focus on ModelOps work. 
+
 * Functions will now return rsplits without `out_id`, like most rsample 
   functions, whenever `buffer` is `NULL`.
 
