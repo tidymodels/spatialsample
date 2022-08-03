@@ -2,7 +2,7 @@
 % Please edit documentation in R/spatial_clustering_cv.R
 \name{spatial_clustering_cv}
 \alias{spatial_clustering_cv}
-\title{Spatial or Cluster Cross-Validation}
+\title{Spatial Clustering Cross-Validation}
 \usage{
 spatial_clustering_cv(
   data,
@@ -19,7 +19,7 @@ spatial_clustering_cv(
 or \code{\link[sf:st_as_sf]{sf::st_as_sf()}}), to split into folds.}
 
 \item{coords}{A vector of variable names, typically spatial coordinates,
-to partition the data into disjointed sets via k-means clustering.
+to partition the data into disjointed sets via clustering.
 This argument is ignored (with a warning) if \code{data} is an \code{sf} object.}
 
 \item{v}{The number of partitions of the data set.}
@@ -49,20 +49,17 @@ Resamples created from non-\code{sf} objects will not have the
 \code{spatial_rset} class.
 }
 \description{
-Spatial or cluster cross-validation splits the data into V groups of
-disjointed sets using k-means clustering of some variables, typically
-spatial coordinates. A resample of the analysis data consists of V-1 of the
-folds/clusters while the assessment set contains the final fold/cluster. In
-basic spatial cross-validation (i.e. no repeats), the number of resamples
-is equal to V.
+Spatial clustering cross-validation splits the data into V groups of
+disjointed sets by clustering points based on their spatial coordinates.
+A resample of the analysis data consists of V-1 of the folds/clusters
+while the assessment set contains the final fold/cluster.
 }
 \details{
-The variables in the \code{coords} argument are used for k-means clustering of
-the data into disjointed sets, as outlined in Brenning (2012), or for
-hierarchical clustering of the data. These
-clusters are used as the folds for cross-validation. Depending on how the
-data are distributed spatially, there may not be an equal number of points
-in each fold.
+Clusters are created based on either the distances between observations
+(if \code{data} is an \code{sf} object) or by clustering the variables in the \code{coords}
+argument. Each cluster is used as a fold for cross-validation.
+Depending on how the data are distributed spatially, there may not be an
+equal number of observations in each fold.
 
 You can optionally provide a custom function to \code{cluster_function}. The
 function must take three arguments:

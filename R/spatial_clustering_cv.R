@@ -1,19 +1,16 @@
-#' Spatial or Cluster Cross-Validation
+#' Spatial Clustering Cross-Validation
 #'
-#' Spatial or cluster cross-validation splits the data into V groups of
-#'  disjointed sets using k-means clustering of some variables, typically
-#'  spatial coordinates. A resample of the analysis data consists of V-1 of the
-#'  folds/clusters while the assessment set contains the final fold/cluster. In
-#'  basic spatial cross-validation (i.e. no repeats), the number of resamples
-#'  is equal to V.
+#' Spatial clustering cross-validation splits the data into V groups of
+#'  disjointed sets by clustering points based on their spatial coordinates.
+#'  A resample of the analysis data consists of V-1 of the folds/clusters
+#'  while the assessment set contains the final fold/cluster.
 #'
 #' @details
-#' The variables in the `coords` argument are used for k-means clustering of
-#'  the data into disjointed sets, as outlined in Brenning (2012), or for
-#'  hierarchical clustering of the data. These
-#'  clusters are used as the folds for cross-validation. Depending on how the
-#'  data are distributed spatially, there may not be an equal number of points
-#'  in each fold.
+#' Clusters are created based on either the distances between observations
+#'  (if `data` is an `sf` object) or by clustering the variables in the `coords`
+#'  argument. Each cluster is used as a fold for cross-validation.
+#'  Depending on how the data are distributed spatially, there may not be an
+#'  equal number of observations in each fold.
 #'
 #' You can optionally provide a custom function to `cluster_function`. The
 #' function must take three arguments:
@@ -28,7 +25,7 @@
 #' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
 #' @param coords A vector of variable names, typically spatial coordinates,
-#'  to partition the data into disjointed sets via k-means clustering.
+#'  to partition the data into disjointed sets via clustering.
 #'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @inheritParams buffer_indices
 #' @param v The number of partitions of the data set.
