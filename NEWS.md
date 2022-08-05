@@ -1,3 +1,5 @@
+# spatialsample (development version)
+
 # spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains
