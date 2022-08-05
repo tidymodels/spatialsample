@@ -1,4 +1,4 @@
-# spatialsample (development version)
+# spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains
   a package author) moves to focus on ModelOps work. 
@@ -14,7 +14,7 @@
   
 * `spatial_buffer_vfold_cv()` and buffering no longer support tibble or 
   data.frame inputs (they now require sf or sfc objects). It was not easy to 
-  use these to begin with, but should have been an error all along: use 
+  use these to begin with, but should have always caused an error: use 
   `rsample::vfold_cv()` instead or transform your data into an sf object.
 
 * `spatial_buffer_vfold_cv()` has had some attribute changes to match `rsample`:
