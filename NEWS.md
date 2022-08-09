@@ -1,5 +1,7 @@
 # spatialsample (development version)
 
+* Outputs from `spatial_buffer_vfold_cv()` should now have the correct `radius` and `buffer` attributes (#110).
+
 # spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains

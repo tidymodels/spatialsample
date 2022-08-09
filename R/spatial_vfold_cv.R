@@ -113,8 +113,8 @@ spatial_buffer_vfold_cv <- function(data,
                  pool    = pool,
                  # Set radius and buffer to 0 if NULL or negative
                  # This enables rsample::reshuffle_rset to work
-                 radius  = min(c(radius, 0)),
-                 buffer  = min(c(buffer, 0)))
+                 radius  = max(c(radius, 0)),
+                 buffer  = max(c(buffer, 0)))
 
   if ("sf" %in% class(data)) {
     rset_class <- c("spatial_buffer_vfold_cv", "spatial_rset", "rset")

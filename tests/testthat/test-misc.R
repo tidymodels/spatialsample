@@ -57,3 +57,42 @@ test_that("check_v handles NULL and Inf appropriately", {
   )
 
 })
+
+test_that("reverse_splits is working", {
+  skip_if_not(rlang::is_installed("withr"))
+
+  for (x in rset_subclasses) {
+
+    set.seed(123)
+    rev_x <- rsample::reverse_splits(x)
+    expect_identical(analysis(x$splits[[1]]), assessment(rev_x$splits[[1]]))
+    expect_identical(assessment(x$splits[[1]]), analysis(rev_x$splits[[1]]))
+    expect_identical(class(x), class(rev_x))
+    expect_identical(class(x$splits[[1]]), class(rev_x$splits[[1]]))
+
+  }
+
+})
+
+test_that("reshuffle_rset is working", {
+
+  skip_if_not(rlang::is_installed("withr"))
+
+  # Reshuffling with the same seed, in the same order,
+  # should recreate the same objects
+  out <- withr::with_seed(
+    123,
+    lapply(
+      rset_subclasses,
+      function(x) suppressWarnings(rsample::reshuffle_rset(x))
+    )
+  )
+
+  for (i in seq_along(rset_subclasses)) {
+    expect_identical(
+      out[[i]],
+      rset_subclasses[[i]]
+    )
+  }
+
+})
