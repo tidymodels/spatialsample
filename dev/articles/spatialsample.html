@@ -210,8 +210,7 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  (-93.66067 42.0346)       5.23  5.25</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> (-93.65921 42.03456)       5.12  5.26</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> (-93.65623 42.03345)       5.39  5.33</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 360 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 360 more rows</span></span></span></code></pre></div>
 <p>Or we can apply this function to all of the <code>splits</code>, using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
@@ -253,8 +252,7 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Fold03 cluster  rmse    standard      0.107 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Fold03 location rmse    standard      0.065<span style="text-decoration: underline;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fold04 block    rmse    standard      0.096<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 35 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 35 more rows</span></span></span></code></pre></div>
 <p>It looks like the RMSE may vary across the city, so we can join the metrics back up to our results and plot them.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
