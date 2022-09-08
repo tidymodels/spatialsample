@@ -122,7 +122,6 @@
        9 <split [2919/11]>  Fold09
       10 <split [2855/75]>  Fold10
       # ... with 17 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -148,7 +147,6 @@
        9 <split [2929/1]>   Fold09
       10 <split [2923/7]>   Fold10
       # ... with 44 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
@@ -199,7 +197,6 @@
        9 <split [2927/3]>   Fold09
       10 <split [2870/60]>  Fold10
       # ... with 44 more rows
-      # i Use `print(n = ...)` to see more rows
 
 ---
 
