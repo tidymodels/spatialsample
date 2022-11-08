@@ -2,6 +2,10 @@
 
 * Outputs from `spatial_buffer_vfold_cv()` should now have the correct `radius` and `buffer` attributes (#110).
 
+* `spatial_buffer_vfold_cv()` now has the correct `id` values when using repeats (#116).
+
+* `spatial_buffer_vfold_cv()` now throws an error when `repeats > 1 && v >= nrow(data)` (#116).
+
 # spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains
