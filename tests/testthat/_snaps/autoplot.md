@@ -4,5 +4,6 @@
       autoplot(ames_non_sf)
     Condition
       Error in `autoplot()`:
-      ! Objects of type spatial_clustering_cv/rset/tbl_df/tbl/data.frame not supported by autoplot.
+      ! Objects of class <spatial_clustering_cv> are not supported by autoplot.
+      i have you loaded the required package?
 
