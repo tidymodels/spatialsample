@@ -157,6 +157,7 @@ spatial_block_cv <- function(data,
                  relevant_only = relevant_only,
                  radius = radius,
                  buffer = buffer,
+                 repeats = repeats,
                  ...)
 
   new_rset(
