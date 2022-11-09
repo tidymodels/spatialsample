@@ -161,7 +161,7 @@ test_that("bad args", {
   expect_snapshot_error(
     spatial_buffer_vfold_cv(
       boston_canopy,
-      v = 683,
+      v = 682,
       buffer = NULL,
       radius = NULL,
       repeats = 2
