@@ -35,14 +35,26 @@
 # registered in zzz.R
 #' @export
 autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
-  # .fold. is named to not interfere with normal column names
-  .fold. <- NULL
-
-  object <- purrr::map2_dfr(
-    object$splits,
-    object$id,
-    ~ cbind(assessment(.x), .fold. = .y)
+  bool_id_columns <- grepl("^id", names(object))
+  # Not sure how this would ever fire, but just in case:
+  if (sum(bool_id_columns) > 2) rlang::abort(
+    "Cannot automatically plot rsets with more than two 'id' columns."
   )
+  # These are named to not interfere with normal column names
+  .fold. <- .facet. <- NULL
+
+  object <- if (sum(bool_id_columns) == 1) {
+    purrr::map2_dfr(
+      object$splits,
+      object$id,
+      ~ cbind(assessment(.x), .fold. = .y)
+    )
+  } else {
+    purrr::pmap_dfr(
+      object[grepl("splits", names(object)) | bool_id_columns],
+      ~ cbind(assessment(..1), .facet. = ..2, .fold. = ..3)
+    )
+  }
 
   p <- ggplot2::ggplot(
     data = object,
@@ -53,6 +65,11 @@ autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
     colour = ggplot2::guide_legend("Fold"),
     fill = ggplot2::guide_legend("Fold")
   )
+
+  if (sum(bool_id_columns) == 2) {
+    p <- p + ggplot2::facet_wrap(ggplot2::vars(.facet.))
+  }
+
   p + ggplot2::coord_sf()
 }
 
