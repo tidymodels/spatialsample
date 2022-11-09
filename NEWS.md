@@ -2,6 +2,8 @@
 
 * Outputs from `spatial_buffer_vfold_cv()` should now have the correct `radius` and `buffer` attributes (#110).
 
+* The minimum `sf` version required is now `>= 1.0-9`, so that unit objects can be passed to `cellsize` in `spatial_block_cv()` (#113; #124).
+
 # spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains
