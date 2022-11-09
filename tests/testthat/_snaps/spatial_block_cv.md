@@ -221,6 +221,18 @@
        9 <split [614/68]> Fold09
       10 <split [614/68]> Fold10
 
+---
+
+    Repeated cross-validation doesn't make sense when `method = 'continuous'`.
+    i Set `method = 'random'`.
+    i Or set `repeats = 1`.
+
+---
+
+    Repeated cross-validation doesn't make sense when `method = 'snake'`.
+    i Set `method = 'random'`.
+    i Or set `repeats = 1`.
+
 # printing
 
     #  10-fold spatial block cross-validation 

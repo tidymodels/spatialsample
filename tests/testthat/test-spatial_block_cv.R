@@ -45,6 +45,25 @@ test_that("random assignment", {
   expect_true(all(good_holdout))
 })
 
+test_that("repeated", {
+  set.seed(11)
+  rs2 <- spatial_block_cv(ames_sf, repeats = 2)
+
+  same_data <-
+    purrr::map_lgl(rs2$splits, function(x) {
+      all.equal(x$data, ames_sf)
+    })
+  expect_true(all(same_data))
+
+  good_holdout <- purrr::map_lgl(
+    rs2$splits,
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
+})
+
 test_that("systematic assignment -- snake", {
   skip_if_not(sf::sf_use_s2())
   set.seed(11)
@@ -249,6 +268,16 @@ test_that("bad args", {
   set.seed(123)
   expect_snapshot(
     spatial_block_cv(boston_canopy, n = 200)
+  )
+
+  set.seed(123)
+  expect_snapshot_error(
+    spatial_block_cv(boston_canopy, method = "continuous", repeats = 2)
+  )
+
+  set.seed(123)
+  expect_snapshot_error(
+    spatial_block_cv(boston_canopy, method = "snake", repeats = 2)
   )
 
 })
