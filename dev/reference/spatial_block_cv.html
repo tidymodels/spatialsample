@@ -73,7 +73,8 @@ blocks their centroid falls into.</p>
 <span>  relevant_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  radius <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  repeats <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,6 +117,10 @@ or assessment set. If <code>NULL</code>, no buffer is applied.</p></dd>
 
 <dt>...</dt>
 <dd><p>Arguments passed to <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">sf::st_make_grid()</a></code>.</p></dd>
+
+
+<dt>repeats</dt>
+<dd><p>The number of times to repeat the V-fold partitioning.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -160,9 +165,9 @@ Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   splits            id   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [408/274]&gt;</span> Fold1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [508/174]&gt;</span> Fold2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [448/234]&gt;</span> Fold3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;split [472/210]&gt;</span> Fold1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;split [400/282]&gt;</span> Fold2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;split [492/190]&gt;</span> Fold3</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
