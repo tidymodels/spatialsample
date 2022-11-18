@@ -121,11 +121,6 @@ test_that("spatial_leave_location_out_cv", {
     v = 2,
     repeats = 2
   )
-  expect_identical(
-    names(rs1),
-    c("splits", "id", "id2")
-  )
-  expect_snapshot(rs1)
   same_data <- map_lgl(
     rs1$splits,
     function(x) {
@@ -141,6 +136,13 @@ test_that("spatial_leave_location_out_cv", {
     }
   )
   expect_true(all(good_holdout))
+
+  expect_identical(
+    names(rs1),
+    c("splits", "id", "id2")
+  )
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+  expect_snapshot(rs1)
 
 })
 
