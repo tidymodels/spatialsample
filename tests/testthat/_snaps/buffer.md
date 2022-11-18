@@ -85,18 +85,18 @@
     Output
       #  28-fold spatial leave-location-out cross-validation 
       # A tibble: 28 x 2
-         splits             id    
-         <list>             <chr> 
-       1 <split [2194/555]> Fold01
-       2 <split [2220/397]> Fold02
-       3 <split [2435/279]> Fold03
-       4 <split [2779/151]> Fold04
-       5 <split [2597/127]> Fold05
-       6 <split [2598/197]> Fold06
-       7 <split [2640/166]> Fold07
-       8 <split [2617/136]> Fold08
-       9 <split [2764/150]> Fold09
-      10 <split [2501/324]> Fold10
+         splits             id        
+         <list>             <chr>     
+       1 <split [2194/555]> Resample01
+       2 <split [2220/397]> Resample02
+       3 <split [2435/279]> Resample03
+       4 <split [2779/151]> Resample04
+       5 <split [2597/127]> Resample05
+       6 <split [2598/197]> Resample06
+       7 <split [2640/166]> Resample07
+       8 <split [2617/136]> Resample08
+       9 <split [2764/150]> Resample09
+      10 <split [2501/324]> Resample10
       # ... with 18 more rows
 
 ---

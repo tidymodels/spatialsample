@@ -51,6 +51,21 @@ test_that("spatial_buffer_vfold_cv", {
   )
   expect_true(all(good_holdout))
 
+  set.seed(123)
+  rs1 <- spatial_buffer_vfold_cv(
+    ames_sf,
+    v = 2,
+    radius = NULL,
+    buffer = NULL,
+    repeats = 2
+  )
+  expect_identical(
+    names(rs1),
+    c("splits", "id", "id2")
+  )
+  expect_snapshot(rs1)
+
+
 })
 
 test_that("spatial_leave_location_out_cv", {
@@ -140,6 +155,17 @@ test_that("bad args", {
   set.seed(123)
   expect_snapshot(
     spatial_buffer_vfold_cv(boston_canopy, v = 683, buffer = NULL, radius = NULL)
+  )
+
+  set.seed(123)
+  expect_snapshot_error(
+    spatial_buffer_vfold_cv(
+      boston_canopy,
+      v = 682,
+      buffer = NULL,
+      radius = NULL,
+      repeats = 2
+    )
   )
 
 })
