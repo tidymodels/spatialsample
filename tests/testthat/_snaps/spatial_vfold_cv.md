@@ -32,6 +32,20 @@
       3 <split [1465/1465]> Repeat2 Fold1
       4 <split [1465/1465]> Repeat2 Fold2
 
+# spatial_leave_location_out_cv
+
+    Code
+      rs1
+    Output
+      #  2-fold spatial leave-location-out cross-validation 
+      # A tibble: 4 x 3
+        splits              id      id2      
+        <list>              <chr>   <chr>    
+      1 <split [1268/1662]> Repeat1 Resample1
+      2 <split [1662/1268]> Repeat1 Resample2
+      3 <split [1548/1382]> Repeat2 Resample1
+      4 <split [1382/1548]> Repeat2 Resample2
+
 # bad args
 
     Code
@@ -148,6 +162,10 @@
     Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.
     i Set `v` to a lower value.
     i Or set `repeats = 1`.
+
+---
+
+    Repeated resampling when `v` is 28 would create identical resamples
 
 # printing
 

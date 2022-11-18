@@ -64,6 +64,21 @@ test_that("spatial_buffer_vfold_cv", {
     c("splits", "id", "id2")
   )
   expect_snapshot(rs1)
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
+      isTRUE(all.equal(x$data, ames_sf))
+    }
+  )
+  expect_true(all(same_data))
+
+  good_holdout <- map_lgl(
+    rs1$splits,
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
 
 
 })
@@ -98,6 +113,36 @@ test_that("spatial_leave_location_out_cv", {
     }
   )
   expect_true(all(good_holdout))
+
+  set.seed(123)
+  rs1 <- spatial_leave_location_out_cv(
+    ames_sf,
+    Neighborhood,
+    v = 2,
+    repeats = 2
+  )
+  same_data <- map_lgl(
+    rs1$splits,
+    function(x) {
+      isTRUE(all.equal(x$data, ames_sf))
+    }
+  )
+  expect_true(all(same_data))
+
+  good_holdout <- map_lgl(
+    rs1$splits,
+    function(x) {
+      length(intersect(x$in_ind, x$out_id)) == 0
+    }
+  )
+  expect_true(all(good_holdout))
+
+  expect_identical(
+    names(rs1),
+    c("splits", "id", "id2")
+  )
+  skip_if_not(getRversion() >= numeric_version("3.6.0"))
+  expect_snapshot(rs1)
 
 })
 
@@ -164,6 +209,15 @@ test_that("bad args", {
       v = 682,
       buffer = NULL,
       radius = NULL,
+      repeats = 2
+    )
+  )
+
+  set.seed(123)
+  expect_snapshot_error(
+    spatial_leave_location_out_cv(
+      ames_sf,
+      Neighborhood,
       repeats = 2
     )
   )
