@@ -156,7 +156,8 @@ spatial_leave_location_out_cv <- function(data,
                                           v = NULL,
                                           radius = NULL,
                                           buffer = NULL,
-                                          ...) {
+                                          ...,
+                                          repeats = 1) {
 
   if (!missing(group)) {
     group <- tidyselect::eval_select(rlang::enquo(group), data)
@@ -167,14 +168,23 @@ spatial_leave_location_out_cv <- function(data,
   } else {
     if (is.null(v)) v <- length(unique(data[[group]]))
     v <- check_v(v, length(unique(data[[group]])), "locations")
+    n <- nrow(data)
+    if (v == n && repeats > 1) {
+      rlang::abort(
+        c(
+          "Repeated cross-validation doesn't make sense when performing leave-one-location-out cross-validation.",
+          i = "Set `v` to a lower value.",
+          i = "Or set `repeats = 1`."
+        )
+      )
+    }
   }
-
-  n <- nrow(data)
 
   rset <- rsample::group_vfold_cv(
     data = data,
     v = v,
     group = {{ group }},
+    repeats = {{ repeats }},
     ...
   )
 

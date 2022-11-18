@@ -23,7 +23,8 @@ spatial_leave_location_out_cv(
   v = NULL,
   radius = NULL,
   buffer = NULL,
-  ...
+  ...,
+  repeats = 1
 )
 }
 \arguments{
