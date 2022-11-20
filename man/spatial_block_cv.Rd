@@ -11,7 +11,8 @@ spatial_block_cv(
   relevant_only = TRUE,
   radius = NULL,
   buffer = NULL,
-  ...
+  ...,
+  repeats = 1
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ test set (after \code{radius} is applied) will be assigned to neither the analys
 or assessment set. If \code{NULL}, no buffer is applied.}
 
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
+
+\item{repeats}{The number of times to repeat the V-fold partitioning.}
 }
 \value{
 A tibble with classes \code{spatial_block_cv},  \code{spatial_rset}, \code{rset},

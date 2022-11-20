@@ -18,6 +18,20 @@
       i Reproject your data into a projected coordinate reference system using `sf::st_transform()`.
       i Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`.
 
+# spatial_buffer_vfold_cv
+
+    Code
+      rs1
+    Output
+      #  2-fold spatial cross-validation 
+      # A tibble: 4 x 3
+        splits              id      id2  
+        <list>              <chr>   <chr>
+      1 <split [1465/1465]> Repeat1 Fold1
+      2 <split [1465/1465]> Repeat1 Fold2
+      3 <split [1465/1465]> Repeat2 Fold1
+      4 <split [1465/1465]> Repeat2 Fold2
+
 # bad args
 
     Code
@@ -90,18 +104,18 @@
     Output
       #  28-fold spatial leave-location-out cross-validation 
       # A tibble: 28 x 2
-         splits             id    
-         <list>             <chr> 
-       1 <split [2816/114]> Fold01
-       2 <split [2928/2]>   Fold02
-       3 <split [2799/131]> Fold03
-       4 <split [2827/103]> Fold04
-       5 <split [2902/28]>  Fold05
-       6 <split [2920/10]>  Fold06
-       7 <split [2886/44]>  Fold07
-       8 <split [2691/239]> Fold08
-       9 <split [2779/151]> Fold09
-      10 <split [2748/182]> Fold10
+         splits             id        
+         <list>             <chr>     
+       1 <split [2816/114]> Resample01
+       2 <split [2928/2]>   Resample02
+       3 <split [2799/131]> Resample03
+       4 <split [2827/103]> Resample04
+       5 <split [2902/28]>  Resample05
+       6 <split [2920/10]>  Resample06
+       7 <split [2886/44]>  Resample07
+       8 <split [2691/239]> Resample08
+       9 <split [2779/151]> Resample09
+      10 <split [2748/182]> Resample10
       # ... with 18 more rows
 
 ---
@@ -128,6 +142,12 @@
        9 <split [681/1]> Fold009
       10 <split [681/1]> Fold010
       # ... with 672 more rows
+
+---
+
+    Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.
+    i Set `v` to a lower value.
+    i Or set `repeats = 1`.
 
 # printing
 

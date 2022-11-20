@@ -89,6 +89,15 @@ spatial_buffer_vfold_cv <- function(data,
 
   n <- nrow(data)
   v <- check_v(v, n, "rows")
+  if (v == n && repeats > 1) {
+    rlang::abort(
+      c(
+        "Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.",
+        i = "Set `v` to a lower value.",
+        i = "Or set `repeats = 1`."
+      )
+    )
+  }
 
   rset <- rsample::vfold_cv(
     data = data,
@@ -230,7 +239,6 @@ posthoc_buffer_rset <- function(data,
 
   split_objs <- tibble::tibble(
     splits = split_objs,
-    id = names0(length(split_objs), "Fold"),
     v = v
   )
 
@@ -238,7 +246,7 @@ posthoc_buffer_rset <- function(data,
 
   new_rset(
     splits = split_objs$splits,
-    ids = split_objs[, grepl("^id", names(split_objs))],
+    ids = rset[, grepl("^id", names(rset))],
     attrib = cv_att,
     subclass = rset_class
   )

@@ -60,8 +60,21 @@ spatial_block_cv <- function(data,
                              relevant_only = TRUE,
                              radius = NULL,
                              buffer = NULL,
-                             ...) {
+                             ...,
+                             repeats = 1) {
   method <- rlang::arg_match(method)
+
+  if (method != "random" && repeats != 1) {
+    rlang::abort(
+      c(
+        glue::glue(
+          "Repeated cross-validation doesn't make sense when `method = '{method}'`."
+        ),
+        i = "Set `method = 'random'`.",
+        i = "Or set `repeats = 1`."
+      )
+    )
+  }
 
   standard_checks(data, "`spatial_block_cv()`")
 
@@ -80,27 +93,45 @@ spatial_block_cv <- function(data,
 
   grid_blocks <- sf::st_make_grid(grid_box, ...)
   original_number_of_blocks <- length(grid_blocks)
-  split_objs <- switch(
-    method,
-    "random" = random_block_cv(
-      data,
-      centroids,
-      grid_blocks,
-      v,
-      radius = radius,
-      buffer = buffer
-    ),
-    systematic_block_cv(
-      data,
-      centroids,
-      grid_blocks,
-      v,
-      ordering = method,
-      relevant_only,
-      radius = radius,
-      buffer = buffer
+
+  block_fun <- function(method) {
+    switch(
+      method,
+      "random" = random_block_cv(
+        data,
+        centroids,
+        grid_blocks,
+        v,
+        radius = radius,
+        buffer = buffer
+      ),
+      systematic_block_cv(
+        data,
+        centroids,
+        grid_blocks,
+        v,
+        ordering = method,
+        relevant_only,
+        radius = radius,
+        buffer = buffer
+      )
     )
-  )
+  }
+
+  if (repeats == 1) {
+    split_objs <- block_fun(method)
+  } else {
+    for (i in 1:repeats) {
+      tmp <- block_fun(method)
+      tmp$id2 <- tmp$id
+      tmp$id <- names0(repeats, "Repeat")[i]
+      split_objs <- if (i == 1) {
+        tmp
+      } else {
+        rbind(split_objs, tmp)
+      }
+    }
+  }
 
   percent_used <- split_objs$filtered_number_of_blocks[[1]] / original_number_of_blocks
 
@@ -126,6 +157,7 @@ spatial_block_cv <- function(data,
                  relevant_only = relevant_only,
                  radius = radius,
                  buffer = buffer,
+                 repeats = repeats,
                  ...)
 
   new_rset(
@@ -155,7 +187,7 @@ random_block_cv <- function(data,
   grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env(2))
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- sample(rep(seq_len(v), length.out = nrow(grid_blocks)))
@@ -177,7 +209,7 @@ systematic_block_cv <- function(data,
   if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
 
   n_blocks <- length(grid_blocks)
-  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env())
+  v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env(2))
 
   folds <- rep(seq_len(v), length.out = length(grid_blocks))
   if (ordering == "snake") folds <- make_snake_ordering(folds, grid_blocks)
