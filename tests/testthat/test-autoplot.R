@@ -87,8 +87,42 @@ test_that("autoplot is stable", {
   vdiffr::expect_doppelganger("snake flips rows the right way", p)
 
 
-  expect_snapshot(
-    autoplot(ames_non_sf),
-    error = TRUE
+  expect_snapshot_error(autoplot(ames_non_sf))
+
+  set.seed(123)
+  repeat_block <- spatial_block_cv(
+    boston_canopy,
+    v = 10,
+    method = "random",
+    repeats = 2
   )
+  vdiffr::expect_doppelganger(
+    "repeated block CV",
+    autoplot(repeat_block)
+  )
+
+  set.seed(123)
+  repeat_vfold <- spatial_buffer_vfold_cv(
+    boston_canopy,
+    radius = 1,
+    buffer = 4000,
+    repeats = 2
+  )
+  vdiffr::expect_doppelganger(
+    "repeated vfold",
+    autoplot(repeat_vfold)
+  )
+
+  set.seed(123)
+  repeat_llo <- spatial_leave_location_out_cv(
+    ames_sf,
+    Neighborhood,
+    repeats = 2,
+    v = 10
+  )
+  vdiffr::expect_doppelganger(
+    "repeated LLO",
+    autoplot(repeat_llo)
+  )
+
 })
