@@ -28,7 +28,7 @@ Imports:
     glue,
     purrr,
     rlang (>= 1.0.0),
-    rsample (>= 1.1.0),
+    rsample (>= 1.1.1),
     sf (>= 1.0-9),
     tibble,
     tidyselect,
