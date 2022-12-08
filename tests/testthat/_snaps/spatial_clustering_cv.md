@@ -1,7 +1,16 @@
 # bad args
 
     Code
-      spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = "a")
+      spatial_clustering_cv(Smithsonian)
+    Condition
+      Error in `spatial_clustering_cv()`:
+      ! `spatial_clustering_cv()` currently only supports `sf` objects.
+      i Try converting `data` to an `sf` object via `sf::st_as_sf()`.
+
+---
+
+    Code
+      spatial_clustering_cv(Smithsonian_sf, v = "a")
     Condition
       Error in `spatial_clustering_cv()`:
       ! `v` must be a single positive integer.
@@ -9,7 +18,7 @@
 ---
 
     Code
-      spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = c(5, 10))
+      spatial_clustering_cv(Smithsonian_sf, v = c(5, 10))
     Condition
       Error in `spatial_clustering_cv()`:
       ! `v` must be a single positive integer.
@@ -17,27 +26,16 @@
 ---
 
     Code
-      spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 100)
+      spatial_clustering_cv(Smithsonian_sf, v = 100)
     Condition
       Error in `spatial_clustering_cv()`:
       ! The number of data points is less than `v = 100` (20)
       i Set `v` to a smaller value than 20
 
----
-
-    Code
-      spatial_clustering_cv(Smithsonian, name)
-    Condition
-      Error in `spatial_clustering_cv()`:
-      ! `coords` must be numeric variables in `data`.
-
 # using sf
 
     Code
-      spatial_clustering_cv(Smithsonian_sf, coords = c(latitude, longitude))
-    Condition
-      Warning:
-      `coords` is ignored when providing `sf` objects to `data`.
+      spatial_clustering_cv(Smithsonian_sf)
     Output
       #  10-fold spatial cross-validation 
       # A tibble: 10 x 2

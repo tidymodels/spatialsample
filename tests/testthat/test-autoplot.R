@@ -9,9 +9,6 @@ test_that("autoplot is stable", {
   set.seed(123)
   ames_cluster <- spatial_clustering_cv(ames_sf)
 
-  set.seed(123)
-  ames_non_sf <- spatial_clustering_cv(ames, coords = c("Longitude", "Latitude"))
-
   p <- autoplot(ames_cluster)
   vdiffr::expect_doppelganger("cluster plots", p)
 
@@ -85,9 +82,6 @@ test_that("autoplot is stable", {
   )
   p <- autoplot(boston_snake)
   vdiffr::expect_doppelganger("snake flips rows the right way", p)
-
-
-  expect_snapshot_error(autoplot(ames_non_sf))
 
   set.seed(123)
   repeat_block <- spatial_block_cv(

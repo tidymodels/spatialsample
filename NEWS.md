@@ -13,6 +13,15 @@
 
 * `autoplot()` now handles repeated cross-validation properly.
 
+* `spatial_clustering_cv()` no longer accepts non-sf objects. Use 
+  `rsample::clustering_cv()` for these instead.
+  
+* `spatial_clustering_cv()` now uses edge-to-edge distances, like the rest of
+  the package, rather than centroids.
+  
+* `spatial_clustering_cv()` now has a `distance_function` argument, set by 
+  default to `as.dist(sf::st_distance(x))`. 
+
 # spatialsample 0.2.1
 
 * Mike Mahoney is taking over as package maintainer, as Julia Silge (who remains

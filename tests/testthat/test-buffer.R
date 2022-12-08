@@ -222,6 +222,7 @@ test_that("using buffers", {
   # These should be the only changes between 0 and NULL:
   attr(rs2, "radius") <- NULL
   attr(rs2, "buffer") <- NULL
+  attr(rs2, "distance_function") <- attr(rs1, "distance_function")
   attr(rs2, "fingerprint") <- attr(rs1, "fingerprint")
   rs2$splits <- map(rs2$splits, rm_out)
 
