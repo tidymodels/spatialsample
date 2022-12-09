@@ -5,12 +5,24 @@
 #'  A resample of the analysis data consists of V-1 of the folds/clusters
 #'  while the assessment set contains the final fold/cluster.
 #'
+#' @section Changes in spatialsample 0.3.0:
+#' As of spatialsample version 0.3.0, this function no longer accepts non-`sf`
+#' objects as arguments to `data`. In order to perform clustering with
+#' non-spatial data, consider using [rsample::clustering_cv()].
+#'
+#' Also as of version 0.3.0, this function now calculates edge-to-edge distance
+#' for non-point geometries, in line with the rest of the package. Earlier
+#' versions relied upon between-centroid distances.
+#'
 #' @details
-#' Clusters are created based on either the distances between observations
-#'  (if `data` is an `sf` object) or by clustering the variables in the `coords`
-#'  argument. Each cluster is used as a fold for cross-validation.
-#'  Depending on how the data are distributed spatially, there may not be an
-#'  equal number of observations in each fold.
+#' Clusters are created based on the distances between observations
+#'  if `data` is an `sf` object. Each cluster is used as a fold for
+#'  cross-validation. Depending on how the data are distributed spatially, there
+#'  may not be an equal number of observations in each fold.
+#'
+#' You can optionally provide a custom function to `distance_function.` The
+#' function should take an `sf` object and return a [stats::dist()] object with
+#' distances between data points.
 #'
 #' You can optionally provide a custom function to `cluster_function`. The
 #' function must take three arguments:
@@ -24,10 +36,12 @@
 #'
 #' @param data A data frame or an `sf` object (often from [sf::read_sf()]
 #' or [sf::st_as_sf()]), to split into folds.
-#' @param coords A vector of variable names, typically spatial coordinates,
-#'  to partition the data into disjointed sets via clustering.
-#'  This argument is ignored (with a warning) if `data` is an `sf` object.
 #' @inheritParams buffer_indices
+#' @inheritParams rsample::clustering_cv
+#' @param distance_function Which function should be used for distance
+#' calculations? Defaults to [sf::st_distance()], with the output matrix
+#' converted to a [stats::dist()] object. You can also provide your own
+#' function; see Details.
 #' @param v The number of partitions of the data set.
 #' @param cluster_function Which function should be used for clustering?
 #' Options are either `"kmeans"` (to use [stats::kmeans()])
@@ -52,7 +66,6 @@
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(Smithsonian, package = "modeldata")
-#' spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 #'
 #' smithsonian_sf <- sf::st_as_sf(
 #'   Smithsonian,
@@ -70,124 +83,56 @@
 #' @rdname spatial_clustering_cv
 #' @export
 spatial_clustering_cv <- function(data,
-                                  coords,
                                   v = 10,
                                   cluster_function = c("kmeans", "hclust"),
                                   radius = NULL,
                                   buffer = NULL,
-                                  ...) {
+                                  ...,
+                                  repeats = 1,
+                                  distance_function = function(x) as.dist(sf::st_distance(x))) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }
 
-  subclasses <- c("spatial_clustering_cv", "spatial_rset", "rset")
-  if ("sf" %in% class(data)) {
-    if (!missing(coords)) {
-      rlang::warn("`coords` is ignored when providing `sf` objects to `data`.")
-    }
-    coords <- sf::st_centroid(sf::st_geometry(data))
-    dists <- as.dist(sf::st_distance(coords))
-  } else {
-    if (!missing(radius) || !missing(buffer)) {
-      rlang::abort("Neither `radius` or `buffer` can be used when providing non-`sf` objects to `data`.")
-    }
-    coords <- tidyselect::eval_select(rlang::enquo(coords), data = data)
-    if (is_empty(coords)) {
-      rlang::abort("`coords` are required and must be variables in `data`.")
-    }
-    coords <- data[coords]
-    if (!all(purrr::map_lgl(coords, is.numeric))) {
-      rlang::abort("`coords` must be numeric variables in `data`.")
-    }
-    dists <- dist(coords)
-    subclasses <- setdiff(subclasses, "spatial_rset")
-  }
+  standard_checks(data, "`spatial_clustering_cv()`")
 
-  split_objs <- spatial_clustering_splits(
-    data = data,
-    dists = dists,
+  n <- nrow(data)
+  v <- check_v(
+    v,
+    n,
+    "data points",
+    allow_max_v = FALSE
+  )
+
+  cv_att <- list(
     v = v,
-    cluster_function = cluster_function,
+    repeats = repeats,
     radius = radius,
     buffer = buffer,
+    cluster_function = cluster_function,
+    distance_function = distance_function
+  )
+
+  rset <- rsample::clustering_cv(
+    data = data,
+    vars = names(data),
+    v = v,
+    repeats = {{ repeats }},
+    distance_function = distance_function,
+    cluster_function = cluster_function,
     ...
   )
 
-  split_objs$splits <- map(split_objs$splits, rm_out, buffer = buffer)
-
-  ## Save some overall information
-
-  cv_att <- list(v = v, repeats = 1, radius = radius, buffer = buffer)
-
-  new_rset(
-    splits = split_objs$splits,
-    ids = split_objs[, grepl("^id", names(split_objs))],
-    attrib = cv_att,
-    subclass = subclasses
-  )
-}
-
-spatial_clustering_splits <- function(data,
-                                      dists,
-                                      v = 10,
-                                      cluster_function = c("kmeans", "hclust"),
-                                      radius = NULL,
-                                      buffer = NULL,
-                                      ...) {
-  if (!rlang::is_function(cluster_function)) {
-    cluster_function <- rlang::arg_match(cluster_function)
-  }
-
-  v <- check_v(v, nrow(data), "data points", allow_max_v = FALSE, call = rlang::caller_env())
-
-  classes <- c("spatial_clustering_split")
-  if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
-
-  classes <- c("spatial_clustering_split")
-  if ("sf" %in% class(data)) classes <- c(classes, "spatial_rsplit")
-
-  n <- nrow(data)
-
-  clusterer <- ifelse(
-    rlang::is_function(cluster_function),
-    "custom",
-    cluster_function
-  )
-
-  folds <- switch(
-    clusterer,
-    "kmeans" = {
-      clusters <- kmeans(dists, centers = v, ...)
-      clusters$cluster
-    },
-    "hclust" = {
-      clusters <- hclust(dists, ...)
-      cutree(clusters, k = v)
-    },
-    do.call(cluster_function, list(dists = dists, v = v, ...))
-  )
-
-  idx <- seq_len(n)
-  indices <- split_unnamed(idx, folds)
-  if (is.null(radius) && is.null(buffer)) {
-    indices <- lapply(indices, default_complement, n = n)
-  } else {
-    indices <- buffer_indices(
-      data,
-      indices,
-      radius,
-      buffer,
-      call = rlang::caller_env()
-    )
-  }
-  split_objs <- purrr::map(
-    indices,
-    make_splits,
+  posthoc_buffer_rset(
     data = data,
-    class = classes
-  )
-  tibble::tibble(
-    splits = split_objs,
-    id = names0(length(split_objs), "Fold")
+    rset = rset,
+    rsplit_class = c("spatial_clustering_split", "spatial_rsplit"),
+    rset_class = c("spatial_clustering_cv", "spatial_rset", "rset"),
+    radius = radius,
+    buffer = buffer,
+    n = n,
+    v = v,
+    cv_att = cv_att
   )
 }
+

@@ -15,6 +15,16 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   standard_checks(data, "Buffering", call)
 
   n <- nrow(data)
+  # calling st_distance is a _huge_ performance hit, especially for big data,
+  # so we make a point of only doing it once.
+  #
+  # This winds up requiring all sorts of weird handler code,
+  # namely `row_ids_within_dist` and `which_within_dist`, in order to
+  # only calculate this matrix
+  #
+  # Using st_is_within_dist is not faster. Using st_intersects is not faster.
+  # I keep trying both of these, and have left this comment in vain hope it
+  # convinces me to stop.
   distmat <- sf::st_distance(data)
 
   # only run radius checks if radius is not NULL (to prevent NAs from >)

@@ -6,21 +6,18 @@
 \usage{
 spatial_clustering_cv(
   data,
-  coords,
   v = 10,
   cluster_function = c("kmeans", "hclust"),
   radius = NULL,
   buffer = NULL,
-  ...
+  ...,
+  repeats = 1,
+  distance_function = function(x) as.dist(sf::st_distance(x))
 )
 }
 \arguments{
 \item{data}{A data frame or an \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
 or \code{\link[sf:st_as_sf]{sf::st_as_sf()}}), to split into folds.}
-
-\item{coords}{A vector of variable names, typically spatial coordinates,
-to partition the data into disjointed sets via clustering.
-This argument is ignored (with a warning) if \code{data} is an \code{sf} object.}
 
 \item{v}{The number of partitions of the data set.}
 
@@ -39,6 +36,13 @@ or assessment set. If \code{NULL}, no buffer is applied.}
 
 \item{...}{Extra arguments passed on to \code{\link[stats:kmeans]{stats::kmeans()}} or
 \code{\link[stats:hclust]{stats::hclust()}}.}
+
+\item{repeats}{The number of times to repeat the clustered partitioning.}
+
+\item{distance_function}{Which function should be used for distance
+calculations? Defaults to \code{\link[sf:geos_measures]{sf::st_distance()}}, with the output matrix
+converted to a \code{\link[stats:dist]{stats::dist()}} object. You can also provide your own
+function; see Details.}
 }
 \value{
 A tibble with classes \code{spatial_clustering_cv}, \code{spatial_rset},
@@ -55,11 +59,14 @@ A resample of the analysis data consists of V-1 of the folds/clusters
 while the assessment set contains the final fold/cluster.
 }
 \details{
-Clusters are created based on either the distances between observations
-(if \code{data} is an \code{sf} object) or by clustering the variables in the \code{coords}
-argument. Each cluster is used as a fold for cross-validation.
-Depending on how the data are distributed spatially, there may not be an
-equal number of observations in each fold.
+Clusters are created based on the distances between observations
+if \code{data} is an \code{sf} object. Each cluster is used as a fold for
+cross-validation. Depending on how the data are distributed spatially, there
+may not be an equal number of observations in each fold.
+
+You can optionally provide a custom function to \code{distance_function.} The
+function should take an \code{sf} object and return a \code{\link[stats:dist]{stats::dist()}} object with
+distances between data points.
 
 You can optionally provide a custom function to \code{cluster_function}. The
 function must take three arguments:
@@ -73,10 +80,20 @@ The function should return a vector of cluster assignments of length
 \code{nrow(data)}, with each element of the vector corresponding to the matching
 row of the data frame.
 }
+\section{Changes in spatialsample 0.3.0}{
+
+As of spatialsample version 0.3.0, this function no longer accepts non-\code{sf}
+objects as arguments to \code{data}. In order to perform clustering with
+non-spatial data, consider using \code{\link[rsample:clustering_cv]{rsample::clustering_cv()}}.
+
+Also as of version 0.3.0, this function now calculates edge-to-edge distance
+for non-point geometries, in line with the rest of the package. Earlier
+versions relied upon between-centroid distances.
+}
+
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(Smithsonian, package = "modeldata")
-spatial_clustering_cv(Smithsonian, coords = c(latitude, longitude), v = 5)
 
 smithsonian_sf <- sf::st_as_sf(
   Smithsonian,
