@@ -38,6 +38,10 @@
 #' or [sf::st_as_sf()]), to split into folds.
 #' @inheritParams buffer_indices
 #' @inheritParams rsample::clustering_cv
+#' @param distance_function Which function should be used for distance
+#' calculations? Defaults to [sf::st_distance()], with the output matrix
+#' converted to a [stats::dist()] object. You can also provide your own
+#' function; see Details.
 #' @param v The number of partitions of the data set.
 #' @param cluster_function Which function should be used for clustering?
 #' Options are either `"kmeans"` (to use [stats::kmeans()])

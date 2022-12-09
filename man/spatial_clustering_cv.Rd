@@ -39,9 +39,10 @@ or assessment set. If \code{NULL}, no buffer is applied.}
 
 \item{repeats}{The number of times to repeat the clustered partitioning.}
 
-\item{distance_function}{Which function should be used for distance calculations?
-Defaults to \code{\link[stats:dist]{stats::dist()}}. You can also provide your own
-function; see \code{Details}.}
+\item{distance_function}{Which function should be used for distance
+calculations? Defaults to \code{\link[sf:geos_measures]{sf::st_distance()}}, with the output matrix
+converted to a \code{\link[stats:dist]{stats::dist()}} object. You can also provide your own
+function; see Details.}
 }
 \value{
 A tibble with classes \code{spatial_clustering_cv}, \code{spatial_rset},
