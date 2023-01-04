@@ -46,6 +46,7 @@ test_that("random assignment", {
 })
 
 test_that("repeated", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
   rs2 <- spatial_block_cv(ames_sf, repeats = 2)
 
@@ -173,6 +174,7 @@ test_that("systematic assignment -- continuous", {
 })
 
 test_that("polygons are only assigned one fold", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
 
   rs1 <- spatial_block_cv(boston_canopy, method = "continuous")
@@ -209,6 +211,7 @@ test_that("polygons are only assigned one fold", {
 })
 
 test_that("blocks are filtered based on centroids", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(123)
   rs1 <- spatial_block_cv(boston_canopy, v = 18, cellsize = 15000)
   expect_true(
