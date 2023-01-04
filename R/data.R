@@ -43,7 +43,7 @@
 #'   \item{geometry}{Geometry of each hexagon, encoded using EPSG:2249 as a coordinate reference system (NAD83 / Massachusetts Mainland (ftUS)). Note that the linear units of this CRS are in US feet.}
 #' }
 #'
-#' @source Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics2}.
-#' Heat data is from \url{https://data.boston.gov/dataset/hex-mean-heat-index2}.
+#' @source Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics}.
+#' Heat data is from \url{https://data.boston.gov/dataset/hex-mean-heat-index}.
 #' Most field definitions are from \url{https://data.boston.gov/dataset/canopy-change-assessment-data-dictionary}.
 "boston_canopy"

@@ -20,13 +20,13 @@ The goal of spatialsample is to provide functions and classes for
 spatial resampling to use with
 [rsample](https://rsample.tidymodels.org/), including:
 
--   [spatial clustering
-    cross-validation](https://doi.org/10.1109/IGARSS.2012.6352393)
--   [spatial block cross-validation](https://doi.org/10.1111/ecog.02881)
--   [spatially buffered
-    cross-validation](https://doi.org/10.1111/geb.12161)
--   [leave-location-out
-    cross-validation](https://doi.org/10.1016/j.envsoft.2017.12.001)
+- [spatial clustering
+  cross-validation](https://doi.org/10.1109/IGARSS.2012.6352393)
+- [spatial block cross-validation](https://doi.org/10.1111/ecog.02881)
+- [spatially buffered
+  cross-validation](https://doi.org/10.1111/geb.12161)
+- [leave-location-out
+  cross-validation](https://doi.org/10.1016/j.envsoft.2017.12.001)
 
 Like [rsample](https://rsample.tidymodels.org/), spatialsample provides
 building blocks for creating and analyzing resamples of a spatial data
@@ -67,11 +67,11 @@ folds
 #> # A tibble: 5 × 2
 #>   splits            id   
 #>   <list>            <chr>
-#> 1 <split [600/82]>  Fold1
-#> 2 <split [589/93]>  Fold2
+#> 1 <split [604/78]>  Fold1
+#> 2 <split [595/87]>  Fold2
 #> 3 <split [524/158]> Fold3
-#> 4 <split [497/185]> Fold4
-#> 5 <split [518/164]> Fold5
+#> 4 <split [490/192]> Fold4
+#> 5 <split [515/167]> Fold5
 ```
 
 In this example, the `boston_canopy` data on tree cover in Boston, MA is
@@ -109,18 +109,18 @@ This project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
--   For questions and discussions about tidymodels packages, modeling,
-    and machine learning, please [post on RStudio
-    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on RStudio
+  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
--   If you think you have encountered a bug, please [submit an
-    issue](https://github.com/tidymodels/rules/issues).
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/rules/issues).
 
--   Either way, learn how to create and share a
-    [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
-    (a minimal, reproducible example), to clearly communicate about your
-    code.
+- Either way, learn how to create and share a
+  [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
 
--   Check out further details on [contributing guidelines for tidymodels
-    packages](https://www.tidymodels.org/contribute/) and [how to get
-    help](https://www.tidymodels.org/help/).
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).

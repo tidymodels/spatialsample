@@ -30,8 +30,8 @@ containing 682 records of 22 variables:
 }
 }
 \source{
-Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics2}.
-Heat data is from \url{https://data.boston.gov/dataset/hex-mean-heat-index2}.
+Canopy data is from \url{https://data.boston.gov/dataset/hex-tree-canopy-change-metrics}.
+Heat data is from \url{https://data.boston.gov/dataset/hex-mean-heat-index}.
 Most field definitions are from \url{https://data.boston.gov/dataset/canopy-change-assessment-data-dictionary}.
 }
 \usage{

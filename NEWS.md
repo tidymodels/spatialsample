@@ -1,9 +1,24 @@
 # spatialsample (development version)
 
-* Outputs from `spatial_buffer_vfold_cv()` should now have the correct `radius` and `buffer` attributes (#110).
+## Breaking changes
+
+* `spatial_clustering_cv()` no longer accepts non-sf objects. Use 
+  `rsample::clustering_cv()` for these instead (#126).
+  
+* `spatial_clustering_cv()` now uses edge-to-edge distances, like the rest of
+  the package, rather than centroids (#126).
+
+## New features
 
 * All functions now have a `repeats` argument, defaulting to 1, allowing for 
-  repeated cross-validation. 
+  repeated cross-validation (#122, #125, #126). 
+
+* `spatial_clustering_cv()` now has a `distance_function` argument, set by 
+  default to `as.dist(sf::st_distance(x))` (#126).
+
+## Minor improvements and fixes
+
+* Outputs from `spatial_buffer_vfold_cv()` should now have the correct `radius` and `buffer` attributes (#110).
 
 * `spatial_buffer_vfold_cv()` now has the correct `id` values when using repeats (#116).
 
@@ -11,16 +26,7 @@
 
 * The minimum `sf` version required is now `>= 1.0-9`, so that unit objects can be passed to `cellsize` in `spatial_block_cv()` (#113; #124).
 
-* `autoplot()` now handles repeated cross-validation properly.
-
-* `spatial_clustering_cv()` no longer accepts non-sf objects. Use 
-  `rsample::clustering_cv()` for these instead.
-  
-* `spatial_clustering_cv()` now uses edge-to-edge distances, like the rest of
-  the package, rather than centroids.
-  
-* `spatial_clustering_cv()` now has a `distance_function` argument, set by 
-  default to `as.dist(sf::st_distance(x))`. 
+* `autoplot()` now handles repeated cross-validation properly (#123).
 
 # spatialsample 0.2.1
 
