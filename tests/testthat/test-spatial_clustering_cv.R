@@ -11,6 +11,7 @@ Smithsonian_sf <- sf::st_as_sf(
 )
 
 test_that("repeats", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
   rs1 <- spatial_clustering_cv(
     Smithsonian_sf,
@@ -38,6 +39,7 @@ test_that("repeats", {
 })
 
 test_that("using hclust", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
   rs1 <- spatial_clustering_cv(
     Smithsonian_sf,
@@ -94,6 +96,7 @@ test_that("bad args", {
 })
 
 test_that("can pass the dots to kmeans", {
+  skip_if_not(sf::sf_use_s2())
   expect_error(
     spatial_clustering_cv(
       Smithsonian_sf,
@@ -105,7 +108,7 @@ test_that("can pass the dots to kmeans", {
 })
 
 test_that("using sf", {
-
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
   rs1 <- spatial_clustering_cv(
     Smithsonian_sf,
@@ -152,6 +155,7 @@ test_that("using sf", {
 })
 
 test_that("using custom functions", {
+  skip_if_not(sf::sf_use_s2())
   custom_cluster <- function(dists, v, ...) {
     clusters <- kmeans(dists, centers = v, ...)
     letters[clusters$cluster]
@@ -182,6 +186,7 @@ test_that("using custom functions", {
 })
 
 test_that("polygons are only assigned one fold", {
+  skip_if_not(sf::sf_use_s2())
   set.seed(11)
 
   rs1 <- spatial_clustering_cv(boston_canopy, cluster_function = "hclust")
@@ -211,6 +216,7 @@ test_that("polygons are only assigned one fold", {
 })
 
 test_that("printing", {
+  skip_if_not(sf::sf_use_s2())
   # The default RNG changed in 3.6.0
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
   set.seed(123)
@@ -223,6 +229,7 @@ test_that("printing", {
 })
 
 test_that("rsplit labels", {
+  skip_if_not(sf::sf_use_s2())
   rs <- spatial_clustering_cv(Smithsonian_sf, v = 2)
   all_labs <- map_df(rs$splits, labels)
   original_id <- rs[, grepl("^id", names(rs))]
