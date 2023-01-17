@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spatialsample</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,18 +55,21 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="spatialsample-development-version">spatialsample (development version)<a class="anchor" aria-label="anchor" href="#spatialsample-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="spatialsample-030">spatialsample 0.3.0<a class="anchor" aria-label="anchor" href="#spatialsample-030"></a></h2>
 <div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<h3 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h3>
 <ul><li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> no longer accepts non-sf objects. Use <code><a href="https://rsample.tidymodels.org/reference/clustering_cv.html" class="external-link">rsample::clustering_cv()</a></code> for these instead (<a href="https://github.com/tidymodels/spatialsample/issues/126" class="external-link">#126</a>).</p></li>
 <li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> now uses edge-to-edge distances, like the rest of the package, rather than centroids (<a href="https://github.com/tidymodels/spatialsample/issues/126" class="external-link">#126</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-3-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h3>
 <ul><li><p>All functions now have a <code>repeats</code> argument, defaulting to 1, allowing for repeated cross-validation (<a href="https://github.com/tidymodels/spatialsample/issues/122" class="external-link">#122</a>, <a href="https://github.com/tidymodels/spatialsample/issues/125" class="external-link">#125</a>, <a href="https://github.com/tidymodels/spatialsample/issues/126" class="external-link">#126</a>).</p></li>
 <li><p><code><a href="../reference/spatial_clustering_cv.html">spatial_clustering_cv()</a></code> now has a <code>distance_function</code> argument, set by default to <code>as.dist(sf::st_distance(x))</code> (<a href="https://github.com/tidymodels/spatialsample/issues/126" class="external-link">#126</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-fixes-development-version">Minor improvements and fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-fixes-0-3-0">Minor improvements and fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-fixes-0-3-0"></a></h3>
 <ul><li><p>Outputs from <code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> should now have the correct <code>radius</code> and <code>buffer</code> attributes (<a href="https://github.com/tidymodels/spatialsample/issues/110" class="external-link">#110</a>).</p></li>
 <li><p><code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> now has the correct <code>id</code> values when using repeats (<a href="https://github.com/tidymodels/spatialsample/issues/116" class="external-link">#116</a>).</p></li>
 <li><p><code><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv()</a></code> now throws an error when <code>repeats &gt; 1 &amp;&amp; v &gt;= nrow(data)</code> (<a href="https://github.com/tidymodels/spatialsample/issues/116" class="external-link">#116</a>).</p></li>
