@@ -16,8 +16,8 @@ spatial_clustering_cv(
 )
 }
 \arguments{
-\item{data}{A data frame or an \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
-or \code{\link[sf:st_as_sf]{sf::st_as_sf()}}), to split into folds.}
+\item{data}{An \code{sf} object (often from \code{\link[sf:st_read]{sf::read_sf()}}
+or \code{\link[sf:st_as_sf]{sf::st_as_sf()}}) to split into folds.}
 
 \item{v}{The number of partitions of the data set.}
 

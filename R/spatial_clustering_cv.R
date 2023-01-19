@@ -34,8 +34,8 @@
 #' `nrow(data)`, with each element of the vector corresponding to the matching
 #' row of the data frame.
 #'
-#' @param data A data frame or an `sf` object (often from [sf::read_sf()]
-#' or [sf::st_as_sf()]), to split into folds.
+#' @param data An `sf` object (often from [sf::read_sf()]
+#' or [sf::st_as_sf()]) to split into folds.
 #' @inheritParams buffer_indices
 #' @inheritParams rsample::clustering_cv
 #' @param distance_function Which function should be used for distance
