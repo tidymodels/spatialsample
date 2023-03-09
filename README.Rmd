@@ -15,7 +15,7 @@ library(ggplot2)
 theme_set(theme_minimal())
 ```
 
-# spatialsample <a href='https://spatialsample.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# spatialsample <a href="https://spatialsample.tidymodels.org"><img src="man/figures/logo.png" align="right" height="138" alt="A hand-drawn map with orange roads, blue rivers, green trees, and brown mountains on a beige background" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/spatialsample/actions/workflows/R-CMD-check.yaml)
