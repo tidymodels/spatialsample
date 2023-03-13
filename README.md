@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# spatialsample <a href='https://spatialsample.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# spatialsample <a href="https://spatialsample.tidymodels.org"><img src="man/figures/logo.png" align="right" height="138" alt="A hand-drawn map with orange roads, blue rivers, green trees, and brown mountains on a beige background" /></a>
 
 <!-- badges: start -->
 
@@ -46,8 +46,8 @@ install.packages("spatialsample")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tidymodels/spatialsample")
+# install.packages("pak")
+pak::pak("tidymodels/spatialsample")
 ```
 
 ## Example
