@@ -6,7 +6,6 @@ chosen_points <- sf::st_as_sf(
 )
 
 test_that("buffering selects the expected points", {
-
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
 
@@ -160,7 +159,6 @@ test_that("buffering selects the expected points", {
       )
     )
   )
-
 })
 
 skip_if_not_installed("modeldata")
@@ -201,7 +199,6 @@ ames_sf <- sf::st_as_sf(
 )
 
 test_that("using buffers", {
-
   skip_if_not(sf::sf_use_s2())
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
@@ -284,11 +281,9 @@ test_that("using buffers", {
       buffer = 500
     )
   )
-
 })
 
 test_that("buffers respect units", {
-
   skip_if_not(sf::sf_use_s2())
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
@@ -332,5 +327,4 @@ test_that("buffers respect units", {
   attr(rs2, "radius") <- 100
   attr(rs2, "buffer") <- 100
   expect_identical(rs1, rs2)
-
 })

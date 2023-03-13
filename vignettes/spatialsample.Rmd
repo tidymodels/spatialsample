@@ -45,7 +45,7 @@ ames_sf <- sf::st_as_sf(
 For this vignette, we'll model the sale prices of the houses in the Ames data set. Let's say that the sale price of these houses depends on the year they were built, their living area (size), and the type of house they are (duplex vs. townhouse vs. single family), along with perhaps interactions between type and house size. 
 
 ```{r, eval = FALSE}
-log10(Sale_Price) ~ Year_Built + Gr_Liv_Area +  Bldg_Type
+log10(Sale_Price) ~ Year_Built + Gr_Liv_Area + Bldg_Type
 ```
 
 This relationship may exhibit spatial autocorrelation across the city of Ames, and we can use any of the several different methods provided by spatialsample to try and investigate it. 
@@ -82,7 +82,7 @@ If you already have a sense of what locations in your data are likely to be clos
 
 ```{r}
 set.seed(123)
-location_folds <- 
+location_folds <-
   spatial_leave_location_out_cv(
     ames_sf,
     group = Neighborhood,
@@ -99,7 +99,7 @@ cluster_folds$type <- "cluster"
 block_folds$type <- "block"
 location_folds$type <- "location"
 
-resamples <- 
+resamples <-
   dplyr::bind_rows(
     cluster_folds,
     block_folds,
@@ -118,14 +118,15 @@ Now let's write a function that will, for each resample:
 # `splits` will be the `rsplit` object
 compute_preds <- function(splits) {
   # fit the model to the analysis set
-  mod <- lm(log10(Sale_Price) ~ Year_Built + Bldg_Type * log10(Gr_Liv_Area), 
-            data = analysis(splits))
+  mod <- lm(log10(Sale_Price) ~ Year_Built + Bldg_Type * log10(Gr_Liv_Area),
+    data = analysis(splits)
+  )
   # identify the assessment set
   holdout <- assessment(splits)
   # return the assessment set, with true and predicted price
   tibble::tibble(
     geometry = holdout$geometry,
-    Sale_Price = log10(holdout$Sale_Price), 
+    Sale_Price = log10(holdout$Sale_Price),
     .pred = predict(mod, holdout)
   )
 }
@@ -135,7 +136,7 @@ compute_preds <- function(splits) {
 We can apply this function to just one of the `splits`.
 
 ```{r}
-compute_preds(cluster_folds$splits[[7]]) 
+compute_preds(cluster_folds$splits[[7]])
 ```
 
 
@@ -171,10 +172,10 @@ library(ggplot2)
 cv_res %>%
   unnest(.preds) %>%
   left_join(cv_rmse, by = c("id", "type")) %>%
-  ggplot(aes(color = .estimate)) + 
+  ggplot(aes(color = .estimate)) +
   geom_sf(aes(geometry = geometry), alpha = 0.5) +
   labs(color = "RMSE") +
-  scale_color_viridis_c() + 
+  scale_color_viridis_c() +
   facet_wrap(vars(type), ncol = 1)
 ```
 

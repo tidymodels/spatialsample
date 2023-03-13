@@ -95,8 +95,7 @@ spatial_block_cv <- function(data,
   original_number_of_blocks <- length(grid_blocks)
 
   block_fun <- function(method) {
-    switch(
-      method,
+    switch(method,
       "random" = random_block_cv(
         data,
         centroids,
@@ -152,13 +151,15 @@ spatial_block_cv <- function(data,
   split_objs$splits <- map(split_objs$splits, rm_out, buffer = buffer)
 
   ## Save some overall information
-  cv_att <- list(v = v,
-                 method = method,
-                 relevant_only = relevant_only,
-                 radius = radius,
-                 buffer = buffer,
-                 repeats = repeats,
-                 ...)
+  cv_att <- list(
+    v = v,
+    method = method,
+    relevant_only = relevant_only,
+    radius = radius,
+    buffer = buffer,
+    repeats = repeats,
+    ...
+  )
 
   new_rset(
     splits = split_objs$splits,

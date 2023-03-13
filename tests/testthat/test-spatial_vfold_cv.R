@@ -79,8 +79,6 @@ test_that("spatial_buffer_vfold_cv", {
     }
   )
   expect_true(all(good_holdout))
-
-
 })
 
 test_that("spatial_leave_location_out_cv", {
@@ -90,8 +88,10 @@ test_that("spatial_leave_location_out_cv", {
   sizes1 <- dim_rset(rs1)
 
   set.seed(11)
-  rs2 <- rsample::group_vfold_cv(ames_sf,
-                                 tidyselect::eval_select("Neighborhood", ames_sf))
+  rs2 <- rsample::group_vfold_cv(
+    ames_sf,
+    tidyselect::eval_select("Neighborhood", ames_sf)
+  )
   expect_identical(
     purrr::map(rs1$splits, purrr::pluck, "in_id"),
     purrr::map(rs2$splits, purrr::pluck, "in_id")
@@ -143,7 +143,6 @@ test_that("spatial_leave_location_out_cv", {
   )
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
   expect_snapshot(rs1)
-
 })
 
 test_that("bad args", {
@@ -221,7 +220,6 @@ test_that("bad args", {
       repeats = 2
     )
   )
-
 })
 
 test_that("printing", {

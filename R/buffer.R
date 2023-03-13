@@ -11,7 +11,6 @@
 #'
 #' @keywords internal
 buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_env()) {
-
   standard_checks(data, "Buffering", call)
 
   n <- nrow(data)
