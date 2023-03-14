@@ -122,7 +122,7 @@ the year they were built, their living area (size), and the type of
 house they are (duplex vs. townhouse vs. single family), along with
 perhaps interactions between type and house size.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span> <span class="op">~</span> <span class="va">Year_Built</span> <span class="op">+</span> <span class="va">Gr_Liv_Area</span> <span class="op">+</span>  <span class="va">Bldg_Type</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span> <span class="op">~</span> <span class="va">Year_Built</span> <span class="op">+</span> <span class="va">Gr_Liv_Area</span> <span class="op">+</span> <span class="va">Bldg_Type</span></span></code></pre></div>
 <p>This relationship may exhibit spatial autocorrelation across the city
 of Ames, and we can use any of the several different methods provided by
 spatialsample to try and investigate it.</p>
@@ -186,7 +186,7 @@ cross-validation</a>. For instance, we can split the Ames data into
 folds based on neighborhoods using this function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">location_folds</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">location_folds</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/spatial_vfold.html">spatial_leave_location_out_cv</a></span><span class="op">(</span></span>
 <span>    <span class="va">ames_sf</span>,</span>
 <span>    group <span class="op">=</span> <span class="va">Neighborhood</span>,</span>
@@ -205,7 +205,7 @@ is from, and then combine them into a new data frame:</p>
 <span><span class="va">block_folds</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="st">"block"</span></span>
 <span><span class="va">location_folds</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="st">"location"</span></span>
 <span></span>
-<span><span class="va">resamples</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">resamples</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
 <span>    <span class="va">cluster_folds</span>,</span>
 <span>    <span class="va">block_folds</span>,</span>
@@ -222,21 +222,22 @@ predicted price, on the log scale</li>
 <code class="sourceCode R"><span><span class="co"># `splits` will be the `rsplit` object</span></span>
 <span><span class="va">compute_preds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">splits</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># fit the model to the analysis set</span></span>
-<span>  <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span> <span class="op">~</span> <span class="va">Year_Built</span> <span class="op">+</span> <span class="va">Bldg_Type</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Gr_Liv_Area</span><span class="op">)</span>, </span>
-<span>            data <span class="op">=</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/as.data.frame.rsplit.html" class="external-link">analysis</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span> <span class="op">~</span> <span class="va">Year_Built</span> <span class="op">+</span> <span class="va">Bldg_Type</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Gr_Liv_Area</span><span class="op">)</span>,</span>
+<span>    data <span class="op">=</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/as.data.frame.rsplit.html" class="external-link">analysis</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span>  <span class="co"># identify the assessment set</span></span>
 <span>  <span class="va">holdout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/as.data.frame.rsplit.html" class="external-link">assessment</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span></span>
 <span>  <span class="co"># return the assessment set, with true and predicted price</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>    geometry <span class="op">=</span> <span class="va">holdout</span><span class="op">$</span><span class="va">geometry</span>,</span>
-<span>    Sale_Price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">holdout</span><span class="op">$</span><span class="va">Sale_Price</span><span class="op">)</span>, </span>
+<span>    Sale_Price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">holdout</span><span class="op">$</span><span class="va">Sale_Price</span><span class="op">)</span>,</span>
 <span>    .pred <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">holdout</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We can apply this function to just one of the
 <code>splits</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">compute_preds</span><span class="op">(</span><span class="va">cluster_folds</span><span class="op">$</span><span class="va">splits</span><span class="op">[[</span><span class="fl">7</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span>
+<code class="sourceCode R"><span><span class="fu">compute_preds</span><span class="op">(</span><span class="va">cluster_folds</span><span class="op">$</span><span class="va">splits</span><span class="op">[[</span><span class="fl">7</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 370 × 3</span></span></span>
 <span><span class="co">#&gt;                geometry Sale_Price .pred</span></span>
 <span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -304,10 +305,10 @@ metrics back up to our results and plot them.</p>
 <span><span class="va">cv_res</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">.preds</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">cv_rmse</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"type"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">.estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">.estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geometry</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"RMSE"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spatialsample_files/figure-html/unnamed-chunk-15-1.png" width="768"></p>
 <p>As you can see, the results you get are highly dependent on how you

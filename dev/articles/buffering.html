@@ -120,7 +120,7 @@ in:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span><span class="va">boston_canopy</span>, v <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">blocks</span><span class="op">)</span></span></code></pre></div>
 <p><img src="buffering_files/figure-html/boston-block-1.png" width="768"></p>
 <p>If we look at the individual folds, we can see that the assessment
@@ -155,8 +155,8 @@ distance. To specify a buffer in meters instead, we can use:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span></span>
-<span>  <span class="va">boston_canopy</span>, </span>
-<span>  v <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>  <span class="va">boston_canopy</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">as_units</a></span><span class="op">(</span><span class="fl">1500</span>, <span class="st">"m"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -177,8 +177,8 @@ sure to only capture adjacent polygons in a buffer, set
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span></span>
-<span>  <span class="va">boston_canopy</span>, </span>
-<span>  v <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>  <span class="va">boston_canopy</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fl">2e-200</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -197,8 +197,8 @@ assessment set:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_block_cv.html">spatial_block_cv</a></span><span class="op">(</span></span>
-<span>  <span class="va">boston_canopy</span>, </span>
-<span>  v <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>  <span class="va">boston_canopy</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  radius <span class="op">=</span> <span class="fl">2e-200</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -220,8 +220,8 @@ leave-one-disc-out cross-validation using spatialsample:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spatial_vfold.html">spatial_buffer_vfold_cv</a></span><span class="op">(</span></span>
-<span>  <span class="va">boston_canopy</span>, </span>
-<span>  v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">boston_canopy</span><span class="op">)</span>, </span>
+<span>  <span class="va">boston_canopy</span>,</span>
+<span>  v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">boston_canopy</span><span class="op">)</span>,</span>
 <span>  radius <span class="op">=</span> <span class="fl">1500</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fl">1500</span></span>
 <span><span class="op">)</span></span>
