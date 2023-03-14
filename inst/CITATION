@@ -1,0 +1,12 @@
+bibentry(
+  bibtype = "Misc",
+  title="Assessing the performance of spatial cross-validation approaches for models of spatially structured data",
+  author="Michael J Mahoney and Lucas K Johnson and Julia Silge and Hannah Frick and Max Kuhn and Colin M Beier",
+  year="2023",
+  eprint="2303.07334",
+  archivePrefix="arXiv",
+  primaryClass="stat.CO",
+  doi = "10.48550/arXiv.2303.07334",
+  url = "https://arxiv.org/abs/2303.07334",
+  textVersion = "Mahoney M. J., Johnson, L. K., Silge, J., Frick, H., Kuhn, M., and Beier C. M. (2023). Assessing the performance of spatial cross-validation approaches for models of spatially structured data. arXiv. https://doi.org/10.48550/arXiv.2303.07334",
+         mheader = "To cite spatialsample in publications please use:")
