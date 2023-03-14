@@ -52,7 +52,6 @@ check_v <- function(v,
                     objects,
                     allow_max_v = TRUE,
                     call = rlang::caller_env()) {
-
   if (is.null(v)) v <- Inf
 
   if (!rlang::is_integerish(v) || length(v) != 1 || v < 1) {

@@ -212,7 +212,6 @@ test_that("polygons are only assigned one fold", {
     }
   )
   expect_true(all(good_holdout))
-
 })
 
 test_that("printing", {

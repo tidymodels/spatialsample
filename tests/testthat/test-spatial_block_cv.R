@@ -122,7 +122,6 @@ test_that("systematic assignment -- snake", {
   )
   expect_snapshot(boston_snake)
   expect_snapshot(as.integer(boston_snake$splits[[1]]))
-
 })
 
 test_that("systematic assignment -- continuous", {
@@ -207,7 +206,6 @@ test_that("polygons are only assigned one fold", {
     }
   )
   expect_true(all(good_holdout))
-
 })
 
 test_that("blocks are filtered based on centroids", {
@@ -282,7 +280,6 @@ test_that("bad args", {
   expect_snapshot_error(
     spatial_block_cv(boston_canopy, method = "snake", repeats = 2)
   )
-
 })
 
 test_that("printing", {

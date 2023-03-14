@@ -2,16 +2,20 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom rsample complement
+#' @importFrom rsample new_rset
+#' @importFrom stats as.dist
+#' @importFrom stats cutree
+#' @importFrom stats hclust
+#' @importFrom stats kmeans
+#' @importFrom rsample make_splits
+#' @importFrom purrr map
+#' @importFrom rlang is_empty
+#' @importFrom dplyr dplyr_reconstruct
 #' @useDynLib spatialsample, .registration = TRUE
 ## usethis namespace: end
 NULL
 
-#' @importFrom rsample complement new_rset make_splits
-#' @importFrom purrr map
-#' @importFrom rlang is_empty
-#' @importFrom stats kmeans hclust cutree as.dist dist
-#' @importFrom dplyr dplyr_reconstruct
-#'
 #' @importFrom rsample analysis
 #' @export
 rsample::analysis

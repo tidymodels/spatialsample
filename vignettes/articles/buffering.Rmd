@@ -31,7 +31,7 @@ By default, most spatial cross-validation methods in spatialsample don't automat
 ```{r boston-block}
 set.seed(123)
 blocks <- spatial_block_cv(boston_canopy, v = 5)
-  
+
 autoplot(blocks)
 ```
 
@@ -63,8 +63,8 @@ For instance, `boston_canopy` uses units of US feet for distance. To specify a b
 ```{r boston-block-buffer-m-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
-  boston_canopy, 
-  v = 5, 
+  boston_canopy,
+  v = 5,
   buffer = units::as_units(1500, "m")
 )
 
@@ -78,8 +78,8 @@ One special case, however, is when `buffer` is set to 0. In this case, spatialsa
 ```{r boston-block-buffer-eps-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
-  boston_canopy, 
-  v = 5, 
+  boston_canopy,
+  v = 5,
   buffer = 2e-200
 )
 
@@ -93,8 +93,8 @@ In addition to exclusion buffers, spatialsample also provides a way to add an _i
 ```{r boston-block-radius-eps-gif, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_block_cv(
-  boston_canopy, 
-  v = 5, 
+  boston_canopy,
+  v = 5,
   radius = 2e-200
 )
 
@@ -112,8 +112,8 @@ Both `radius` and `buffer` can be specified at the same time. This makes it poss
 ```{r boston-block-disc-visible, eval = FALSE}
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
-  boston_canopy, 
-  v = nrow(boston_canopy), 
+  boston_canopy,
+  v = nrow(boston_canopy),
   radius = 1500,
   buffer = 1500
 )
@@ -123,8 +123,8 @@ purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```{r boston-block-disc-executed, echo = FALSE, animation.hook="gifski"}
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
-  boston_canopy, 
-  v = nrow(boston_canopy), 
+  boston_canopy,
+  v = nrow(boston_canopy),
   radius = 1500,
   buffer = 1500
 )
@@ -132,7 +132,7 @@ blocks <- spatial_buffer_vfold_cv(
 # Without filtering, this creates an 11 minute long GIF
 # which is possibly not the best use of disc space
 #
-# ...no matter how badly I want to ship an 11 minute GIF in a CRAN package 
+# ...no matter how badly I want to ship an 11 minute GIF in a CRAN package
 purrr::walk(head(blocks, 60)$splits, function(x) print(autoplot(x)))
 ```
 
