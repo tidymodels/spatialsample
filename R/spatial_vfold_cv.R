@@ -70,7 +70,6 @@ spatial_buffer_vfold_cv <- function(data,
                                     breaks = 4,
                                     pool = 0.1,
                                     ...) {
-
   standard_checks(data, "`spatial_buffer_vfold_cv()`")
 
   if (missing(radius) || missing(buffer)) {
@@ -115,15 +114,17 @@ spatial_buffer_vfold_cv <- function(data,
   }
 
   if (!is.null(strata)) names(strata) <- NULL
-  cv_att <- list(v = v,
-                 repeats = repeats,
-                 strata  = strata,
-                 breaks  = breaks,
-                 pool    = pool,
-                 # Set radius and buffer to 0 if NULL or negative
-                 # This enables rsample::reshuffle_rset to work
-                 radius  = max(c(radius, 0)),
-                 buffer  = max(c(buffer, 0)))
+  cv_att <- list(
+    v = v,
+    repeats = repeats,
+    strata = strata,
+    breaks = breaks,
+    pool = pool,
+    # Set radius and buffer to 0 if NULL or negative
+    # This enables rsample::reshuffle_rset to work
+    radius = max(c(radius, 0)),
+    buffer = max(c(buffer, 0))
+  )
 
   if ("sf" %in% class(data)) {
     rset_class <- c("spatial_buffer_vfold_cv", "spatial_rset", "rset")
@@ -144,7 +145,6 @@ spatial_buffer_vfold_cv <- function(data,
     v = v,
     cv_att = cv_att
   )
-
 }
 
 
@@ -158,7 +158,6 @@ spatial_leave_location_out_cv <- function(data,
                                           buffer = NULL,
                                           ...,
                                           repeats = 1) {
-
   if (!missing(group)) {
     group <- tidyselect::eval_select(rlang::enquo(group), data)
   }
@@ -188,10 +187,12 @@ spatial_leave_location_out_cv <- function(data,
     ...
   )
 
-  cv_att <- list(v = v,
-                 group = group,
-                 radius = radius,
-                 buffer = buffer)
+  cv_att <- list(
+    v = v,
+    group = group,
+    radius = radius,
+    buffer = buffer
+  )
 
   if ("sf" %in% class(data)) {
     rset_class <- c("spatial_leave_location_out_cv", "spatial_rset", "rset")
@@ -212,7 +213,6 @@ spatial_leave_location_out_cv <- function(data,
     v = v,
     cv_att = cv_att
   )
-
 }
 
 posthoc_buffer_rset <- function(data,
@@ -260,5 +260,4 @@ posthoc_buffer_rset <- function(data,
     attrib = cv_att,
     subclass = rset_class
   )
-
 }

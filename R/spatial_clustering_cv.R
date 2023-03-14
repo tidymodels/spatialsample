@@ -135,4 +135,3 @@ spatial_clustering_cv <- function(data,
     cv_att = cv_att
   )
 }
-

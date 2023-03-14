@@ -119,5 +119,4 @@ test_that("autoplot is stable", {
     "repeated LLO",
     autoplot(repeat_llo)
   )
-
 })
