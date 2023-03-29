@@ -121,7 +121,7 @@
        8 <split [2736/194]> Fold08
        9 <split [2919/11]>  Fold09
       10 <split [2855/75]>  Fold10
-      # ... with 17 more rows
+      # i 17 more rows
 
 ---
 
@@ -146,7 +146,7 @@
        8 <split [2928/2]>   Fold08
        9 <split [2929/1]>   Fold09
       10 <split [2923/7]>   Fold10
-      # ... with 44 more rows
+      # i 44 more rows
 
 ---
 
@@ -196,7 +196,7 @@
        8 <split [2854/76]>  Fold08
        9 <split [2927/3]>   Fold09
       10 <split [2870/60]>  Fold10
-      # ... with 44 more rows
+      # i 44 more rows
 
 ---
 

@@ -71,7 +71,7 @@
        8 <split [663/7]> Fold008
        9 <split [663/7]> Fold009
       10 <split [665/7]> Fold010
-      # ... with 672 more rows
+      # i 672 more rows
 
 ---
 
@@ -97,7 +97,7 @@
        8 <split [2617/136]> Resample08
        9 <split [2764/150]> Resample09
       10 <split [2501/324]> Resample10
-      # ... with 18 more rows
+      # i 18 more rows
 
 ---
 
