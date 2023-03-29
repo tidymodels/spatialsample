@@ -46,17 +46,18 @@ autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
   .fold. <- .facet. <- NULL
 
   object <- if (sum(bool_id_columns) == 1) {
-    purrr::map2_dfr(
+    purrr::map2(
       object$splits,
       object$id,
       ~ cbind(assessment(.x), .fold. = .y)
     )
   } else {
-    purrr::pmap_dfr(
+    purrr::pmap(
       object[grepl("splits", names(object)) | bool_id_columns],
       ~ cbind(assessment(..1), .facet. = ..2, .fold. = ..3)
     )
   }
+  object <- dplyr::bind_rows(object)
 
   p <- ggplot2::ggplot(
     data = object,
