@@ -236,13 +236,13 @@ test_that("rsplit labels", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)
   rs <- spatial_buffer_vfold_cv(ames_sf, v = 2, buffer = NULL, radius = NULL)
-  all_labs <- map_df(rs$splits, labels)
+  all_labs <- dplyr::bind_rows(purrr::map(rs$splits, labels))
   original_id <- rs[, grepl("^id", names(rs))]
   expect_equal(all_labs, original_id)
 
   set.seed(123)
   rs <- spatial_leave_location_out_cv(ames_sf, Neighborhood, v = 2)
-  all_labs <- map_df(rs$splits, labels)
+  all_labs <- dplyr::bind_rows(purrr::map(rs$splits, labels))
   original_id <- rs[, grepl("^id", names(rs))]
   expect_equal(all_labs, original_id)
 })
