@@ -251,7 +251,7 @@ predicted price, on the log scale</li>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  (-93.66067 42.0346)       5.23  5.25</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> (-93.65921 42.03456)       5.12  5.26</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> (-93.65623 42.03345)       5.39  5.33</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 360 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 360 more rows</span></span></span></code></pre></div>
 <p>Or we can apply this function to all of the <code>splits</code>,
 using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -296,7 +296,7 @@ analysis</a>, such as <code><a href="https://yardstick.tidymodels.org/reference/
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Fold04 cluster rmse    standard      0.054<span style="text-decoration: underline;">2</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Fold05 block   rmse    standard      0.103 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fold05 cluster rmse    standard      0.146 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 35 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 35 more rows</span></span></span></code></pre></div>
 <p>It looks like the RMSE may vary across the city, so we can join the
 metrics back up to our results and plot them.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
