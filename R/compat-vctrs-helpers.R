@@ -17,7 +17,8 @@ delayedAssign("rset_subclasses", {
         spatial_block_cv              = spatial_block_cv(test_data()),
         spatial_clustering_cv         = spatial_clustering_cv(test_data()),
         spatial_buffer_vfold_cv       = spatial_buffer_vfold_cv(test_data(), radius = 1, buffer = 1),
-        spatial_leave_location_out_cv = spatial_leave_location_out_cv(test_data(), idx)
+        spatial_leave_location_out_cv = spatial_leave_location_out_cv(test_data(), idx),
+        spatial_nndm_cv               = spatial_nndm_cv(test_data()[1:500, ], test_data()[501:682, ])
       )
     )
   } else {
