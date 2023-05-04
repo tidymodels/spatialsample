@@ -59,7 +59,7 @@ test_that("normal usage", {
   same_data <- map_lgl(
     rs1$splits,
     function(x) {
-      isTRUE(all.equal(x$data, Smithsonian_sf))
+      isTRUE(all.equal(x$data, Smithsonian_sf[1:15, ]))
     }
   )
   expect_true(all(same_data))
