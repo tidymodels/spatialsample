@@ -67,7 +67,7 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
                             min_analysis_proportion = 0.5) {
   rlang::check_dots_used()
 
-  standard_checks(data, "`spatial_nndm_cv()`")
+  standard_checks(data, "`spatial_nndm_cv()`", rlang::current_env())
   if (!is_sf(prediction_sites)) {
     rlang::abort(
       c(
