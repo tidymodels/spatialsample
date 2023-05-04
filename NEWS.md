@@ -1,5 +1,10 @@
 # spatialsample (development version)
 
+* `spatial_nndm_cv()` is a new function for nearest neighbor distance matching
+  cross-validation, as described in Milà et al. 2022 
+  (doi: 10.1111/2041-210X.13851). NNDM was first implemented in CAST
+  (https://cran.r-project.org/package=CAST).
+
 # spatialsample 0.3.0
 
 ## Breaking changes

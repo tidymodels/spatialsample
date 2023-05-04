@@ -68,7 +68,15 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   rlang::check_dots_used()
 
   standard_checks(data, "`spatial_nndm_cv()`")
-  check_sf(data, "`spatial_nndm_cv()`", rlang::current_env())
+  if (!is_sf(prediction_sites)) {
+    rlang::abort(
+      c(
+        glue::glue("`spatial_nndm_cv()` currently only supports `sf` objects."),
+        i = "Try converting `prediction_sites` to an `sf` object via `sf::st_as_sf()`."
+      ),
+      call = rlang::current_env()
+    )
+  }
 
   if (!isTRUE(sf::st_crs(prediction_sites) == sf::st_crs(data))) {
     rlang::warn(
@@ -145,13 +153,8 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
 
     n_remaining <- sum(!is.na(distance_matrix[indices$col, ]))
 
-    if (!any(nn_training > indices$distance)) {
-      break
-    }
-
     if (prop_close_training >= prop_close_prediction &
       (n_remaining / n_training) > min_analysis_proportion) {
-
       distance_matrix[indices$row, indices$col] <- NA
 
       nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
@@ -164,6 +167,11 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
       indices$row <- which(nn_training == indices$distance)[1]
       indices$col <- which(distance_matrix[indices$row, ] == indices$distance)
     }
+
+    if (!any(nn_training > indices$distance)) {
+      break
+    }
+
   }
 
   indices <- purrr::map(
@@ -189,5 +197,4 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     attrib = cv_att,
     subclass = c("spatial_nndm_cv", "spatial_rset", "rset")
   )
-
 }
