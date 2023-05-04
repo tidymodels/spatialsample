@@ -146,31 +146,32 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   n_training <- nrow(data)
 
   while (indices$distance <= autocorrelation_range) {
+    # Proportion of training data with a neighbor in training
+    # closer than indices$distance if we removed one additional point
+    # (hence 1 / n_training)
     prop_close_training <-
       mean(nn_training <= indices$distance) - (1 / n_training)
+    # Proportion of training data with a neighbor in prediction data
+    # closer than indices$distance
     prop_close_prediction <- mean(nn_prediction <= indices$distance)
 
-    n_remaining <- sum(!is.na(distance_matrix[indices$col, ]))
+    # How much data remains in analysis sets?
+    prop_remaining <- sum(!is.na(distance_matrix[indices$row, ])) / n_training
 
-    if (prop_close_training >= prop_close_prediction &
-      (n_remaining / n_training) > min_analysis_proportion) {
+    if ((prop_close_training >= prop_close_prediction) &
+      (prop_remaining > min_analysis_proportion)) {
       distance_matrix[indices$row, indices$col] <- NA
 
       nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
 
-      indices$distance <- min(nn_training[nn_training >= indices$distance])
-      indices$row <- which(nn_training == indices$distance)[1]
-      indices$col <- which(distance_matrix[indices$row, ] == indices$distance)
+      indices <- update_indices(indices, nn_training, distance_matrix, `>=`)
     } else {
-      indices$distance <- min(nn_training[nn_training > indices$distance])
-      indices$row <- which(nn_training == indices$distance)[1]
-      indices$col <- which(distance_matrix[indices$row, ] == indices$distance)
+      indices <- update_indices(indices, nn_training, distance_matrix, `>`)
     }
 
     if (!any(nn_training > indices$distance)) {
       break
     }
-
   }
 
   indices <- purrr::map(
@@ -196,4 +197,11 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     attrib = cv_att,
     subclass = c("spatial_nndm_cv", "spatial_rset", "rset")
   )
+}
+
+update_indices <- function(indices, nn_training, distance_matrix, operator = `>`) {
+  indices$distance <- min(nn_training[operator(nn_training, indices$distance)])
+  indices$row <- which(nn_training == indices$distance)[1]
+  indices$col <- which(distance_matrix[indices$row, ] == indices$distance)
+  indices
 }

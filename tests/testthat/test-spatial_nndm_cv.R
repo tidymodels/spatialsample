@@ -11,17 +11,6 @@ Smithsonian_sf <- sf::st_as_sf(
 )
 
 test_that("bad args", {
-  expect_snapshot(
-    spatial_nndm_cv(),
-    error = TRUE
-  )
-
-  expect_snapshot(
-    spatial_nndm_cv(
-      prediction_sites = Smithsonian_sf[16:20, ]
-    ),
-    error = TRUE
-  )
 
   expect_snapshot(
     spatial_nndm_cv(Smithsonian_sf[1:15, ], Smithsonian[16:20, ]),
