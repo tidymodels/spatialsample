@@ -73,8 +73,7 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
       c(
         glue::glue("`spatial_nndm_cv()` currently only supports `sf` objects."),
         i = "Try converting `prediction_sites` to an `sf` object via `sf::st_as_sf()`."
-      ),
-      call = rlang::current_env()
+      )
     )
   }
 
