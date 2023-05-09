@@ -53,9 +53,10 @@ data split objects and an identification variable \code{id}.
 \description{
 NNDM is a variant of leave-one-out cross-validation which assigns each
 observation to a single assessment fold, and then attempts to remove data
-from each analysis fold until the mean nearest neighbor distance between
-assessment and analysis folds matches the mean nearest neighbor distance
-between training data and the locations a model will be used to predict.
+from each analysis fold until the nearest neighbor distance distribution
+between assessment and analysis folds matches the nearest neighbor distance
+distribution between training data and the locations a model will be used to
+predict.
 Proposed by Milà et al. (2022), this method aims to provide accurate
 estimates of how well models will perform in the locations they will actually
 be predicting. This method was originally implemented in the CAST package.

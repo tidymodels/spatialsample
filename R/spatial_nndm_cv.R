@@ -2,9 +2,10 @@
 #'
 #' NNDM is a variant of leave-one-out cross-validation which assigns each
 #' observation to a single assessment fold, and then attempts to remove data
-#' from each analysis fold until the mean nearest neighbor distance between
-#' assessment and analysis folds matches the mean nearest neighbor distance
-#' between training data and the locations a model will be used to predict.
+#' from each analysis fold until the nearest neighbor distance distribution
+#' between assessment and analysis folds matches the nearest neighbor distance
+#' distribution between training data and the locations a model will be used to
+#' predict.
 #' Proposed by Milà et al. (2022), this method aims to provide accurate
 #' estimates of how well models will perform in the locations they will actually
 #' be predicting. This method was originally implemented in the CAST package.
@@ -65,6 +66,9 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
                             autocorrelation_range = NULL,
                             prediction_sample_size = 1000,
                             min_analysis_proportion = 0.5) {
+  # Data validation: check that all dots are used,
+  # that data and prediction_sites are sf objects,
+  # that data has a CRS and s2 is enabled if necessary
   rlang::check_dots_used()
 
   standard_checks(data, "`spatial_nndm_cv()`", rlang::current_env())
@@ -77,6 +81,9 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     )
   }
 
+  # sf::st_distance won't reproject automatically, so if prediction_sites
+  # isn't already aligned with data, reproject coordinates to prevent
+  # distance calculations from failing
   if (!isTRUE(sf::st_crs(prediction_sites) == sf::st_crs(data))) {
     rlang::warn(
       c(
@@ -84,9 +91,17 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
         i = "Reproject `prediction_sites` and `data` to share a CRS to avoid this warning."
       )
     )
-    prediction_sites <- sf::st_transform(prediction_sites, sf::st_crs(data))
+    if (is.na(sf::st_crs(prediction_sites))) {
+      prediction_sites <- sf::st_set_crs(prediction_sites, sf::st_crs(data))
+    } else {
+      prediction_sites <- sf::st_transform(prediction_sites, sf::st_crs(data))
+    }
   }
 
+  # Attributes that will be attached to the rset object
+  # Importantly this is before we sample prediction_sites
+  # or compute autocorrelation_range,
+  # primarily for compatibility with rsample::reshuffle_rset()
   cv_att <- list(
     prediction_sites = prediction_sites,
     prediction_sample_size = prediction_sample_size,
@@ -95,6 +110,12 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     ...
   )
 
+  ######## Actual processing begins here ########
+  # "If any element of `prediction_sites` is not a single point,
+  # then points are sampled from within the bounding box of `prediction_sites`"
+  # Because an sf object can contain multiple geometry types,
+  # we check both for length > 1 (in order to avoid the "condition has length"
+  # error) and to see if the input is already only points
   pred_geometry <- unique(sf::st_geometry_type(prediction_sites))
   if (length(pred_geometry) > 1 || pred_geometry != "POINT") {
     prediction_sites <- sf::st_sample(
@@ -104,6 +125,13 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     )
   }
 
+  # Set autocorrelation range, if not specified, to be the distance between
+  # the bottom-left and upper-right corners of prediction_sites --
+  # the idea being that this is the maximum relevant distance for
+  # autocorrelation, and there's limited harm in assuming too long a range
+  # (at least, versus too short)
+  #
+  # We do this after sampling for 1:1 compatibility with CAST
   if (is.null(autocorrelation_range)) {
     bbox <- sf::st_bbox(prediction_sites)
 
@@ -119,7 +147,11 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     )[2]
   }
 
-  nn_prediction <- apply(sf::st_distance(prediction_sites, data), 1, min)
+  dist_to_nn_prediction <- apply(
+    sf::st_distance(prediction_sites, data),
+    1,
+    min
+  )
 
   distance_matrix <- sf::st_distance(data)
 
@@ -135,41 +167,57 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   units(distance_matrix) <- NULL
 
   diag(distance_matrix) <- NA
-  nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
+  dist_to_nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
 
-  indices <- list(
-    distance = min(nn_training),
-    row = which.min(nn_training)[1]
+  current_neighbor <- list(
+    distance = min(dist_to_nn_training),
+    row = which.min(dist_to_nn_training)[1]
   )
-  indices$col <- which.min(distance_matrix[indices$row, ])
+  current_neighbor$col <- which.min(distance_matrix[current_neighbor$row, ])
 
   n_training <- nrow(data)
 
-  while (indices$distance <= autocorrelation_range) {
+  # Core loop: try to match the empirical nearest neighbor distribution curves
+  # (adjusting the training:training curve to that of prediction:training)
+  while (current_neighbor$distance <= autocorrelation_range) {
     # Proportion of training data with a neighbor in training
-    # closer than indices$distance if we removed one additional point
+    # closer than current_neighbor$distance if we removed one additional point
     # (hence 1 / n_training)
     prop_close_training <-
-      mean(nn_training <= indices$distance) - (1 / n_training)
-    # Proportion of training data with a neighbor in prediction data
-    # closer than indices$distance
-    prop_close_prediction <- mean(nn_prediction <= indices$distance)
+      mean(dist_to_nn_training <= current_neighbor$distance) - (1 / n_training)
+    # Proportion of prediction data with a neighbor in training data
+    # closer than current_neighbor$distance
+    prop_close_prediction <- mean(
+      dist_to_nn_prediction <= current_neighbor$distance
+    )
 
     # How much data remains in analysis sets?
-    prop_remaining <- sum(!is.na(distance_matrix[indices$row, ])) / n_training
+    prop_remaining <- sum(
+      !is.na(distance_matrix[current_neighbor$row, ])
+    ) / n_training
 
     if ((prop_close_training >= prop_close_prediction) &
       (prop_remaining > min_analysis_proportion)) {
-      distance_matrix[indices$row, indices$col] <- NA
+      distance_matrix[current_neighbor$row, current_neighbor$col] <- NA
 
-      nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
+      dist_to_nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
 
-      indices <- update_indices(indices, nn_training, distance_matrix, `>=`)
+      current_neighbor <- find_next_neighbor(
+        current_neighbor,
+        dist_to_nn_training,
+        distance_matrix,
+        `>=`
+      )
     } else {
-      indices <- update_indices(indices, nn_training, distance_matrix, `>`)
+      current_neighbor <- find_next_neighbor(
+        current_neighbor,
+        dist_to_nn_training,
+        distance_matrix,
+        `>`
+      )
     }
 
-    if (!any(nn_training > indices$distance)) {
+    if (!any(dist_to_nn_training > current_neighbor$distance)) {
       break
     }
   }
@@ -199,9 +247,9 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   )
 }
 
-update_indices <- function(indices, nn_training, distance_matrix, operator = `>`) {
-  indices$distance <- min(nn_training[operator(nn_training, indices$distance)])
-  indices$row <- which(nn_training == indices$distance)[1]
-  indices$col <- which(distance_matrix[indices$row, ] == indices$distance)
-  indices
+find_next_neighbor <- function(current_neighbor, dist_to_nn_training, distance_matrix, operator = `>`) {
+  current_neighbor$distance <- min(dist_to_nn_training[operator(dist_to_nn_training, current_neighbor$distance)])
+  current_neighbor$row <- which(dist_to_nn_training == current_neighbor$distance)[1]
+  current_neighbor$col <- which(distance_matrix[current_neighbor$row, ] == current_neighbor$distance)
+  current_neighbor
 }
