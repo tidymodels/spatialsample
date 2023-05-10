@@ -202,18 +202,25 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
 
       dist_to_nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
 
+      # We just set the distance at current_neighbor to NA,
+      # so using >= won't just select the same neighbor over and over again
       current_neighbor <- find_next_neighbor(
         current_neighbor,
         dist_to_nn_training,
         distance_matrix,
-        `>=`
+        equal_distance_ok = TRUE
       )
     } else {
+      # If prop_close_training < prop_close_prediction,
+      # we don't need to remove the current point;
+      # as such, we need to find a distance >, rather than >=,
+      # to the current neighbor
+      # (or else we'd loop on this point forever)
       current_neighbor <- find_next_neighbor(
         current_neighbor,
         dist_to_nn_training,
         distance_matrix,
-        `>`
+        equal_distance_ok = FALSE
       )
     }
 
@@ -247,7 +254,8 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   )
 }
 
-find_next_neighbor <- function(current_neighbor, dist_to_nn_training, distance_matrix, operator = `>`) {
+find_next_neighbor <- function(current_neighbor, dist_to_nn_training, distance_matrix, equal_distance_ok = FALSE) {
+  operator <- if (equal_distance_ok) `>=` else `>`
   current_neighbor$distance <- min(dist_to_nn_training[operator(dist_to_nn_training, current_neighbor$distance)])
   current_neighbor$row <- which(dist_to_nn_training == current_neighbor$distance)[1]
   current_neighbor$col <- which(distance_matrix[current_neighbor$row, ] == current_neighbor$distance)
