@@ -198,10 +198,16 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
 
     if ((prop_close_training >= prop_close_prediction) &
       (prop_remaining > min_analysis_proportion)) {
+
+      # Remove nearest neighbors from analysis sets until the % of points with
+      # an NN in analysis at distance X in analysis ~= the % of points
+      # in predict with NN in train at distance X
       distance_matrix[current_neighbor$row, current_neighbor$col] <- NA
 
       dist_to_nn_training <- apply(distance_matrix, 1, min, na.rm = TRUE)
 
+      # Then update "distance X" to be the next nearest neighbor
+      #
       # We just set the distance at current_neighbor to NA,
       # so using >= won't just select the same neighbor over and over again
       current_neighbor <- find_next_neighbor(
