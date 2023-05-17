@@ -1,3 +1,5 @@
+# spatialsample (development version)
+
 # spatialsample 0.4.0
 
 * `spatial_nndm_cv()` is a new function for nearest neighbor distance matching
