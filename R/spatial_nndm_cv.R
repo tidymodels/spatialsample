@@ -59,7 +59,7 @@
 #' ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 #'
 #' # Using a small subset of the data, to make the example run faster:
-#' spatial_nndm_cv(ames_sf[1:200, ], ames_sf[2001:2200, ])
+#' spatial_nndm_cv(ames_sf[1:100, ], ames_sf[2001:2100, ])
 #'
 #' @export
 spatial_nndm_cv <- function(data, prediction_sites, ...,
