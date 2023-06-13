@@ -1,5 +1,9 @@
 # spatialsample (development version)
 
+* `get_rsplit()` is now re-exported from the rsample package. This provides a 
+  more natural, pipe-able interface for accessing individual splits; 
+  `get_rsplit(rset, 1)` is identical to `rset$splits[[1]]`.
+
 # spatialsample 0.4.0
 
 * `spatial_nndm_cv()` is a new function for nearest neighbor distance matching

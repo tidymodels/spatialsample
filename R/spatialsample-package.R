@@ -24,6 +24,10 @@ rsample::analysis
 #' @export
 rsample::assessment
 
+#' @importFrom rsample get_rsplit
+#' @export
+rsample::get_rsplit
+
 #' @importFrom ggplot2 autoplot
 #' @export
 ggplot2::autoplot

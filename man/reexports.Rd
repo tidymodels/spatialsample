@@ -5,6 +5,7 @@
 \alias{reexports}
 \alias{analysis}
 \alias{assessment}
+\alias{get_rsplit}
 \alias{autoplot}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -15,6 +16,6 @@ below to see their documentation.
 \describe{
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
-  \item{rsample}{\code{\link[rsample:as.data.frame.rsplit]{analysis}}, \code{\link[rsample:as.data.frame.rsplit]{assessment}}}
+  \item{rsample}{\code{\link[rsample:as.data.frame.rsplit]{analysis}}, \code{\link[rsample:as.data.frame.rsplit]{assessment}}, \code{\link[rsample]{get_rsplit}}}
 }}
 
