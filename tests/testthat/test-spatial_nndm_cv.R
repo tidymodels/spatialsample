@@ -74,6 +74,7 @@ test_that("normal usage", {
 })
 
 test_that("can pass a single polygon to sample within", {
+  library(sf)
   skip_if_not(sf::sf_use_s2())
 
   example_poly <- sf::st_as_sfc(
