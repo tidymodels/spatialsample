@@ -19,10 +19,11 @@ spatial_nndm_cv(
 \item{prediction_sites}{An \code{sf} or \code{sfc} object describing the areas to be
 predicted. If \code{prediction_sites} are all points, then those points are
 treated as the intended prediction points when calculating target nearest
-neighbor distances. If any element of \code{prediction_sites} is not a single
-point, then points are sampled from within the bounding box of
-\code{prediction_sites} and those points are then used as the intended prediction
-points.}
+neighbor distances. If \code{prediction_sites} is a single (multi-)polygon, then
+points are sampled from within the boundaries of that polygon. Otherwise,
+if \code{prediction_sites} is of length > 1 and not made up of points,
+then points are sampled from within the bounding box of \code{prediction_sites}
+and used as the intended prediction points.}
 
 \item{...}{Additional arguments passed to \code{\link[sf:st_sample]{sf::st_sample()}}. Note that the
 number of points to sample is controlled by \code{prediction_sample_size}; trying

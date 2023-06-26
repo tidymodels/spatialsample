@@ -25,13 +25,12 @@ test_that("bad args", {
 
 test_that("can pass the dots to st_sample", {
   skip_if_not(sf::sf_use_s2())
-  expect_error(
+  expect_no_error(
     spatial_nndm_cv(
       Smithsonian_sf[1:15, ],
       Smithsonian_sf[16:20, ],
       type = "regular"
-    ),
-    NA
+    )
   )
 })
 
@@ -73,6 +72,30 @@ test_that("normal usage", {
     spatial_nndm_cv(Smithsonian_sf[1:15, ], Smithsonian_sf[16:20, ])
   )
 })
+
+test_that("can pass a single polygon to sample within", {
+  skip_if_not(sf::sf_use_s2())
+
+  example_poly <- sf::st_as_sfc(
+    list(
+      sf::st_point(c(-77.03, 40)),
+      sf::st_point(c(-76, 40.5)),
+      sf::st_point(c(-76.5, 39.5))
+    )
+  ) |>
+    sf::st_set_crs(sf::st_crs(Smithsonian_sf)) |>
+    sf::st_union() |>
+    sf::st_cast("POLYGON")
+
+  expect_snapshot(
+    spatial_nndm_cv(
+      Smithsonian_sf,
+      example_poly
+    )
+  )
+})
+
+
 
 test_that("printing", {
   skip_if_not(sf::sf_use_s2())
