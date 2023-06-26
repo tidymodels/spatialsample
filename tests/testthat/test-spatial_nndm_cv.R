@@ -83,10 +83,10 @@ test_that("can pass a single polygon to sample within", {
       sf::st_point(c(-76, 40.5)),
       sf::st_point(c(-76.5, 39.5))
     )
-  ) |>
-    sf::st_set_crs(sf::st_crs(Smithsonian_sf)) |>
-    sf::st_union() |>
-    sf::st_cast("POLYGON")
+  )
+  example_poly <- sf::st_set_crs(example_poly, sf::st_crs(Smithsonian_sf))
+  example_poly <- sf::st_union(example_poly)
+  example_poly <- sf::st_cast(example_poly, "POLYGON")
 
   expect_snapshot(
     spatial_nndm_cv(
