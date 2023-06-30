@@ -104,10 +104,11 @@ be predicting. This method was originally implemented in the CAST package.</p>
 <dd><p>An <code>sf</code> or <code>sfc</code> object describing the areas to be
 predicted. If <code>prediction_sites</code> are all points, then those points are
 treated as the intended prediction points when calculating target nearest
-neighbor distances. If any element of <code>prediction_sites</code> is not a single
-point, then points are sampled from within the bounding box of
-<code>prediction_sites</code> and those points are then used as the intended prediction
-points.</p></dd>
+neighbor distances. If <code>prediction_sites</code> is a single (multi-)polygon, then
+points are sampled from within the boundaries of that polygon. Otherwise,
+if <code>prediction_sites</code> is of length &gt; 1 and not made up of points,
+then points are sampled from within the bounding box of <code>prediction_sites</code>
+and used as the intended prediction points.</p></dd>
 
 
 <dt>...</dt>
