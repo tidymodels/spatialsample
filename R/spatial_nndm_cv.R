@@ -18,10 +18,11 @@
 #' @param prediction_sites An `sf` or `sfc` object describing the areas to be
 #' predicted. If `prediction_sites` are all points, then those points are
 #' treated as the intended prediction points when calculating target nearest
-#' neighbor distances. If any element of `prediction_sites` is not a single
-#' point, then points are sampled from within the bounding box of
-#' `prediction_sites` and those points are then used as the intended prediction
-#' points.
+#' neighbor distances. If `prediction_sites` is a single (multi-)polygon, then
+#' points are sampled from within the boundaries of that polygon. Otherwise,
+#' if `prediction_sites` is of length > 1 and not made up of points,
+#' then points are sampled from within the bounding box of `prediction_sites`
+#' and used as the intended prediction points.
 #' @param ... Additional arguments passed to [sf::st_sample()]. Note that the
 #' number of points to sample is controlled by `prediction_sample_size`; trying
 #' to pass `size` via `...` will cause an error.
@@ -117,11 +118,37 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   # we check both for length > 1 (in order to avoid the "condition has length"
   # error) and to see if the input is already only points
   pred_geometry <- unique(sf::st_geometry_type(prediction_sites))
-  if (length(pred_geometry) > 1 || pred_geometry != "POINT") {
-    prediction_sites <- sf::st_sample(
+
+  use_provided_points <- length(pred_geometry) == 1 && pred_geometry == "POINT"
+  sample_provided_poly <- length(pred_geometry) == 1 && pred_geometry %in% c(
+    "POLYGON",
+    "MULTIPOLYGON"
+  )
+
+  if (use_provided_points) {
+    sample_points <- prediction_sites
+  } else if (sample_provided_poly) {
+    sample_points <- sf::st_sample(
+      x = sf::st_geometry(prediction_sites),
+      size = prediction_sample_size,
+      ...
+    )
+  } else {
+    sample_points <- sf::st_sample(
       x = sf::st_as_sfc(sf::st_bbox(prediction_sites)),
       size = prediction_sample_size,
       ...
+    )
+  }
+
+  # st_sample can _sometimes_ use geographic coordinates (for SRS, mainly)
+  # and will _sometimes_ warn instead (systematic sampling)
+  # but will _often_ strip CRS from the returned data;
+  # enforce here that our output prediction sites share a CRS with input data
+  if (is.na(sf::st_crs(sample_points))) {
+    prediction_sites <- sf::st_set_crs(
+      sample_points,
+      sf::st_crs(prediction_sites)
     )
   }
 
