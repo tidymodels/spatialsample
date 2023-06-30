@@ -119,29 +119,26 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   # error) and to see if the input is already only points
   pred_geometry <- unique(sf::st_geometry_type(prediction_sites))
 
-  # these are more for clarity than control flow -- they do not get used
-  # outside of the below if/else
   use_provided_points <- length(pred_geometry) == 1 && pred_geometry == "POINT"
   sample_provided_poly <- length(pred_geometry) == 1 && pred_geometry %in% c(
     "POLYGON",
     "MULTIPOLYGON"
   )
-  sample_bbox <- !use_provided_points && !sample_provided_poly
 
-  if (sample_bbox) {
-    sample_points <- sf::st_sample(
-      x = sf::st_as_sfc(sf::st_bbox(prediction_sites)),
-      size = prediction_sample_size,
-      ...
-    )
+  if (use_provided_points) {
+    sample_points <- prediction_sites
   } else if (sample_provided_poly) {
     sample_points <- sf::st_sample(
       x = sf::st_geometry(prediction_sites),
       size = prediction_sample_size,
       ...
     )
-  } else if (use_provided_points) {
-    sample_points <- prediction_sites
+  } else {
+    sample_points <- sf::st_sample(
+      x = sf::st_as_sfc(sf::st_bbox(prediction_sites)),
+      size = prediction_sample_size,
+      ...
+    )
   }
 
   # st_sample can _sometimes_ use geographic coordinates (for SRS, mainly)
