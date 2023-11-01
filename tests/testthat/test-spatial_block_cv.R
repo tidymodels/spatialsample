@@ -7,27 +7,6 @@ skip_if_not_installed("modeldata")
 data(ames, package = "modeldata")
 ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
 
-drought <- structure(list(x = c(995494, 995924, 996354, 996784, 997214,
-                                997644, 998074, 998504, 998934, 999364, 999794, 1000224, 1000654,
-                                1001084, 1001514, 1001944, 1002374, 1002804, 1003234, 1003664,
-                                1004094, 1004524, 1004954, 1005384, 1005814, 1006244, 1006674,
-                                1007104, 1007534, 1007964, 1008394, 1008824, 1009254, 1009684,
-                                1010114, 1010544, 1010974, 1011404, 1011834, 1012264, 1012694,
-                                1013124, 1013554, 1013984, 1014414, 1014844, 1015274, 1015704,
-                                1016134, 1016564, 1016994, 1017424, 1017854, 1018284, 1018714,
-                                995494, 995924, 996354, 996784, 997214), y = c(1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019852, 1019852, 1019852,
-                                                                               1019852, 1019852, 1019852, 1019852, 1019422, 1019422, 1019422,
-                                                                               1019422, 1019422)), row.names = c(NA, 60L), class = "data.frame")
-
-drought_sf <- sf::st_as_sf(drought, coords = c("x", "y"),  crs = "EPSG:7760")
-
 test_that("erroring when no S2", {
   s2_store <- sf::sf_use_s2()
   sf::sf_use_s2(FALSE)
@@ -244,6 +223,17 @@ test_that("blocks are filtered based on centroids", {
 })
 
 test_that("duplicated observations in assessment sets throws an error", {
+  # adapted from bug in https://stackoverflow.com/q/77374348/9625040
+  # but the bigger grid makes it easier to visualize what's going on
+  drought_sf <- sf::st_as_sf(
+    expand.grid(
+      x = seq(995494, 1018714, 430),
+      y = seq(1019422, by = 430, length.out = 55)
+    ),
+    coords = c("x", "y"),
+    crs = 7760
+  )
+
   expect_snapshot_error(
     spatial_block_cv(drought_sf, expand_bbox = 0)
   )
