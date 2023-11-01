@@ -12,6 +12,10 @@
     geographic data falls is more likely to fall within the constructed grid.
   * Thanks to Nikos on StackOverflow for reporting this behavior:
     https://stackoverflow.com/q/77374348/9625040
+    
+* `spatial_block_cv()` will now throw an error if observations are in multiple
+  assessment folds (caused by observations, or observation centroids, falling 
+  precisely along grid polygon boundaries).
 
 * `get_rsplit()` is now re-exported from the rsample package. This provides a 
   more natural, pipe-able interface for accessing individual splits; 
