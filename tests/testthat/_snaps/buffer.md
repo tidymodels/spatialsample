@@ -50,7 +50,7 @@
         splits           id   
         <list>           <chr>
       1 <split [37/553]> Fold1
-      2 <split [54/529]> Fold2
+      2 <split [54/527]> Fold2
 
 ---
 

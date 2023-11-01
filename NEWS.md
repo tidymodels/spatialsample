@@ -1,5 +1,18 @@
 # spatialsample (development version)
 
+* `spatial_block_cv()` gains an argument, `expand_bbox`, which represents the 
+  proportion a bounding box should be expanded by (each corner of the bounding
+  box is expanded by `bbox_corner_value * expand_bbox`). 
+  * **This is a breaking change** for data in planar coordinate reference 
+    systems. Set to 0 to obtain previous behaviors. 
+  * Data in geographic coordinates was already having its bounding box expanded 
+    by the default 0.00001. 
+  * This makes it so that regularly spaced data is less likely to fall precisely 
+    along grid lines (and therefore fall into two assessment sets) and so that 
+    geographic data falls is more likely to fall within the constructed grid.
+  * Thanks to Nikos on StackOverflow for reporting this behavior:
+    https://stackoverflow.com/q/77374348/9625040
+
 * `get_rsplit()` is now re-exported from the rsample package. This provides a 
   more natural, pipe-able interface for accessing individual splits; 
   `get_rsplit(rset, 1)` is identical to `rset$splits[[1]]`.
