@@ -248,7 +248,17 @@ generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radiu
 
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, centroids)
 
-  # could potentially randomly sample to assign indices to folds here
+  # error if points are assigned to multiple folds
+  # (if they're perfectly aligned with grid lines)
+  #
+  # we might consider ways to handle automatically assigning
+  # points in this situation; either selecting their first assignment as the
+  # "true" one, or randomly choosing one (or doing one for systematic CV and
+  # the other for randomized)
+  #
+  # but this fixes the immediate issue (points are sometimes duplicated) and
+  # frees up time to think about the best way to handle it automatically going
+  # forward
   n_indices <- sum(vapply(indices, length, numeric(1)))
   if (n_indices > nrow(data)) {
     rlang::abort(c(
