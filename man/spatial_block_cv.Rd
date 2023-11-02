@@ -12,7 +12,8 @@ spatial_block_cv(
   radius = NULL,
   buffer = NULL,
   ...,
-  repeats = 1
+  repeats = 1,
+  expand_bbox = 1e-05
 )
 }
 \arguments{
@@ -42,6 +43,14 @@ or assessment set. If \code{NULL}, no buffer is applied.}
 \item{...}{Arguments passed to \code{\link[sf:st_make_grid]{sf::st_make_grid()}}.}
 
 \item{repeats}{The number of times to repeat the V-fold partitioning.}
+
+\item{expand_bbox}{A numeric of length 1, representing a proportion to expand
+the bounding box of \code{data} by before building a grid. Without this expansion,
+grids built from data in geographic coordinates may exclude observations and
+grids built from regularly spaced data might have observations fall exactly
+on the boundary between folds, duplicating them. In spatialsample < 0.5.0,
+this was 0.00001 for data in a geographic CRS and 0 for data in a planar CRS.
+In spatialsample > 0.5.0, this is 0.00001 for all data.}
 }
 \value{
 A tibble with classes \code{spatial_block_cv},  \code{spatial_rset}, \code{rset},

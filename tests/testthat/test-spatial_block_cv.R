@@ -222,6 +222,26 @@ test_that("blocks are filtered based on centroids", {
   )
 })
 
+test_that("duplicated observations in assessment sets throws an error", {
+  # adapted from bug in https://stackoverflow.com/q/77374348/9625040
+  # but the bigger grid makes it easier to visualize what's going on
+  drought_sf <- sf::st_as_sf(
+    expand.grid(
+      x = seq(995494, 1018714, 430),
+      y = seq(1019422, by = 430, length.out = 55)
+    ),
+    coords = c("x", "y"),
+    crs = 7760
+  )
+
+  expect_snapshot_error(
+    spatial_block_cv(drought_sf, expand_bbox = 0)
+  )
+  expect_no_error(
+    spatial_block_cv(drought_sf)
+  )
+})
+
 test_that("bad args", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)

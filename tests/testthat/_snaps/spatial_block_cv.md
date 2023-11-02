@@ -20,10 +20,10 @@
        1 <split [662/20]>  Fold01
        2 <split [617/65]>  Fold02
        3 <split [604/78]>  Fold03
-       4 <split [595/87]>  Fold04
-       5 <split [581/101]> Fold05
+       4 <split [597/85]>  Fold04
+       5 <split [580/102]> Fold05
        6 <split [577/105]> Fold06
-       7 <split [603/79]>  Fold07
+       7 <split [602/80]>  Fold07
        8 <split [614/68]>  Fold08
        9 <split [630/52]>  Fold09
       10 <split [655/27]>  Fold10
@@ -70,6 +70,11 @@
       [613] 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649
       [631] 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667
       [649] 668 670 671 672 673 674 675 676 677 678 679 680 681 682
+
+# duplicated observations in assessment sets throws an error
+
+    Some observations fell exactly on block boundaries, meaning they were assigned to multiple assessment sets unexpectedly.
+    i Try setting a different `expand_bbox` value, an `offset`, or use a different number of folds.
 
 # bad args
 
@@ -162,16 +167,16 @@
       # A tibble: 10 x 2
          splits             id    
          <list>             <chr> 
-       1 <split [2539/391]> Fold01
-       2 <split [2647/283]> Fold02
-       3 <split [2653/277]> Fold03
-       4 <split [2649/281]> Fold04
-       5 <split [2644/286]> Fold05
-       6 <split [2626/304]> Fold06
-       7 <split [2657/273]> Fold07
-       8 <split [2779/151]> Fold08
-       9 <split [2389/541]> Fold09
-      10 <split [2787/143]> Fold10
+       1 <split [2524/406]> Fold01
+       2 <split [2656/274]> Fold02
+       3 <split [2476/454]> Fold03
+       4 <split [2771/159]> Fold04
+       5 <split [2607/323]> Fold05
+       6 <split [2762/168]> Fold06
+       7 <split [2718/212]> Fold07
+       8 <split [2665/265]> Fold08
+       9 <split [2642/288]> Fold09
+      10 <split [2549/381]> Fold10
 
 ---
 

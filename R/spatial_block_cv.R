@@ -36,6 +36,13 @@
 #' data be included in fold labeling?
 #' @inheritParams buffer_indices
 #' @param ... Arguments passed to [sf::st_make_grid()].
+#' @param expand_bbox A numeric of length 1, representing a proportion to expand
+#' the bounding box of `data` by before building a grid. Without this expansion,
+#' grids built from data in geographic coordinates may exclude observations and
+#' grids built from regularly spaced data might have observations fall exactly
+#' on the boundary between folds, duplicating them. In spatialsample < 0.5.0,
+#' this was 0.00001 for data in a geographic CRS and 0 for data in a planar CRS.
+#' In spatialsample >= 0.5.0, this is 0.00001 for all data.
 #'
 #' @return A tibble with classes `spatial_block_cv`,  `spatial_rset`, `rset`,
 #'   `tbl_df`, `tbl`, and `data.frame`. The results include a column for the
@@ -61,7 +68,8 @@ spatial_block_cv <- function(data,
                              radius = NULL,
                              buffer = NULL,
                              ...,
-                             repeats = 1) {
+                             repeats = 1,
+                             expand_bbox = 0.00001) {
   method <- rlang::arg_match(method)
 
   if (method != "random" && repeats != 1) {
@@ -81,15 +89,15 @@ spatial_block_cv <- function(data,
   centroids <- sf::st_centroid(sf::st_geometry(data))
 
   grid_box <- sf::st_bbox(data)
-  if (is_longlat(data)) {
-    # cf https://github.com/ropensci/stplanr/pull/467
-    # basically: spherical geometry means sometimes the straight line of the
-    # grid will exclude points within the bounding box
-    #
-    # so here we'll expand our boundary by a small bit in order to always contain our
-    # points within the grid
-    grid_box <- expand_grid(grid_box)
-  }
+  # cf https://github.com/ropensci/stplanr/pull/467
+  # basically: spherical geometry means sometimes the straight line of the
+  # grid will exclude points within the bounding box
+  # but in https://stackoverflow.com/a/77399241/9625040 default args also
+  # cause problems with regularly spaced data
+  #
+  # so here we'll expand our boundary by a small bit in order to always contain our
+  # points within the grid
+  grid_box <- expand_grid(grid_box, expand_bbox)
 
   grid_blocks <- sf::st_make_grid(grid_box, ...)
   original_number_of_blocks <- length(grid_blocks)
@@ -239,6 +247,25 @@ generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radiu
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
   indices <- row_ids_intersecting_fold_blocks(grid_blocks, centroids)
+
+  # error if points are assigned to multiple folds
+  # (if they're perfectly aligned with grid lines)
+  #
+  # we might consider ways to handle automatically assigning
+  # points in this situation; either selecting their first assignment as the
+  # "true" one, or randomly choosing one (or doing one for systematic CV and
+  # the other for randomized)
+  #
+  # but this fixes the immediate issue (points are sometimes duplicated) and
+  # frees up time to think about the best way to handle it automatically going
+  # forward
+  n_indices <- sum(vapply(indices, length, numeric(1)))
+  if (n_indices > nrow(data)) {
+    rlang::abort(c(
+      "Some observations fell exactly on block boundaries, meaning they were assigned to multiple assessment sets unexpectedly.",
+      i = "Try setting a different `expand_bbox` value, an `offset`, or use a different number of folds."
+    ))
+  }
 
   if (is.null(radius) && is.null(buffer)) {
     indices <- lapply(indices, default_complement, n = n)
