@@ -50,7 +50,7 @@ grids built from data in geographic coordinates may exclude observations and
 grids built from regularly spaced data might have observations fall exactly
 on the boundary between folds, duplicating them. In spatialsample < 0.5.0,
 this was 0.00001 for data in a geographic CRS and 0 for data in a planar CRS.
-In spatialsample > 0.5.0, this is 0.00001 for all data.}
+In spatialsample >= 0.5.0, this is 0.00001 for all data.}
 }
 \value{
 A tibble with classes \code{spatial_block_cv},  \code{spatial_rset}, \code{rset},

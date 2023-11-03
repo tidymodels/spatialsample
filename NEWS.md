@@ -17,13 +17,13 @@
   assessment folds (caused by observations, or observation centroids, falling 
   precisely along grid polygon boundaries).
 
+* In `spatial_nndm_cv()`, passing a single polygon (or multipolygon) to the 
+  `prediction_sites` argument will result in prediction sites being sampled from 
+  that polygon, rather than from its bounding box.
+
 * `get_rsplit()` is now re-exported from the rsample package. This provides a 
   more natural, pipe-able interface for accessing individual splits; 
   `get_rsplit(rset, 1)` is identical to `rset$splits[[1]]`.
-  
-* Passing a single polygon (or multipolygon) to the `prediction_sites` argument 
-  of `spatial_nndm_cv()` will result in prediction sites being sampled from that
-  polygon, rather than from its bounding box.
 
 # spatialsample 0.4.0
 
