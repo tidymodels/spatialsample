@@ -119,11 +119,9 @@ autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ..., alpha = 0.6
   data <- object$splits[[1]]$data
 
   plot_data <- data
-  if (is_longlat(data)) {
-    plot_data <- sf::st_bbox(data)
-    plot_data <- expand_grid(plot_data)
-    plot_data <- sf::st_as_sfc(plot_data)
-  }
+  plot_data <- sf::st_bbox(data)
+  plot_data <- expand_grid(plot_data, attr(object, "expand_bbox"))
+  plot_data <- sf::st_as_sfc(plot_data)
 
   grid_args <- list(x = plot_data)
   grid_args$cellsize <- attr(object, "cellsize", TRUE)

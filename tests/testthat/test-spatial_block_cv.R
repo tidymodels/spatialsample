@@ -242,6 +242,22 @@ test_that("duplicated observations in assessment sets throws an error", {
   )
 })
 
+test_that("expand_bbox attribute is set", {
+  skip_if_not_installed("withr")
+  folds <- withr::with_seed(
+    123,
+    spatial_block_cv(boston_canopy, expand_bbox = 0.01)
+  )
+  expect_equal(attr(folds, "expand_bbox"), 0.01)
+  expect_identical(
+    folds,
+    withr::with_seed(
+      123,
+      rsample::reshuffle_rset(folds)
+    )
+  )
+})
+
 test_that("bad args", {
   skip_if_not(sf::sf_use_s2())
   set.seed(123)

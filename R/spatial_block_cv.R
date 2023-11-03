@@ -166,6 +166,7 @@ spatial_block_cv <- function(data,
     radius = radius,
     buffer = buffer,
     repeats = repeats,
+    expand_bbox = expand_bbox,
     ...
   )
 
