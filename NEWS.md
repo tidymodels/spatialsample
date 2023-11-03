@@ -1,3 +1,5 @@
+# spatialsample (development version)
+
 # spatialsample 0.5.0
 
 * `spatial_block_cv()` gains an argument, `expand_bbox`, which represents the 
