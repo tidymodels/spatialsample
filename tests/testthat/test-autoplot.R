@@ -125,7 +125,7 @@ test_that("autoplot respects expand_bbox", {
   vdiffr::expect_doppelganger(
     "expand_bbox",
     autoplot(
-      spatial_block_cv(boston_canopy, expand_bbox = 0.5)
+      spatial_block_cv(boston_canopy, expand_bbox = 0.5, v = 4)
     )
   )
 })
