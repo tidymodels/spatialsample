@@ -1,4 +1,4 @@
-# spatialsample (development version)
+# spatialsample 0.5.1
 
 * `spatial_block_cv()` now adds an `expand_bbox` attribute to the resulting rset
   for compatibility with `rsample::reshuffle_rset()`
