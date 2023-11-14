@@ -262,10 +262,13 @@ generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radiu
   # forward
   n_indices <- sum(vapply(indices, length, numeric(1)))
   if (n_indices > nrow(data)) {
-    rlang::abort(c(
-      "Some observations fell exactly on block boundaries, meaning they were assigned to multiple assessment sets unexpectedly.",
-      i = "Try setting a different `expand_bbox` value, an `offset`, or use a different number of folds."
-    ))
+    rlang::abort(
+      c(
+        "Some observations fell exactly on block boundaries, meaning they were assigned to multiple assessment sets unexpectedly.",
+        i = "Try setting a different `expand_bbox` value, an `offset`, or use a different number of folds."
+      ),
+      call = rlang::caller_env(n = 3)
+    )
   }
 
   if (is.null(radius) && is.null(buffer)) {
