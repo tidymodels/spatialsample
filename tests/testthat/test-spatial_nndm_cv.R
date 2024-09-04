@@ -115,3 +115,24 @@ test_that("rsplit labels", {
   original_id <- rs[, grepl("^id", names(rs))]
   expect_equal(all_labs, original_id)
 })
+
+test_that("passing a polygon works correctly", {
+  ames_sf <- sf::st_as_sf(
+    modeldata::ames,
+    coords = c("Longitude", "Latitude"), 
+    crs = 4326
+  )
+  ch <- st_concave_hull(st_union(ames_sf), ratio = 0.4, allow_holes = TRUE)
+
+  withr::with_seed(
+    123,
+    pts <- sf::st_sample(ch, 1000)
+  )
+  nndm_1 <- spatial_nndm_cv(ames_sf[1:100, ], pts)
+  attr(nndm_1, "prediction_sites") <- ch
+  withr::with_seed(
+    123,
+    nndm_2 <- spatial_nndm_cv(ames_sf[1:100, ], ch)
+  )
+  expect_identical(nndm_1, nndm_2)
+})
