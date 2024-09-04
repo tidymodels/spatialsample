@@ -126,15 +126,15 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   )
 
   if (use_provided_points) {
-    sample_points <- prediction_sites
+    prediction_sites <- prediction_sites
   } else if (sample_provided_poly) {
-    sample_points <- sf::st_sample(
+    prediction_sites <- sf::st_sample(
       x = sf::st_geometry(prediction_sites),
       size = prediction_sample_size,
       ...
     )
   } else {
-    sample_points <- sf::st_sample(
+    prediction_sites <- sf::st_sample(
       x = sf::st_as_sfc(sf::st_bbox(prediction_sites)),
       size = prediction_sample_size,
       ...
@@ -145,9 +145,9 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   # and will _sometimes_ warn instead (systematic sampling)
   # but will _often_ strip CRS from the returned data;
   # enforce here that our output prediction sites share a CRS with input data
-  if (is.na(sf::st_crs(sample_points))) {
+  if (is.na(sf::st_crs(prediction_sites))) {
     prediction_sites <- sf::st_set_crs(
-      sample_points,
+      prediction_sites,
       sf::st_crs(prediction_sites)
     )
   }
