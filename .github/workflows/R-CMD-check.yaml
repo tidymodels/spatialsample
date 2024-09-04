@@ -24,6 +24,7 @@ jobs:
         config:
           - {os: macos-latest,   r: 'release'}
 
+          - {os: windows-latest, r: 'release'}
           # use 4.1 to check with rtools40's older compiler
           - {os: windows-latest, r: '4.1'}
 
