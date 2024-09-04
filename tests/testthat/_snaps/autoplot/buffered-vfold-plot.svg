@@ -793,7 +793,7 @@
 <text x='5.48' y='48.79' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='22.02px' lengthAdjust='spacingAndGlyphs'>42.40</text>
 <text x='27.50' y='48.79' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='3.31px' lengthAdjust='spacingAndGlyphs'>°</text>
 <text x='30.81' y='48.79' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='6.36px' lengthAdjust='spacingAndGlyphs'>N</text>
-<polyline points='39.36,466.60 42.10,466.60 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='39.36,466.59 42.10,466.59 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='39.36,326.32 42.10,326.32 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='39.36,186.04 42.10,186.04 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='39.36,45.76 42.10,45.76 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
