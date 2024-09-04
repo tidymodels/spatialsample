@@ -122,7 +122,7 @@ test_that("passing a polygon works correctly", {
     coords = c("Longitude", "Latitude"), 
     crs = 4326
   )
-  ch <- st_concave_hull(st_union(ames_sf), ratio = 0.4, allow_holes = TRUE)
+  ch <- sf::st_as_sfc(sf::st_bbox(ames_sf))
 
   withr::with_seed(
     123,
