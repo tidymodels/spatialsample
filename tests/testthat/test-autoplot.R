@@ -29,6 +29,7 @@ test_that("autoplot is stable", {
   p <- autoplot(ames_block$splits[[1]])
   vdiffr::expect_doppelganger("block split plots", p)
 
+  skip_if_not_installed("curl")
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
 

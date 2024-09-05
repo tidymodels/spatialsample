@@ -6,6 +6,7 @@ chosen_points <- sf::st_as_sf(
 )
 
 test_that("buffering selects the expected points", {
+  skip_if_not_installed("curl")
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
 
@@ -200,6 +201,7 @@ ames_sf <- sf::st_as_sf(
 
 test_that("using buffers", {
   skip_if_not(sf::sf_use_s2())
+  skip_if_not_installed("curl")
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
 
@@ -285,6 +287,7 @@ test_that("using buffers", {
 
 test_that("buffers respect units", {
   skip_if_not(sf::sf_use_s2())
+  skip_if_not_installed("curl")
   skip_if_offline()
   sf::sf_proj_network(enable = TRUE)
 
