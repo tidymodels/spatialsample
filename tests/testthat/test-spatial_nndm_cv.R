@@ -117,6 +117,7 @@ test_that("rsplit labels", {
 })
 
 test_that("passing a polygon works correctly", {
+  skip_if_not(sf::sf_use_s2())
   ames_sf <- sf::st_as_sf(
     modeldata::ames,
     coords = c("Longitude", "Latitude"), 
