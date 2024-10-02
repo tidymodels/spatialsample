@@ -1,3 +1,5 @@
+# spatialsample (development version)
+
 # spatialsample 0.6.0
 
 * Fixed bug where passing a polygon to `spatial_nndm_cv()` forced leave-one-out
