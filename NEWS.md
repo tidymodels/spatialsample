@@ -1,4 +1,4 @@
-# spatialsample (development version)
+# spatialsample 0.6.0
 
 * Fixed bug where passing a polygon to `spatial_nndm_cv()` forced leave-one-out
   CV, rather than the intended sampling of prediction points from the polygon.
