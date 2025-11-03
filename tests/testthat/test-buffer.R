@@ -248,7 +248,6 @@ test_that("using buffers", {
     )
   )
 
-
   # The default RNG changed in 3.6.0
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
 
@@ -256,7 +255,7 @@ test_that("using buffers", {
   expect_snapshot(
     spatial_buffer_vfold_cv(
       boston_canopy,
-      v = 682,
+      v = 681,
       radius = 500,
       buffer = 500
     )

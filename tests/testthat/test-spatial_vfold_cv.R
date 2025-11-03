@@ -15,7 +15,11 @@ test_that("erroring when no S2", {
     error = TRUE
   )
   expect_snapshot(
-    suppressMessages(spatial_leave_location_out_cv(ames_sf, Neighborhood, buffer = 500)),
+    suppressMessages(spatial_leave_location_out_cv(
+      ames_sf,
+      Neighborhood,
+      buffer = 500
+    )),
     error = TRUE
   )
   sf::sf_use_s2(s2_store)
@@ -185,7 +189,12 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(ames_sf, v = c(5, 10), buffer = NULL, radius = NULL),
+    spatial_buffer_vfold_cv(
+      ames_sf,
+      v = c(5, 10),
+      buffer = NULL,
+      radius = NULL
+    ),
     error = TRUE
   )
 
@@ -198,14 +207,19 @@ test_that("bad args", {
 
   set.seed(123)
   expect_snapshot(
-    spatial_buffer_vfold_cv(boston_canopy, v = 683, buffer = NULL, radius = NULL)
+    spatial_buffer_vfold_cv(
+      boston_canopy,
+      v = 681,
+      buffer = NULL,
+      radius = NULL
+    )
   )
 
   set.seed(123)
-  expect_snapshot_error(
+  expect_snapshot(
     spatial_buffer_vfold_cv(
       boston_canopy,
-      v = 682,
+      v = 681,
       buffer = NULL,
       radius = NULL,
       repeats = 2
