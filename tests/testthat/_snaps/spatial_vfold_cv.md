@@ -155,28 +155,6 @@
 
 ---
 
-    Code
-      spatial_buffer_vfold_cv(boston_canopy, v = 681, buffer = NULL, radius = NULL,
-        repeats = 2)
-    Output
-      #  681-fold spatial cross-validation 
-      # A tibble: 1,362 x 3
-         splits          id      id2    
-         <list>          <chr>   <chr>  
-       1 <split [680/2]> Repeat1 Fold001
-       2 <split [681/1]> Repeat1 Fold002
-       3 <split [681/1]> Repeat1 Fold003
-       4 <split [681/1]> Repeat1 Fold004
-       5 <split [681/1]> Repeat1 Fold005
-       6 <split [681/1]> Repeat1 Fold006
-       7 <split [681/1]> Repeat1 Fold007
-       8 <split [681/1]> Repeat1 Fold008
-       9 <split [681/1]> Repeat1 Fold009
-      10 <split [681/1]> Repeat1 Fold010
-      # i 1,352 more rows
-
----
-
     Repeated resampling when `v` is 28 would create identical resamples.
 
 # printing

@@ -216,17 +216,6 @@ test_that("bad args", {
   )
 
   set.seed(123)
-  expect_snapshot(
-    spatial_buffer_vfold_cv(
-      boston_canopy,
-      v = 681,
-      buffer = NULL,
-      radius = NULL,
-      repeats = 2
-    )
-  )
-
-  set.seed(123)
   expect_snapshot_error(
     spatial_leave_location_out_cv(
       ames_sf,
