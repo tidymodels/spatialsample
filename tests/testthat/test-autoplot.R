@@ -57,7 +57,7 @@ test_that("autoplot is stable", {
   set.seed(123)
   boston_vfold_buffer <- spatial_buffer_vfold_cv(
     boston_canopy,
-    v = 682,
+    v = 681,
     radius = 1,
     buffer = 5000
   )

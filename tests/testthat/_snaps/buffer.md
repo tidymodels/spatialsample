@@ -55,23 +55,23 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(boston_canopy, v = 682, radius = 500, buffer = 500)
+      spatial_buffer_vfold_cv(boston_canopy, v = 681, radius = 500, buffer = 500)
     Output
-      #  682-fold spatial cross-validation 
-      # A tibble: 682 x 2
-         splits          id     
-         <list>          <chr>  
-       1 <split [672/3]> Fold001
-       2 <split [664/7]> Fold002
-       3 <split [663/7]> Fold003
-       4 <split [666/7]> Fold004
-       5 <split [665/7]> Fold005
-       6 <split [671/5]> Fold006
-       7 <split [671/6]> Fold007
-       8 <split [663/7]> Fold008
-       9 <split [663/7]> Fold009
-      10 <split [665/7]> Fold010
-      # i 672 more rows
+      #  681-fold spatial cross-validation 
+      # A tibble: 681 x 2
+         splits           id     
+         <list>           <chr>  
+       1 <split [656/10]> Fold001
+       2 <split [664/7]>  Fold002
+       3 <split [663/7]>  Fold003
+       4 <split [666/7]>  Fold004
+       5 <split [665/7]>  Fold005
+       6 <split [671/5]>  Fold006
+       7 <split [671/6]>  Fold007
+       8 <split [663/7]>  Fold008
+       9 <split [663/7]>  Fold009
+      10 <split [665/7]>  Fold010
+      # i 671 more rows
 
 ---
 

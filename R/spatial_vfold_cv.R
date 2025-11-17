@@ -61,21 +61,25 @@
 #' ames_neighborhoods <- spatial_leave_location_out_cv(ames_sf, Neighborhood)
 #'
 #' @export
-spatial_buffer_vfold_cv <- function(data,
-                                    radius,
-                                    buffer,
-                                    v = 10,
-                                    repeats = 1,
-                                    strata = NULL,
-                                    breaks = 4,
-                                    pool = 0.1,
-                                    ...) {
+spatial_buffer_vfold_cv <- function(
+  data,
+  radius,
+  buffer,
+  v = 10,
+  repeats = 1,
+  strata = NULL,
+  breaks = 4,
+  pool = 0.1,
+  ...
+) {
   standard_checks(data, "`spatial_buffer_vfold_cv()`")
 
   if (missing(radius) || missing(buffer)) {
     use_vfold <- NULL
     if (missing(radius) && missing(buffer)) {
-      use_vfold <- c(i = "Or use `rsample::vfold_cv() to use a non-spatial V-fold.")
+      use_vfold <- c(
+        i = "Or use `rsample::vfold_cv() to use a non-spatial V-fold."
+      )
     }
     rlang::abort(
       c(
@@ -88,15 +92,6 @@ spatial_buffer_vfold_cv <- function(data,
 
   n <- nrow(data)
   v <- check_v(v, n, "rows")
-  if (v == n && repeats > 1) {
-    rlang::abort(
-      c(
-        "Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.",
-        i = "Set `v` to a lower value.",
-        i = "Or set `repeats = 1`."
-      )
-    )
-  }
 
   rset <- rsample::vfold_cv(
     data = data,
@@ -113,7 +108,9 @@ spatial_buffer_vfold_cv <- function(data,
     if (length(strata) == 0) strata <- NULL
   }
 
-  if (!is.null(strata)) names(strata) <- NULL
+  if (!is.null(strata)) {
+    names(strata) <- NULL
+  }
   cv_att <- list(
     v = v,
     repeats = repeats,
@@ -151,13 +148,15 @@ spatial_buffer_vfold_cv <- function(data,
 #' @rdname spatial_vfold
 #'
 #' @export
-spatial_leave_location_out_cv <- function(data,
-                                          group,
-                                          v = NULL,
-                                          radius = NULL,
-                                          buffer = NULL,
-                                          ...,
-                                          repeats = 1) {
+spatial_leave_location_out_cv <- function(
+  data,
+  group,
+  v = NULL,
+  radius = NULL,
+  buffer = NULL,
+  ...,
+  repeats = 1
+) {
   if (!missing(group)) {
     group <- tidyselect::eval_select(rlang::enquo(group), data)
   }
@@ -165,7 +164,9 @@ spatial_leave_location_out_cv <- function(data,
   if (missing(group) || length(group) == 0) {
     group <- NULL
   } else {
-    if (is.null(v)) v <- length(unique(data[[group]]))
+    if (is.null(v)) {
+      v <- length(unique(data[[group]]))
+    }
     v <- check_v(v, length(unique(data[[group]])), "locations")
     n <- nrow(data)
     if (v == n && repeats > 1) {
@@ -215,15 +216,17 @@ spatial_leave_location_out_cv <- function(data,
   )
 }
 
-posthoc_buffer_rset <- function(data,
-                                rset,
-                                rsplit_class,
-                                rset_class,
-                                radius,
-                                buffer,
-                                n,
-                                v,
-                                cv_att) {
+posthoc_buffer_rset <- function(
+  data,
+  rset,
+  rsplit_class,
+  rset_class,
+  radius,
+  buffer,
+  n,
+  v,
+  cv_att
+) {
   # This basically undoes everything post-`split_unnamed` for us
   # so we're back to an unnamed list of assessment-set indices
   indices <- purrr::map(rset$splits, as.integer, "assessment")

@@ -80,7 +80,7 @@
       spatial_leave_location_out_cv(ames)
     Condition
       Error in `rsample::group_vfold_cv()`:
-      ! `group` should be a single character value for the column that will be used for splitting.
+      ! `group` must be a single string, not `NULL`.
 
 ---
 
@@ -97,7 +97,7 @@
       spatial_leave_location_out_cv(ames_sf, v = c(5, 10))
     Condition
       Error in `rsample::group_vfold_cv()`:
-      ! `group` should be a single character value for the column that will be used for splitting.
+      ! `group` must be a single string, not `NULL`.
 
 ---
 
@@ -135,17 +135,13 @@
 ---
 
     Code
-      spatial_buffer_vfold_cv(boston_canopy, v = 683, buffer = NULL, radius = NULL)
-    Condition
-      Warning in `spatial_buffer_vfold_cv()`:
-      Fewer than 683 rows available for sampling
-      i Setting `v` to 682
+      spatial_buffer_vfold_cv(boston_canopy, v = 681, buffer = NULL, radius = NULL)
     Output
-      #  682-fold spatial cross-validation 
-      # A tibble: 682 x 2
+      #  681-fold spatial cross-validation 
+      # A tibble: 681 x 2
          splits          id     
          <list>          <chr>  
-       1 <split [681/1]> Fold001
+       1 <split [680/2]> Fold001
        2 <split [681/1]> Fold002
        3 <split [681/1]> Fold003
        4 <split [681/1]> Fold004
@@ -155,17 +151,11 @@
        8 <split [681/1]> Fold008
        9 <split [681/1]> Fold009
       10 <split [681/1]> Fold010
-      # i 672 more rows
+      # i 671 more rows
 
 ---
 
-    Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.
-    i Set `v` to a lower value.
-    i Or set `repeats = 1`.
-
----
-
-    Repeated resampling when `v` is 28 would create identical resamples
+    Repeated resampling when `v` is 28 would create identical resamples.
 
 # printing
 
