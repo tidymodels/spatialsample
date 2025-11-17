@@ -88,25 +88,33 @@ spatial_buffer_vfold_cv <- function(data,
 
   n <- nrow(data)
   v <- check_v(v, n, "rows")
-  if (v == n && repeats > 1) {
-    rlang::abort(
-      c(
-        "Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.",
-        i = "Set `v` to a lower value.",
-        i = "Or set `repeats = 1`."
+
+  if (v == n) {
+    if (repeats > 1) {
+      rlang::abort(
+        c(
+          "Repeated cross-validation doesn't make sense when performing leave-one-out cross-validation.",
+          i = "Set `v` to a lower value.",
+          i = "Or set `repeats = 1`."
+        )
       )
+    }
+    rset <- rsample::loo_cv(data)
+
+    # change `id` to match vfold style
+    # no need to change the rset class here since we're setting it at the end
+    rset$id <- names0(length(rset$splits), "Fold")
+  } else {
+    rset <- rsample::vfold_cv(
+      data = data,
+      v = v,
+      repeats = repeats,
+      strata = {{ strata }},
+      breaks = breaks,
+      pool = pool,
+      ...
     )
   }
-
-  rset <- rsample::vfold_cv(
-    data = data,
-    v = v,
-    repeats = repeats,
-    strata = {{ strata }},
-    breaks = breaks,
-    pool = pool,
-    ...
-  )
 
   if (!missing(strata)) {
     strata <- tidyselect::vars_select(names(data), {{ strata }})

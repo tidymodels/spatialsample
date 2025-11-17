@@ -80,7 +80,7 @@
       spatial_leave_location_out_cv(ames)
     Condition
       Error in `rsample::group_vfold_cv()`:
-      ! `group` should be a single character value for the column that will be used for splitting.
+      ! `group` must be a single string, not `NULL`.
 
 ---
 
@@ -97,7 +97,7 @@
       spatial_leave_location_out_cv(ames_sf, v = c(5, 10))
     Condition
       Error in `rsample::group_vfold_cv()`:
-      ! `group` should be a single character value for the column that will be used for splitting.
+      ! `group` must be a single string, not `NULL`.
 
 ---
 
@@ -165,7 +165,7 @@
 
 ---
 
-    Repeated resampling when `v` is 28 would create identical resamples
+    Repeated resampling when `v` is 28 would create identical resamples.
 
 # printing
 
