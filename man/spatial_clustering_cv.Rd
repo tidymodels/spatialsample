@@ -92,7 +92,7 @@ versions relied upon between-centroid distances.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(Smithsonian, package = "modeldata")
 
 smithsonian_sf <- sf::st_as_sf(

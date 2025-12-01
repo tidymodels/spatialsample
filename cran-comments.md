@@ -1,7 +1,6 @@
 ## Release Summary
 
-This is the 8th CRAN release of spatialsample. This release fixes a bug in 
-how `spatial_nndm_cv()` samples within a single polygon.
+This is the 9th CRAN release of spatialsample. This release fixes CRAN errors.
 
 ## R CMD check results
 
@@ -9,7 +8,7 @@ how `spatial_nndm_cv()` samples within a single polygon.
 
 ## revdepcheck results
 
-We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 3 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages

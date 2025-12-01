@@ -81,7 +81,7 @@ is equivalent to \code{\link[rsample:vfold_cv]{rsample::vfold_cv()}} and \code{s
 is equivalent to \code{\link[rsample:group_vfold_cv]{rsample::group_vfold_cv()}}.
 }
 \examples{
-\dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (sf::sf_use_s2() && rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 
 data(Smithsonian, package = "modeldata")
 Smithsonian_sf <- sf::st_as_sf(
