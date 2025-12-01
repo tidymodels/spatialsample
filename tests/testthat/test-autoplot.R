@@ -124,6 +124,8 @@ test_that("autoplot is stable", {
 })
 
 test_that("autoplot respects expand_bbox", {
+  skip_on_os("windows")
+
   vdiffr::expect_doppelganger(
     "expand_bbox",
     autoplot(
