@@ -2,6 +2,9 @@
 
 ## spatialsample (development version)
 
+- Minor update to follow update in rsample and testthat. No user-facing
+  impacts.
+
 ## spatialsample 0.6.0
 
 CRAN release: 2024-10-02
