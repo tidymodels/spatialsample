@@ -125,7 +125,9 @@ spatial_buffer_vfold_cv <- function(
     if (length(strata) == 0) strata <- NULL
   }
 
-  if (!is.null(strata)) names(strata) <- NULL
+  if (!is.null(strata)) {
+    names(strata) <- NULL
+  }
   cv_att <- list(
     v = v,
     repeats = repeats,
@@ -179,7 +181,9 @@ spatial_leave_location_out_cv <- function(
   if (missing(group) || length(group) == 0) {
     group <- NULL
   } else {
-    if (is.null(v)) v <- length(unique(data[[group]]))
+    if (is.null(v)) {
+      v <- length(unique(data[[group]]))
+    }
     v <- check_v(v, length(unique(data[[group]])), "locations")
     n <- nrow(data)
     if (v == n && repeats > 1) {

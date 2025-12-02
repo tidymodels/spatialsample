@@ -224,17 +224,23 @@ systematic_block_cv <- function(
   n <- length(centroids)
   ordering <- rlang::arg_match(ordering)
 
-  if (relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
+  if (relevant_only) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
+  }
 
   n_blocks <- length(grid_blocks)
   v <- check_v(v, n_blocks, "blocks", call = rlang::caller_env(2))
 
   folds <- rep(seq_len(v), length.out = length(grid_blocks))
-  if (ordering == "snake") folds <- make_snake_ordering(folds, grid_blocks)
+  if (ordering == "snake") {
+    folds <- make_snake_ordering(folds, grid_blocks)
+  }
 
   grid_blocks <- sf::st_as_sf(grid_blocks)
   grid_blocks$fold <- folds
-  if (!relevant_only) grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
+  if (!relevant_only) {
+    grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
+  }
 
   num_folds <- length(unique(grid_blocks$fold))
   if (num_folds != v) {
