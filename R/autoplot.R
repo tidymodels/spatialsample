@@ -64,10 +64,11 @@ autoplot.spatial_rset <- function(object, ..., alpha = 0.6) {
     mapping = ggplot2::aes(color = .fold., fill = .fold.)
   )
   p <- p + ggplot2::geom_sf(..., alpha = alpha)
-  p <- p + ggplot2::guides(
-    colour = ggplot2::guide_legend("Fold"),
-    fill = ggplot2::guide_legend("Fold")
-  )
+  p <- p +
+    ggplot2::guides(
+      colour = ggplot2::guide_legend("Fold"),
+      fill = ggplot2::guide_legend("Fold")
+    )
 
   if (sum(bool_id_columns) == 2) {
     p <- p + ggplot2::facet_wrap(ggplot2::vars(.facet.))
@@ -97,10 +98,11 @@ autoplot.spatial_rsplit <- function(object, ..., alpha = 0.6) {
     data = object,
     mapping = ggplot2::aes(color = .class., fill = .class.)
   )
-  p <- p + ggplot2::guides(
-    colour = ggplot2::guide_legend("Class"),
-    fill = ggplot2::guide_legend("Class")
-  )
+  p <- p +
+    ggplot2::guides(
+      colour = ggplot2::guide_legend("Class"),
+      fill = ggplot2::guide_legend("Class")
+    )
   p <- p + ggplot2::geom_sf(..., alpha = alpha)
   p + ggplot2::coord_sf()
 }
@@ -109,7 +111,12 @@ autoplot.spatial_rsplit <- function(object, ..., alpha = 0.6) {
 #' @param show_grid When plotting [spatial_block_cv] objects, should the grid
 #' itself be drawn on top of the data? Set to FALSE to remove the grid.
 #' @export
-autoplot.spatial_block_cv <- function(object, show_grid = TRUE, ..., alpha = 0.6) {
+autoplot.spatial_block_cv <- function(
+  object,
+  show_grid = TRUE,
+  ...,
+  alpha = 0.6
+) {
   p <- autoplot.spatial_rset(object, ..., alpha = alpha)
 
   if (!show_grid) {

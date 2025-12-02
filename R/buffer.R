@@ -10,7 +10,13 @@
 #' or assessment set. If `NULL`, no buffer is applied.
 #'
 #' @keywords internal
-buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_env()) {
+buffer_indices <- function(
+  data,
+  indices,
+  radius,
+  buffer,
+  call = rlang::caller_env()
+) {
   standard_checks(data, "Buffering", call)
 
   n <- nrow(data)
@@ -30,7 +36,8 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   run_radius <- !is.null(radius)
   if (run_radius && units::set_units(radius, NULL) > 0) {
     # In case `radius` has no units, assume it's in the same units as `data`
-    if (!identical(sf::st_crs(data), sf::NA_crs_)) units(radius) <- units(distmat)
+    if (!identical(sf::st_crs(data), sf::NA_crs_))
+      units(radius) <- units(distmat)
     indices <- row_ids_within_dist(distmat, indices, radius)
   }
 

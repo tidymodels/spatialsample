@@ -1,4 +1,7 @@
-delayedAssign("boston_canopy", local({
-  requireNamespace("sf", quietly = TRUE)
-  spatialsample:::boston_canopy
-}))
+delayedAssign(
+  "boston_canopy",
+  local({
+    requireNamespace("sf", quietly = TRUE)
+    spatialsample:::boston_canopy
+  })
+)

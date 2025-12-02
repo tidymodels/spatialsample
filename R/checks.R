@@ -14,7 +14,9 @@ check_s2 <- function(data, calling_function, call = rlang::caller_env()) {
   if (is_longlat(data) && !sf::sf_use_s2()) {
     rlang::abort(
       c(
-        glue::glue("{calling_function} can only process geographic coordinates when using the s2 geometry library."),
+        glue::glue(
+          "{calling_function} can only process geographic coordinates when using the s2 geometry library."
+        ),
         "i" = "Reproject your data into a projected coordinate reference system using `sf::st_transform()`.",
         "i" = "Or install the `s2` package and enable it using `sf::sf_use_s2(TRUE)`."
       ),
@@ -27,16 +29,24 @@ check_na_crs <- function(data, calling_function, call = rlang::caller_env()) {
   if (sf::st_crs(data) == sf::NA_crs_) {
     rlang::warn(
       c(
-        glue::glue("{calling_function} expects your data to have an appropriate coordinate reference system (CRS)."),
+        glue::glue(
+          "{calling_function} expects your data to have an appropriate coordinate reference system (CRS)."
+        ),
         i = "If possible, try setting a CRS using `sf::st_set_crs()`.",
-        i = glue::glue("Otherwise, {tolower(calling_function)} will assume your data is in projected coordinates.")
+        i = glue::glue(
+          "Otherwise, {tolower(calling_function)} will assume your data is in projected coordinates."
+        )
       ),
       call = call
     )
   }
 }
 
-standard_checks <- function(data, calling_function, call = rlang::caller_env()) {
+standard_checks <- function(
+  data,
+  calling_function,
+  call = rlang::caller_env()
+) {
   check_sf(data, calling_function, call)
   check_na_crs(data, calling_function, call)
   check_s2(data, calling_function, call)
@@ -47,11 +57,13 @@ standard_checks <- function(data, calling_function, call = rlang::caller_env()) 
 #' @param v The number of partitions for the resampling. Set to `NULL` or `Inf`
 #' for the maximum sensible value (for leave-one-X-out cross-validation).
 #' @keywords internal
-check_v <- function(v,
-                    max_v,
-                    objects,
-                    allow_max_v = TRUE,
-                    call = rlang::caller_env()) {
+check_v <- function(
+  v,
+  max_v,
+  objects,
+  allow_max_v = TRUE,
+  call = rlang::caller_env()
+) {
   if (is.null(v)) v <- Inf
 
   if (!rlang::is_integerish(v) || length(v) != 1 || v < 1) {

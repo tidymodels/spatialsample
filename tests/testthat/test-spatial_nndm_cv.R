@@ -11,7 +11,6 @@ Smithsonian_sf <- sf::st_as_sf(
 )
 
 test_that("bad args", {
-
   expect_snapshot(
     spatial_nndm_cv(Smithsonian_sf[1:15, ], Smithsonian[16:20, ]),
     error = TRUE
@@ -97,7 +96,6 @@ test_that("can pass a single polygon to sample within", {
 })
 
 
-
 test_that("printing", {
   skip_if_not(sf::sf_use_s2())
   # The default RNG changed in 3.6.0
@@ -120,7 +118,7 @@ test_that("passing a polygon works correctly", {
   skip_if_not(sf::sf_use_s2())
   ames_sf <- sf::st_as_sf(
     modeldata::ames,
-    coords = c("Longitude", "Latitude"), 
+    coords = c("Longitude", "Latitude"),
     crs = 4326
   )
   ch <- sf::st_as_sfc(sf::st_bbox(ames_sf))

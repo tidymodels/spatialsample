@@ -82,14 +82,16 @@
 #'
 #' @rdname spatial_clustering_cv
 #' @export
-spatial_clustering_cv <- function(data,
-                                  v = 10,
-                                  cluster_function = c("kmeans", "hclust"),
-                                  radius = NULL,
-                                  buffer = NULL,
-                                  ...,
-                                  repeats = 1,
-                                  distance_function = function(x) as.dist(sf::st_distance(x))) {
+spatial_clustering_cv <- function(
+  data,
+  v = 10,
+  cluster_function = c("kmeans", "hclust"),
+  radius = NULL,
+  buffer = NULL,
+  ...,
+  repeats = 1,
+  distance_function = function(x) as.dist(sf::st_distance(x))
+) {
   if (!rlang::is_function(cluster_function)) {
     cluster_function <- rlang::arg_match(cluster_function)
   }

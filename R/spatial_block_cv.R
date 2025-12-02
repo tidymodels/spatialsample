@@ -61,15 +61,17 @@
 #' Ecography 40(8), pp. 913-929, doi: 10.1111/ecog.02881.
 #'
 #' @export
-spatial_block_cv <- function(data,
-                             method = c("random", "snake", "continuous"),
-                             v = 10,
-                             relevant_only = TRUE,
-                             radius = NULL,
-                             buffer = NULL,
-                             ...,
-                             repeats = 1,
-                             expand_bbox = 0.00001) {
+spatial_block_cv <- function(
+  data,
+  method = c("random", "snake", "continuous"),
+  v = 10,
+  relevant_only = TRUE,
+  radius = NULL,
+  buffer = NULL,
+  ...,
+  repeats = 1,
+  expand_bbox = 0.00001
+) {
   method <- rlang::arg_match(method)
 
   if (method != "random" && repeats != 1) {
@@ -103,7 +105,8 @@ spatial_block_cv <- function(data,
   original_number_of_blocks <- length(grid_blocks)
 
   block_fun <- function(method) {
-    switch(method,
+    switch(
+      method,
       "random" = random_block_cv(
         data,
         centroids,
@@ -140,7 +143,8 @@ spatial_block_cv <- function(data,
     }
   }
 
-  percent_used <- split_objs$filtered_number_of_blocks[[1]] / original_number_of_blocks
+  percent_used <- split_objs$filtered_number_of_blocks[[1]] /
+    original_number_of_blocks
 
   if (percent_used < 0.1) {
     percent_used <- round(percent_used * 100, 2)
@@ -186,12 +190,14 @@ expand_grid <- function(grid_box, expansion = 0.00001) {
   grid_box
 }
 
-random_block_cv <- function(data,
-                            centroids,
-                            grid_blocks,
-                            v,
-                            radius = NULL,
-                            buffer = NULL) {
+random_block_cv <- function(
+  data,
+  centroids,
+  grid_blocks,
+  v,
+  radius = NULL,
+  buffer = NULL
+) {
   n <- length(centroids)
 
   grid_blocks <- filter_grid_blocks(grid_blocks, centroids)
@@ -205,14 +211,16 @@ random_block_cv <- function(data,
   generate_folds_from_blocks(data, centroids, grid_blocks, v, n, radius, buffer)
 }
 
-systematic_block_cv <- function(data,
-                                centroids,
-                                grid_blocks,
-                                v,
-                                ordering = c("snake", "continuous"),
-                                relevant_only = TRUE,
-                                radius = NULL,
-                                buffer = NULL) {
+systematic_block_cv <- function(
+  data,
+  centroids,
+  grid_blocks,
+  v,
+  ordering = c("snake", "continuous"),
+  relevant_only = TRUE,
+  radius = NULL,
+  buffer = NULL
+) {
   n <- length(centroids)
   ordering <- rlang::arg_match(ordering)
 
@@ -232,8 +240,10 @@ systematic_block_cv <- function(data,
   if (num_folds != v) {
     rlang::warn(c(
       "Not all folds contained blocks with data:",
-      x = glue::glue("{v} folds were requested, \\
-                     but only {num_folds} contain any data."),
+      x = glue::glue(
+        "{v} folds were requested, \\
+                     but only {num_folds} contain any data."
+      ),
       x = "Empty folds were dropped.",
       i = "To avoid this, set `relevant_only = TRUE`."
     ))
@@ -243,7 +253,15 @@ systematic_block_cv <- function(data,
   generate_folds_from_blocks(data, centroids, grid_blocks, v, n, radius, buffer)
 }
 
-generate_folds_from_blocks <- function(data, centroids, grid_blocks, v, n, radius, buffer) {
+generate_folds_from_blocks <- function(
+  data,
+  centroids,
+  grid_blocks,
+  v,
+  n,
+  radius,
+  buffer
+) {
   filtered_number_of_blocks <- nrow(grid_blocks)
   grid_blocks <- split_unnamed(grid_blocks, grid_blocks$fold)
 
