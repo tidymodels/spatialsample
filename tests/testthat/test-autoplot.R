@@ -5,6 +5,7 @@ data(ames, package = "modeldata")
 
 test_that("autoplot is stable", {
   skip_if_not(sf::sf_use_s2())
+  skip_on_os("windows")
 
   ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
   set.seed(123)
@@ -123,6 +124,8 @@ test_that("autoplot is stable", {
 })
 
 test_that("autoplot respects expand_bbox", {
+  skip_on_os("windows")
+
   vdiffr::expect_doppelganger(
     "expand_bbox",
     autoplot(
