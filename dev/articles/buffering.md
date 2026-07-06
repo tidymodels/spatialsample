@@ -19,6 +19,7 @@ considerations about how those buffers are calculated.
 To begin, let’s load spatialsample:
 
 ``` r
+
 library(spatialsample)
 ```
 
@@ -31,6 +32,7 @@ which creates a number of “blocks” in a grid and assigns data to folds
 based on the block its centroid falls in:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_block_cv(boston_canopy, v = 5)
 
@@ -43,6 +45,7 @@ If we look at the individual folds, we can see that the assessment data
 directly borders the analysis data for each given fold:
 
 ``` r
+
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
@@ -58,6 +61,7 @@ that. To create these exclusion buffers while using any cross-validation
 function in spatialsample, we can use a standardized `buffer` argument:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_block_cv(boston_canopy, v = 5, buffer = 1500)
 ```
@@ -68,6 +72,7 @@ or assessment fold. Instead, it’s been removed entirely in order to
 provide some distance between the two sets:
 
 ``` r
+
 purrr::walk(blocks$splits, function(x) print(autoplot(x)))
 ```
 
@@ -82,6 +87,7 @@ For instance, `boston_canopy` uses units of US feet for distance. To
 specify a buffer in meters instead, we can use:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy,
@@ -108,6 +114,7 @@ zero (that is, *no*) buffer. If you want to be sure to only capture
 adjacent polygons in a buffer, set `buffer` to a tiny, non-zero value:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy,
@@ -129,6 +136,7 @@ spatial cross-validation function to your desired distance, and any data
 within that inclusion radius will be added to the assessment set:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_block_cv(
   boston_canopy,
@@ -154,6 +162,7 @@ it possible to implement, for instance, leave-one-disc-out
 cross-validation using spatialsample:
 
 ``` r
+
 set.seed(123)
 blocks <- spatial_buffer_vfold_cv(
   boston_canopy,
@@ -179,6 +188,7 @@ separately. See for instance the non-uniform buffer region that happens
 when there’s a gap in the data:
 
 ``` r
+
 autoplot(blocks$splits[[12]])
 ```
 

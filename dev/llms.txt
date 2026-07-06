@@ -26,12 +26,14 @@ You can install the released version of spatialsample from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
+
 install.packages("spatialsample")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("tidymodels/spatialsample")
 ```
@@ -43,6 +45,7 @@ The most straightforward spatial resampling strategy is
 which uses k-means clustering to identify cross-validation folds:
 
 ``` r
+
 library(spatialsample)
 
 set.seed(1234)
@@ -71,6 +74,7 @@ through the
 function:
 
 ``` r
+
 autoplot(folds)
 ```
 
@@ -79,6 +83,7 @@ autoplot(folds)
 We can use the same function to visualize each fold separately:
 
 ``` r
+
 library(purrr)
 
 walk(folds$splits, function(x) print(autoplot(x)))

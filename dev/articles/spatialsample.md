@@ -9,6 +9,7 @@ let’s walk through a more basic example using linear modeling of housing
 data from Ames, IA.
 
 ``` r
+
 data("ames", package = "modeldata")
 ```
 
@@ -22,6 +23,7 @@ object using the
 function:
 
 ``` r
+
 ames_sf <- sf::st_as_sf(
   ames,
   # "coords" is in x/y order -- so longitude goes first!
@@ -39,6 +41,7 @@ they are (duplex vs. townhouse vs. single family), along with perhaps
 interactions between type and house size.
 
 ``` r
+
 log10(Sale_Price) ~ Year_Built + Gr_Liv_Area + Bldg_Type
 ```
 
@@ -56,6 +59,7 @@ visualize those folds using the
 function from spatialsample:
 
 ``` r
+
 library(spatialsample)
 
 set.seed(123)
@@ -71,6 +75,7 @@ resamples or `rsplit` objects in the `splits` column. The resulting
 partitions do not necessarily contain an equal number of observations:
 
 ``` r
+
 cluster_folds
 #> #  15-fold spatial cross-validation 
 #> # A tibble: 15 × 2
@@ -104,6 +109,7 @@ function will perform [spatial
 blocking](https://doi.org/10.1111/ecog.02881) with your data:
 
 ``` r
+
 set.seed(123)
 block_folds <- spatial_block_cv(ames_sf, v = 15)
 
@@ -121,6 +127,7 @@ instance, we can split the Ames data into folds based on neighborhoods
 using this function:
 
 ``` r
+
 set.seed(123)
 location_folds <-
   spatial_leave_location_out_cv(
@@ -141,6 +148,7 @@ named `type` to signal what type of resample each fold is from, and then
 combine them into a new data frame:
 
 ``` r
+
 cluster_folds$type <- "cluster"
 block_folds$type <- "block"
 location_folds$type <- "location"
@@ -161,6 +169,7 @@ Now let’s write a function that will, for each resample:
   price, on the log scale
 
 ``` r
+
 # `splits` will be the `rsplit` object
 compute_preds <- function(splits) {
   # fit the model to the analysis set
@@ -181,6 +190,7 @@ compute_preds <- function(splits) {
 We can apply this function to just one of the `splits`.
 
 ``` r
+
 compute_preds(cluster_folds$splits[[7]])
 #> # A tibble: 370 × 3
 #>                geometry Sale_Price .pred
@@ -202,6 +212,7 @@ Or we can apply this function to all of the `splits`, using
 [`purrr::map()`](https://purrr.tidyverse.org/reference/map.html).
 
 ``` r
+
 library(purrr)
 library(dplyr)
 #> 
@@ -225,6 +236,7 @@ such as
 [`yardstick::rmse()`](https://yardstick.tidymodels.org/reference/rmse.html):
 
 ``` r
+
 library(tidyr)
 library(yardstick)
 
@@ -254,6 +266,7 @@ It looks like the RMSE may vary across the city, so we can join the
 metrics back up to our results and plot them.
 
 ``` r
+
 library(ggplot2)
 
 cv_res %>%

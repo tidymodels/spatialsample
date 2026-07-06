@@ -119,12 +119,13 @@ hierarchical, or phylogenetic structure," 2016, Ecography 40(8), pp.
 ## Examples
 
 ``` r
+
 spatial_block_cv(boston_canopy, v = 3)
 #> #  3-fold spatial block cross-validation 
 #> # A tibble: 3 × 2
 #>   splits            id   
 #>   <list>            <chr>
-#> 1 <split [479/203]> Fold1
-#> 2 <split [433/249]> Fold2
-#> 3 <split [452/230]> Fold3
+#> 1 <split [455/227]> Fold1
+#> 2 <split [481/201]> Fold2
+#> 3 <split [428/254]> Fold3
 ```

@@ -142,10 +142,10 @@ spatial_clustering_cv(smithsonian_sf, v = 5)
 #> # A tibble: 5 × 2
 #>   splits         id   
 #>   <list>         <chr>
-#> 1 <split [19/1]> Fold1
-#> 2 <split [18/2]> Fold2
-#> 3 <split [5/15]> Fold3
-#> 4 <split [19/1]> Fold4
+#> 1 <split [9/11]> Fold1
+#> 2 <split [16/4]> Fold2
+#> 3 <split [18/2]> Fold3
+#> 4 <split [18/2]> Fold4
 #> 5 <split [19/1]> Fold5
 
 # Can use hclust instead:

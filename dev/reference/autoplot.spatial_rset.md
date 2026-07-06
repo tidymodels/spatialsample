@@ -59,6 +59,7 @@ fold separately. Alternatively, consider plotting each split using the
 ## Examples
 
 ``` r
+
 boston_block <- spatial_block_cv(boston_canopy, v = 2)
 autoplot(boston_block)
 

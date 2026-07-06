@@ -119,6 +119,7 @@ Modelling & Software 101, pp. 1-9, doi: 10.1016/j.envsoft.2017.12.001.
 ## Examples
 
 ``` r
+
 data(Smithsonian, package = "modeldata")
 Smithsonian_sf <- sf::st_as_sf(
   Smithsonian,
@@ -136,15 +137,15 @@ spatial_buffer_vfold_cv(
 #>    splits         id    
 #>    <list>         <chr> 
 #>  1 <split [11/2]> Fold01
-#>  2 <split [11/2]> Fold02
-#>  3 <split [18/2]> Fold03
-#>  4 <split [16/2]> Fold04
-#>  5 <split [13/2]> Fold05
-#>  6 <split [10/2]> Fold06
-#>  7 <split [11/2]> Fold07
-#>  8 <split [11/2]> Fold08
+#>  2 <split [17/2]> Fold02
+#>  3 <split [11/2]> Fold03
+#>  4 <split [11/2]> Fold04
+#>  5 <split [11/2]> Fold05
+#>  6 <split [11/2]> Fold06
+#>  7 <split [17/2]> Fold07
+#>  8 <split [17/2]> Fold08
 #>  9 <split [11/2]> Fold09
-#> 10 <split [18/2]> Fold10
+#> 10 <split [13/2]> Fold10
 
 data(ames, package = "modeldata")
 ames_sf <- sf::st_as_sf(ames, coords = c("Longitude", "Latitude"), crs = 4326)
