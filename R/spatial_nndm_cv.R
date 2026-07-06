@@ -63,10 +63,14 @@
 #' spatial_nndm_cv(ames_sf[1:100, ], ames_sf[2001:2100, ])
 #'
 #' @export
-spatial_nndm_cv <- function(data, prediction_sites, ...,
-                            autocorrelation_range = NULL,
-                            prediction_sample_size = 1000,
-                            min_analysis_proportion = 0.5) {
+spatial_nndm_cv <- function(
+  data,
+  prediction_sites,
+  ...,
+  autocorrelation_range = NULL,
+  prediction_sample_size = 1000,
+  min_analysis_proportion = 0.5
+) {
   # Data validation: check that all dots are used,
   # that data and prediction_sites are sf objects,
   # that data has a CRS and s2 is enabled if necessary
@@ -120,10 +124,8 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   pred_geometry <- unique(sf::st_geometry_type(prediction_sites))
 
   use_provided_points <- length(pred_geometry) == 1 && pred_geometry == "POINT"
-  sample_provided_poly <- length(pred_geometry) == 1 && pred_geometry %in% c(
-    "POLYGON",
-    "MULTIPOLYGON"
-  )
+  sample_provided_poly <- length(pred_geometry) == 1 &&
+    pred_geometry %in% c("POLYGON", "MULTIPOLYGON")
 
   if (use_provided_points) {
     prediction_sites <- prediction_sites
@@ -221,11 +223,13 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
     # How much data remains in analysis sets?
     prop_remaining <- sum(
       !is.na(distance_matrix[current_neighbor$row, ])
-    ) / n_training
+    ) /
+      n_training
 
-    if ((prop_close_training >= prop_close_prediction) &
-      (prop_remaining > min_analysis_proportion)) {
-
+    if (
+      (prop_close_training >= prop_close_prediction) &
+        (prop_remaining > min_analysis_proportion)
+    ) {
       # Remove nearest neighbors from analysis sets until the % of points with
       # an NN in analysis at distance X in analysis ~= the % of points
       # in predict with NN in train at distance X
@@ -287,10 +291,22 @@ spatial_nndm_cv <- function(data, prediction_sites, ...,
   )
 }
 
-find_next_neighbor <- function(current_neighbor, dist_to_nn_training, distance_matrix, equal_distance_ok = FALSE) {
+find_next_neighbor <- function(
+  current_neighbor,
+  dist_to_nn_training,
+  distance_matrix,
+  equal_distance_ok = FALSE
+) {
   operator <- if (equal_distance_ok) `>=` else `>`
-  current_neighbor$distance <- min(dist_to_nn_training[operator(dist_to_nn_training, current_neighbor$distance)])
-  current_neighbor$row <- which(dist_to_nn_training == current_neighbor$distance)[1]
-  current_neighbor$col <- which(distance_matrix[current_neighbor$row, ] == current_neighbor$distance)
+  current_neighbor$distance <- min(dist_to_nn_training[operator(
+    dist_to_nn_training,
+    current_neighbor$distance
+  )])
+  current_neighbor$row <- which(
+    dist_to_nn_training == current_neighbor$distance
+  )[1]
+  current_neighbor$col <- which(
+    distance_matrix[current_neighbor$row, ] == current_neighbor$distance
+  )
   current_neighbor
 }

@@ -27,7 +27,9 @@ split_unnamed <- function(x, f) {
 
 ## This will remove the assessment indices from an rsplit object
 rm_out <- function(x, buffer = NULL) {
-  if (is.null(buffer)) x$out_id <- NA
+  if (is.null(buffer)) {
+    x$out_id <- NA
+  }
   x
 }
 

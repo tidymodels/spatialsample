@@ -1,6 +1,8 @@
 ## code to prepare `boston_canopy` dataset goes here
 working_dir <- file.path(tempdir(), "boston_canopy")
-if (!dir.exists(working_dir)) dir.create(working_dir)
+if (!dir.exists(working_dir)) {
+  dir.create(working_dir)
+}
 
 download.file(
   "https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::hex-tree-canopy-change-metrics.zip?outSR=%7B%22latestWkid%22%3A2249%2C%22wkid%22%3A102686%7D",

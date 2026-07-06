@@ -248,7 +248,6 @@ test_that("using buffers", {
     )
   )
 
-
   # The default RNG changed in 3.6.0
   skip_if_not(getRversion() >= numeric_version("3.6.0"))
 

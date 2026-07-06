@@ -15,3 +15,5 @@
 ^vignettes/articles$
 ^CRAN-SUBMISSION$
 ^revdep$
+^[.]?air[.]toml$
+^\.vscode$

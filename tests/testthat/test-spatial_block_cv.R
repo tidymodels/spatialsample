@@ -148,7 +148,8 @@ test_that("systematic assignment -- continuous", {
   expect_true(all(good_holdout))
 
   set.seed(123)
-  rs3 <- spatial_block_cv(ames_sf,
+  rs3 <- spatial_block_cv(
+    ames_sf,
     method = "continuous",
     relevant_only = FALSE,
     v = 4

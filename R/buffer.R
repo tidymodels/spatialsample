@@ -10,7 +10,13 @@
 #' or assessment set. If `NULL`, no buffer is applied.
 #'
 #' @keywords internal
-buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_env()) {
+buffer_indices <- function(
+  data,
+  indices,
+  radius,
+  buffer,
+  call = rlang::caller_env()
+) {
   standard_checks(data, "Buffering", call)
 
   n <- nrow(data)
@@ -30,15 +36,21 @@ buffer_indices <- function(data, indices, radius, buffer, call = rlang::caller_e
   run_radius <- !is.null(radius)
   if (run_radius && units::set_units(radius, NULL) > 0) {
     # In case `radius` has no units, assume it's in the same units as `data`
-    if (!identical(sf::st_crs(data), sf::NA_crs_)) units(radius) <- units(distmat)
+    if (!identical(sf::st_crs(data), sf::NA_crs_)) {
+      units(radius) <- units(distmat)
+    }
     indices <- row_ids_within_dist(distmat, indices, radius)
   }
 
   # `buffer_indices` are _always_ needed
   # so re-code a NULL buffer as a 0, which will buffer nothing
-  if (is.null(buffer)) buffer <- 0L
+  if (is.null(buffer)) {
+    buffer <- 0L
+  }
   # In case `buffer` has no units, assume it's in the same units as `data`
-  if (!identical(sf::st_crs(data), sf::NA_crs_)) units(buffer) <- units(distmat)
+  if (!identical(sf::st_crs(data), sf::NA_crs_)) {
+    units(buffer) <- units(distmat)
+  }
   buffer_indices <- row_ids_within_dist(distmat, indices, buffer)
 
   purrr::map2(indices, buffer_indices, buffered_complement, n = n)
