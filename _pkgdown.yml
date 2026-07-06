@@ -8,6 +8,7 @@ template:
     primary: "#CA225E"
   includes:
     in_header: |
+      <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-hide-below="1200" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script>
       <script defer data-domain="spatialsample.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 authors:
@@ -19,20 +20,20 @@ development:
 
 figures:
   fig.width: 8
-  fig.height: ~
+  fig.height:
 
 reference:
-  - title: Resampling Methods
-    contents:
-      - spatial_clustering_cv
-      - spatial_block_cv
-      - spatial_buffer_vfold_cv
-      - spatial_leave_location_out_cv
-      - spatial_nndm_cv
-  - title: Utilities
-    contents:
-      - reexports
-      - autoplot.spatial_rset
-  - title: Data
-    contents:
-      - boston_canopy
+- title: Resampling Methods
+  contents:
+  - spatial_clustering_cv
+  - spatial_block_cv
+  - spatial_buffer_vfold_cv
+  - spatial_leave_location_out_cv
+  - spatial_nndm_cv
+- title: Utilities
+  contents:
+  - reexports
+  - autoplot.spatial_rset
+- title: Data
+  contents:
+  - boston_canopy
